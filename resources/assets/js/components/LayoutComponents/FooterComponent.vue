@@ -1,9 +1,8 @@
 <template>
 
 <!--Footer-->
-<div class=" pageStyle">
+<div class="pageStyle">
 <footer class="page-footer font-small unique-color-dark pt-0">
-
     <div style="background-color: #6351ce;">
         <div class="container">
             <!--Grid row-->
@@ -18,24 +17,24 @@
                 <!--Grid column-->
                 <div class="col-md-6 col-lg-7 text-center text-md-right">
                     <!--Facebook-->
-                    <a class="fb-ic ml-0">
-                        <i class="fa fa-facebook white-text mr-lg-4"> </i>
+                    <a class="fb-ic ml-0" :class="socialIconStyle" href="http://facebook.com" target="_blank">
+                        <i class="fa fa-facebook white-text mr-4"> </i>
                     </a>
                     <!--Twitter-->
-                    <a class="tw-ic">
-                        <i class="fa fa-twitter white-text mr-lg-4"> </i>
+                    <a class="tw-ic" :class="socialIconStyle" href="http://twitter.com" target="_blank">
+                        <i class="fa fa-twitter white-text mr-4"> </i>
                     </a>
                     <!--Google +-->
-                    <a class="gplus-ic">
-                        <i class="fa fa-google-plus white-text mr-lg-4"> </i>
+                    <a class="gplus-ic" :class="socialIconStyle" href="http://google.com" target="_blank">
+                        <i class="fa fa-google-plus white-text mr-4"> </i>
                     </a>
                     <!--Linkedin-->
-                    <a class="li-ic">
-                        <i class="fa fa-linkedin white-text mr-lg-4"> </i>
+                    <a class="li-ic" :class="socialIconStyle" href="http://linkedin.com" target="_blank">
+                        <i class="fa fa-linkedin white-text mr-4"> </i>
                     </a>
                     <!--Instagram-->
-                    <a class="ins-ic">
-                        <i class="fa fa-instagram white-text mr-lg-4"> </i>
+                    <a class="ins-ic" :class="socialIconStyle" href="http://instagram.com" target="_blank">
+                        <i class="fa fa-instagram white-text mr-4"> </i>
                     </a>
                 </div>
                 <!--Grid column-->
@@ -109,13 +108,13 @@
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <i class="fa fa-home mr-3 fa-2x"></i> New York, NY 10012, US</p>
+                    <i class=" fa-home " :class="contactIconClass"></i> New York, NY 10012, US</p>
                 <p>
-                    <i class="fa fa-envelope mr-3 fa-2x"></i> info@example.com</p>
+                    <i class=" fa-envelope " :class="contactIconClass"></i> info@example.com</p>
                 <p>
-                    <i class="fa fa-phone mr-3 fa-2x"></i> + 01 234 567 88</p>
+                    <i class=" fa-phone " :class="contactIconClass"></i> + 01 234 567 88</p>
                 <p>
-                    <i class="fa fa-print mr-3 fa-2x"></i> + 01 234 567 89</p>
+                    <i class=" fa-print " :class="contactIconClass"></i> + 01 234 567 89</p>
             </div>
             <!--/.Fourth column-->
 
@@ -126,8 +125,8 @@
     <!-- Copyright-->
     <div class="footer-copyright py-3 text-center">
         © 2018 Copyright:
-        <a href="https://mdbootstrap.com/material-design-for-bootstrap/">
-            <strong> MDBootstrap.com</strong>
+        <a >
+            <strong>György Sándor</strong>
         </a>
     </div>
     <!--/.Copyright -->
@@ -136,5 +135,29 @@
 <!--/.Footer-->
 </div>
 
-
 </template>
+
+
+<script>
+    export default {
+        data: function(){
+            return{
+                contactIconClass: 'fa mr-3 fa-2x',
+                socialIconStyle: ' fa-2x colorBlack'
+
+            }
+
+        }
+    }
+
+</script>
+
+
+<style>
+
+    .colorBlack{
+        color: black;
+
+    }
+
+</style>

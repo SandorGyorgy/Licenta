@@ -22,15 +22,13 @@
          }
 
           .pageStyle{
-        background-color: white;
-        border-radius: 5px;
+                background-color: white;
+                border-radius: 5px;
+               
        
     }
 
-    .navbarCustom{
-        
-
-    }
+   
          </style>
     </head>
     <body>
@@ -40,7 +38,7 @@
       <div id="app" class="container">
       
             <navbar-component></navbar-component>
-            <div class="container mt-2 mb-2">
+            <div class=" mt-2 mb-2">
                 <router-view></router-view>
             </div>
 
