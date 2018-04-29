@@ -3,7 +3,7 @@
 <!--Footer-->
 <div class="pageStyle">
 <footer class="page-footer font-small unique-color-dark pt-0">
-    <div style="background-color: #6351ce;">
+    <div style="background-color: #138496;">
         <div class="container">
             <!--Grid row-->
             <div class="row py-4 d-flex align-items-center">
@@ -18,23 +18,23 @@
                 <div class="col-md-6 col-lg-7 text-center text-md-right">
                     <!--Facebook-->
                     <a class="fb-ic ml-0" :class="socialIconStyle" href="http://facebook.com" target="_blank">
-                        <i class="fa fa-facebook white-text mr-4"> </i>
+                        <i class="fa-facebook" :class="socialIconStyle2"> </i>
                     </a>
                     <!--Twitter-->
                     <a class="tw-ic" :class="socialIconStyle" href="http://twitter.com" target="_blank">
-                        <i class="fa fa-twitter white-text mr-4"> </i>
+                        <i class="fa-twitter" :class="socialIconStyle2"> </i>
                     </a>
                     <!--Google +-->
                     <a class="gplus-ic" :class="socialIconStyle" href="http://google.com" target="_blank">
-                        <i class="fa fa-google-plus white-text mr-4"> </i>
+                        <i class="fa-google-plus" :class="socialIconStyle2"> </i>
                     </a>
                     <!--Linkedin-->
                     <a class="li-ic" :class="socialIconStyle" href="http://linkedin.com" target="_blank">
-                        <i class="fa fa-linkedin white-text mr-4"> </i>
+                        <i class="fa-linkedin" :class="socialIconStyle2"> </i>
                     </a>
                     <!--Instagram-->
                     <a class="ins-ic" :class="socialIconStyle" href="http://instagram.com" target="_blank">
-                        <i class="fa fa-instagram white-text mr-4"> </i>
+                        <i class="fa-instagram" :class="socialIconStyle2"> </i>
                     </a>
                 </div>
                 <!--Grid column-->
@@ -50,7 +50,7 @@
 
             <!--First column-->
             <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
-                <h6 class="text-uppercase font-weight-bold">
+                <h6 :class="columnTitle">
                     <strong>Company name</strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
@@ -61,7 +61,7 @@
 
             <!--Second column-->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                <h6 class="text-uppercase font-weight-bold">
+                <h6 :class="columnTitle">
                     <strong>Products</strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
@@ -82,7 +82,7 @@
 
             <!--Third column-->
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                <h6 class="text-uppercase font-weight-bold">
+                <h6 :class="columnTitle">
                     <strong>Useful links</strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
@@ -103,7 +103,7 @@
 
             <!--Fourth column-->
             <div class="col-md-4 col-lg-3 col-xl-3">
-                <h6 class="text-uppercase font-weight-bold">
+                <h6 :class="columnTitle">
                     <strong>Contact</strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
@@ -143,7 +143,9 @@
         data: function(){
             return{
                 contactIconClass: 'fa mr-3 fa-2x',
-                socialIconStyle: ' fa-2x colorBlack'
+                socialIconStyle: ' fa-2x colorBlack',
+                socialIconStyle2 : 'fa white-text mr-4',
+                columnTitle: 'text-uppercase font-weight-bold'
 
             }
 
