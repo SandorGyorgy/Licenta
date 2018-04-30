@@ -2,7 +2,7 @@
 
 <div class="pageStyle p-3 ">
         <div class="row mb-4 ml-1 mr-1">
-            <div class=" text-center col-md-4 mb-2 container " id="form-container">
+            <div class=" text-center col-md-4 mb-2 container mx-auto" style="width: 250px;"  id="form-container">
                 <form action="">
                     <h5 class="card-title">Card title</h5>
 
@@ -35,7 +35,7 @@
 
 <div class="col-md-4"></div>
 
-       <div class="card mr-2 " style="width: 21rem;">
+       <div class="card mr-2 mx-auto " style="width: 20rem;">
                 <img class="card-img-top" src="https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046" alt="">
         <div class="card-body ">
             <h5 class="card-title">Card title</h5>

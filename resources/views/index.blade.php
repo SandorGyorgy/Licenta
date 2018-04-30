@@ -15,7 +15,8 @@
          crossorigin="anonymous"> 
 
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-         
+         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIs_aEf6tp2cSDv1B-b6fJ1SLZIHATWnk"
+    ></script>
          <style>
          body{
             background-color : #C5DBE3       ;
@@ -51,6 +52,8 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
          crossorigin="anonymous"></script>
+
+        
 <script src="/js/app.js"></script>
     </body>
 </html>

@@ -28,6 +28,43 @@
                     Sign Up
                   </button></router-link>
 
+
+                <div class="dropdown" v-if="logedIn">
+                <button type="button" class="btn btn-info dropdown-toggle" id="accountButton"  data-toggle="dropdown">
+                  Contul Meu
+                </button>
+
+                <div class="dropdown-menu text-left">
+                  <a class="dropdown-item" href="#"> 
+                    <i class=" fa-plus-circle" :class="dropdownIcons"></i> 
+                    Adauga Anunt
+                  </a>
+
+                  <a class="dropdown-item" href="#">
+                     <i class=" fa-map-marker " :class="dropdownIcons"></i> 
+                     Anunturile Mele
+                     </a>
+
+                  <a class="dropdown-item" href="#"> 
+                    <i class=" fa-envelope" :class="dropdownIcons"></i>
+                    Mesaje
+                    </a>
+
+                  <a class="dropdown-item" href="#"> 
+                    <i class=" fa-cog" :class="dropdownIcons"></i> 
+                    Setari Cont
+                    </a>
+
+                  <a class="dropdown-item" href="#"> 
+                    <i class=" fa-home" :class="dropdownIcons"></i> 
+                    Delogare
+                    </a>
+                 
+                </div>
+              </div>
+
+
+
               </div>
 
             </div>
@@ -39,7 +76,9 @@
 export default {
     data(){
       return {  
-        buttonClass: 'btn btn-info btnWidth mr-lg-2 mb-sm-2 mb-lg-0 mb-xs-2  '
+        buttonClass: 'btn btn-info btnWidth mr-lg-2 mb-sm-2 mb-lg-0 mb-xs-2  ',
+        logedIn: true ,
+        dropdownIcons : ' fa mr-1 '
         }
     }
 
@@ -55,8 +94,12 @@ margin-right: 25%;
 }
 .btnWidth{
 
-  width: 90px;
+  width: 100px;
 
+}
+#accountButton{
+
+    width: 130px;
 }
 
 
