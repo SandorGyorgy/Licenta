@@ -25539,27 +25539,30 @@ __webpack_require__(23);
 
 // ----- Imports
 
+// Router
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]);
-
 var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
-
     routes: __WEBPACK_IMPORTED_MODULE_4__routes__["a" /* default */]
-
 });
+// Router
 
 window.Vue = __webpack_require__(15);
 
+// Imported components
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('navbar-component', __webpack_require__(16));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('home-component', __webpack_require__(17));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('map-component', __webpack_require__(18));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('footer-component', __webpack_require__(71));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('register-component', __webpack_require__(20));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('login-component', __webpack_require__(19));
+// Imported components
 
+// Vue core instance
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#app',
     router: router
 });
+//Vue core instance
 
 /***/ }),
 /* 23 */
