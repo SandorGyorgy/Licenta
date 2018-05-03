@@ -16,7 +16,8 @@ class APIRegisterController extends Controller
         $validator = Validator::make($request-> all(),[
             'email' => 'required|string|email|max:255|unique:users',
             'name' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'phone' => 'required|max:10'
            
         ]);
 
@@ -27,7 +28,8 @@ class APIRegisterController extends Controller
         User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'password' => bcrypt($request->get('password'))
+            'password' => bcrypt($request->get('password')),
+            'phone' => $request->get('phone')
 
         ]);
 

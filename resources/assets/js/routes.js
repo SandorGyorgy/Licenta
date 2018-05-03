@@ -1,8 +1,11 @@
-import NavbarComponent from './components/LayoutComponents/NavbarComponent.vue'
 import HomeComponent from './components/HomeComponent.vue'
 import MapComponent from './components/MapComponent.vue'
-import LoginComponent from './components/AuthComponents/LoginComponent.vue'
-import RegisterComponent from './components/AuthComponents/RegisterComponent.vue'
+import Login from './components/AuthComponents/Login.vue'
+import Register from './components/AuthComponents/Register.vue'
+import AccountSettings from './components/AuthComponents/AccountSettings.vue'
+import Messages from './components/AuthComponents/Messages.vue'
+import MyPosts from './components/AuthComponents/MyPosts.vue'
+import Post from './components/AuthComponents/Post.vue'
 
 
 const routes = [
@@ -18,12 +21,28 @@ const routes = [
 },
 {
     path: '/login',
-    component : LoginComponent
+    component : Login
 },
 {
     path : '/register',
-    component : RegisterComponent
-}
+    component : Register
+},
+{
+    path : '/user/post',
+    component : Post
+},
+{
+    path : '/user/posts',
+    component : MyPosts
+},
+{
+    path : '/user/messages',
+    component : Messages
+},
+{
+    path : '/user/account',
+    component : AccountSettings
+},
 
 
 ];

@@ -35,30 +35,37 @@
                 </button>
 
                 <div class="dropdown-menu text-left">
-                  <a class="dropdown-item" href="#"> 
+
+                <router-link to="/user/post" >
+                  <a class="dropdown-item"> 
                     <i class=" fa-plus-circle" :class="dropdownIcons"></i> 
                     Adauga Anunt
                   </a>
+                </router-link>
 
-                  <a class="dropdown-item" href="#">
+                <router-link to="/user/posts" >
+                  <a class="dropdown-item">
                      <i class=" fa-map-marker " :class="dropdownIcons"></i> 
                      Anunturile Mele
                      </a>
-
-                  <a class="dropdown-item" href="#"> 
+                </router-link>
+                <router-link to="/user/messages" >
+                  <a class="dropdown-item"> 
                     <i class=" fa-envelope" :class="dropdownIcons"></i>
                     Mesaje
                     </a>
+                </router-link>
 
-                  <a class="dropdown-item" href="#"> 
+                <router-link to="/user/account" >
+                  <a class="dropdown-item"> 
                     <i class=" fa-cog" :class="dropdownIcons"></i> 
                     Setari Cont
                     </a>
-
-                  <a class="dropdown-item" href="#"> 
-                    <i class=" fa-home" :class="dropdownIcons"></i> 
+                </router-link>
+                  <button class="dropdown-item"> 
+                    <i class=" fa-power-off" :class="dropdownIcons"></i> 
                     Delogare
-                    </a>
+                    </button>
                  
                 </div>
               </div>
@@ -100,6 +107,10 @@ margin-right: 25%;
 #accountButton{
 
     width: 130px;
+}
+a{
+ 
+ text-decoration: none;
 }
 
 
