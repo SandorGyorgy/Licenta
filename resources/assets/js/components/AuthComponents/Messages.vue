@@ -1,6 +1,6 @@
 <template>
 
-    <div class="pageStyle">
+    <div>
 
         <h1>Messages work !</h1>
 

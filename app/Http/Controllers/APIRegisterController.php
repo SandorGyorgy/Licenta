@@ -11,7 +11,7 @@ use Response;
 
 class APIRegisterController extends Controller
 {
-    public function register(REquest $request){
+    public function register(Request $request){
 
         $validator = Validator::make($request-> all(),[
             'email' => 'required|string|email|max:255|unique:users',

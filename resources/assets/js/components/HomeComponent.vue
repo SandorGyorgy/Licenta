@@ -1,6 +1,6 @@
 <template>
 
-<div class="pageStyle p-3 ">
+<div class="p-3 ">
         <div class="row mb-4 ml-1 mr-1">
             <div class=" text-center col-md-4 mb-2 container mx-auto" style="width: 250px;"  id="form-container">
                 <form action="">

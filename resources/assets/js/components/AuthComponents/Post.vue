@@ -1,6 +1,6 @@
 <template>
 
-    <div class="pageStyle">
+    <div>
 
         <h1>New post works !</h1>
 

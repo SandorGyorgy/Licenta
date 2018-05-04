@@ -1,7 +1,7 @@
 <template>
 
 <!--Footer-->
-<div class="pageStyle">
+<div >
 <footer class="page-footer font-small unique-color-dark pt-0">
     <div style="background-color: #138496;">
         <div class="container">

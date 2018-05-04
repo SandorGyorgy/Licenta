@@ -19,34 +19,13 @@
          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIs_aEf6tp2cSDv1B-b6fJ1SLZIHATWnk"
     ></script>
 
-         <style>
-         body{
-            background-color : #C5DBE3       ;
-         }
-
-          .pageStyle{
-                background-color: white;
-                border-radius: 5px;
-               
-       
-    }
-
-   
-         </style>
+        
     </head>
     <body>
 
 
       
-      <div id="app" class="container">
-      
-            <navbar-component></navbar-component>
-            <div class=" mt-2 mb-2">
-                <router-view></router-view>
-            </div>
-            <footer-component></footer-component>
-      
-      </div>
+      <div id="app"> </div>
 
 
 

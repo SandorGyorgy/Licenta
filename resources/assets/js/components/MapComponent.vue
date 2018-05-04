@@ -1,14 +1,14 @@
 <template>
 
 
-  <div class="pageStyle ">
-
-      <div class="mapComponent text-center">
-
-            <div id="myMap"></div>
-
-      </div>
-      
+  <div class=" map-page"  id="align">
+            <div class="row">
+            <div class="col-md-3"><h1> Map component </h1></div>
+            <div class="col-md-"></div>
+            <div class=" col-md-9">            
+               <div id="myMap"  class="mapComponent"></div>
+            </div>
+            </div>
   </div>
 
 
@@ -16,7 +16,6 @@
 
 <script>
 export default {
-  name: 'hello',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
@@ -34,13 +33,16 @@ export default {
 <style scoped>
     #myMap {
     height:400px;
-    width: 100%;
+    width: 500px;
     border: 1px black solid;
+    margin: 2%;
    }
 
-   .mapComponent{
-        padding: 10px;
-        width: 700px;
-        
-   }
+ .map-page{
+   height: 850px;
+   width: 1110px;
+
+ }
+
+  
 </style>
