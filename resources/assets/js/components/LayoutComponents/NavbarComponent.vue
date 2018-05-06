@@ -20,16 +20,16 @@
                 </div>
               <div class="navbar-nav lg-navbar-right">
 
-                <router-link to="/login"><button :class=" buttonClass" > 
+                <router-link to="/login" v-if="!auth"><button :class=" buttonClass" > 
                     Login
                   </button></router-link>
 
-                      <router-link to="/register" ><button :class=" buttonClass" > 
+                      <router-link to="/register"  v-if="!auth" ><button :class=" buttonClass" > 
                     Sign Up
                   </button></router-link>
 
 
-                <div class="dropdown" v-if="logedIn">
+                <div class="dropdown" v-if="auth">
                 <button type="button" class="btn btn-info dropdown-toggle" id="accountButton"  data-toggle="dropdown">
                   Contul Meu
                 </button>
@@ -86,6 +86,11 @@ export default {
         buttonClass: 'btn btn-info btnWidth mr-lg-2 mb-sm-2 mb-lg-0 mb-xs-2  ',
         logedIn: true ,
         dropdownIcons : ' fa mr-1 '
+        }
+    },
+    computed: {
+        auth(){
+          return this.$store.getters.isAuth
         }
     }
 

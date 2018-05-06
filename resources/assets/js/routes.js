@@ -1,3 +1,5 @@
+import {store} from './store'
+
 import HomeComponent from './components/HomeComponent.vue'
 import MapComponent from './components/MapComponent.vue'
 import Login from './components/AuthComponents/Login.vue'
@@ -29,19 +31,48 @@ const routes = [
 },
 {
     path : '/user/post',
-    component : Post
+    component : Post,
+    beforeEnter(to, from, next) {
+     if(store.state.token){
+         next()
+     } else {
+         next('/login')
+     }  
+    }
 },
 {
     path : '/user/posts',
-    component : MyPosts
+    component : MyPosts,
+    beforeEnter(to, from, next) {
+     if(store.state.token){
+         next()
+     } else {
+         next('/login')
+     }  
+    }
+  
 },
 {
     path : '/user/messages',
-    component : Messages
+    component : Messages,
+    beforeEnter(to, from, next) {
+     if(store.state.token){
+         next()
+     } else {
+         next('/login')
+     }  
+    }
 },
 {
     path : '/user/account',
-    component : AccountSettings
+    component : AccountSettings,
+    beforeEnter(to, from, next) {
+     if(store.state.token){
+         next()
+     } else {
+         next('/login')
+     }  
+    }
 },
 
 

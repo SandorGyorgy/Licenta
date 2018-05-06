@@ -1,7 +1,7 @@
 <template>
 
 <div class="container">
-    <form class="form-horizontal" role="form" method="POST">
+    <form  @submit.prevent="onSubmit" class="form-horizontal" role="form">
      <div class="text-center">   
         <div class="row">
             <div class="col-md-3"></div>
@@ -20,7 +20,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <input type="text" name="email" class="form-control" id="email"
+                        <input v-model="email" type="text" name="email" class="form-control" id="email"
                                placeholder="you@example.com" required autofocus>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
             <div class="col-md-6">
                 <div class="form-group has-danger">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <input type="password" name="password" class="form-control" id="password"
+                        <input v-model="password" type="password" name="password" class="form-control" id="password"
                                placeholder="Parola" required>
                     </div>
                 </div>
@@ -71,6 +71,26 @@
 </template>
 
 <script>
+export default {
+    data() {
+        return{
+            email: '',
+            password: ''
+        }
+    },
+
+    methods: {
+        onSubmit(){
+          const  loginData = {
+              email : this.email,
+              password : this.password
+          }
+        this.$store.dispatch('login' , loginData);
+
+        }
+    }
+
+}
 
 
 </script>

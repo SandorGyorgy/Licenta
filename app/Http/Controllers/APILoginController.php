@@ -8,6 +8,7 @@ use JWTFactory;
 use JWTAuth;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Response;
 
 class APILoginController extends Controller
 {
@@ -33,7 +34,8 @@ class APILoginController extends Controller
 
         }
 
-        return response() -> json(compact('token'));
+       
+        return response()->json(['token' => $token]);
 
     }
 }

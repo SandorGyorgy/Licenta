@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -132,10 +132,7 @@ export default {
                 phone : this.phone,
                 password : this.password
             }
-            console.log(formData);
-            axios.post('/api/user/register' , formData)
-            .then(res => console.log(res))
-            .catch(error => console.log(error))
+            this.$store.dispatch('register', formData)
         }
 
     }

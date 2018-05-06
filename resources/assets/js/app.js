@@ -6,6 +6,8 @@ import VueAxios from 'vue-axios';
 import VueRouter from 'vue-router';
 import routes from './routes';
 import App from './components/App.vue';
+import Vuex from 'vuex';
+import { store } from './store';
 // ----- Imports
 
 // Router
@@ -23,6 +25,8 @@ window.Vue = require('vue');
 const app = new Vue({
     el: '#app',
     render: h => h(App),
-    router
+    router,
+    axios,
+    store
 });
 //Vue core instance
