@@ -17,6 +17,9 @@ export default {
     components: {
         NavbarComponent,
         FooterComponent
+    },
+    created(){
+        this.$store.dispatch('tryAutoLogin')
     }
   
 }

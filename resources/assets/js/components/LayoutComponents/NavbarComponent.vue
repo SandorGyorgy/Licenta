@@ -62,7 +62,7 @@
                     Setari Cont
                     </button>
                 </router-link>
-                  <button class="dropdown-item"> 
+                  <button @click="logOut" class="dropdown-item"> 
                     <i class=" fa-power-off" :class="dropdownIcons"></i> 
                     Delogare
                     </button>
@@ -92,6 +92,11 @@ export default {
         auth(){
           return this.$store.getters.isAuth
         }
+    },
+    methods:{
+      logOut(){
+        this.$store.dispatch('logOut')
+      }
     }
 
 };
