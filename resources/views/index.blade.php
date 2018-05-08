@@ -16,8 +16,6 @@
 
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
          
-         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIs_aEf6tp2cSDv1B-b6fJ1SLZIHATWnk"
-    ></script>
 
         
     </head>

@@ -4,6 +4,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueRouter from 'vue-router';
+import * as VueGoogleMaps from "vue2-google-maps";
 import routes from './routes';
 import App from './components/App.vue';
 import Vuex from 'vuex';
@@ -17,6 +18,13 @@ const router = new VueRouter({
     routes
 });
 // Router
+
+Vue.use(VueGoogleMaps, {
+    load: {
+      key: "AIzaSyDIs_aEf6tp2cSDv1B-b6fJ1SLZIHATWnk",
+      libraries: "places" //necessary for places input
+    }
+  });
 
 window.Vue = require('vue');
 

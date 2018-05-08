@@ -1,12 +1,12 @@
 <template>
 <div class="container">
- <navbar-component class="pageStyle"></navbar-component>
-            <div class=" mt-2 mb-2">
+ <navbar-component class="pageStyle" style="display:block;"></navbar-component>
+            <div class=" mt-2 mb-2" style="display:block !important;">
                 <transition name="slide" mode="out-in">
-                    <router-view class="pageStyle"></router-view>
+                    <router-view class="pageStyle" style="display:block !important;"></router-view>
                 </transition>
             </div>
- <footer-component class="pageStyle"></footer-component>
+ <footer-component class="pageStyle" style="display:block;"></footer-component>
 </div>
 </template>
 

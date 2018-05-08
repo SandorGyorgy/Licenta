@@ -1,48 +1,85 @@
 <template>
+  <div>
+    <div >
+      <h2>Search and add a pin</h2>
+      <label>
+        <gmap-autocomplete
+          @place_changed="setPlace">
+        </gmap-autocomplete>
+        <button @click="addMarker">Add</button>
+      </label>
+      <br/>
+    </div>
+    <br>
+    <div > 
+    <gmap-map
+      :center="center"
+      :zoom="12"
+      style="width:80%;  height: 400px; " 
+    >
+      <gmap-marker
+        :key="index"
+        v-for="(m, index) in markers"
+        :position="m.position"
+        @click="center=m.position"
+      ></gmap-marker>
+    </gmap-map>
 
+     </div>
+    </div>
 
-  <div class=" map-page"  id="align">
-            <div class="row">
-            <div class="col-md-3"><h1> Map component </h1></div>
-            <div class="col-md-"></div>
-            <div class=" col-md-9">            
-               <div id="myMap"  class="mapComponent"></div>
-            </div>
-            </div>
-  </div>
-
-
+  
+  
 </template>
 
 <script>
 export default {
-  data () {
+  name: "GoogleMap",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }},
-  mounted: function initMap() {
-            this.map = new google.maps.Map(document.getElementById('myMap'), {
-            center: {lat:46.7712, lng: 23.6236},
-            scrollwheel: false,
-            zoom: 10
-            })
+      // default to montreal to keep it simple
+      // change this to whatever makes sense
+      center: { lat: 45.508, lng: -73.587 },
+      markers: [ {lat:45.508, lng:-73.587}],
+      places: [],
+      currentPlace: null
+    };
+  },
+
+  mounted() {
+    this.geolocate();
+  },
+
+  methods: {
+    setPlace(place) {
+      this.currentPlace = place;
+    },
+    addMarker() {
+      if (this.currentPlace) {
+        const marker = {
+          lat: this.currentPlace.geometry.location.lat(),
+          lng: this.currentPlace.geometry.location.lng()
+        };
+        this.markers.push({ position: marker });
+        this.places.push(this.currentPlace);
+        this.center = marker;
+        this.currentPlace = null;
+      }
+    },
+    geolocate: function() {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
+    }
   }
-
-}
+};
 </script>
-<style scoped>
-    #myMap {
-    height:400px;
-    width: 500px;
-    border: 1px black solid;
-    margin: 2%;
-   }
 
- .map-page{
-   height: 850px;
-   width: 1110px;
+<style>
 
- }
 
-  
+
 </style>
