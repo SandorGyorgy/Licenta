@@ -20,10 +20,4 @@ class AuthController extends Controller
         ] , 200);
     }
 
-    public function user(Request $request){
-
-        return auth()->user()->only('name' , 'email' , 'phone');
-
-
-    }
 }

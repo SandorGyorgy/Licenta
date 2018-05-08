@@ -6,8 +6,8 @@
               <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse float-md-left" id="navbarNavAltMarkup">
-               <div class="navbar-nav mx-auto" style="width: 200px;">
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+               <div class="navbar-nav mx-auto" >
                 
                   <router-link to="/"><button :class=" buttonClass" >
                       Home 
@@ -31,7 +31,7 @@
 
                 <div class="dropdown" v-if="auth">
                 <button type="button" class="btn btn-info dropdown-toggle" id="accountButton"  data-toggle="dropdown">
-                  Contul Meu
+                  {{ userName }}
                 </button>
 
                 <div class="dropdown-menu text-left">
@@ -91,7 +91,13 @@ export default {
     computed: {
         auth(){
           return this.$store.getters.isAuth
+        },
+
+        userName(){
+          return this.$store.state.userName
         }
+
+
     },
     methods:{
       logOut(){

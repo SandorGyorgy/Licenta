@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div >
-      <h2>Search and add a pin</h2>
+    <nav class="navbar navbar-light navbar-inverse" role="navigation" >
       <label>
         <gmap-autocomplete
           @place_changed="setPlace">
@@ -9,13 +8,13 @@
         <button @click="addMarker">Add</button>
       </label>
       <br/>
-    </div>
-    <br>
-    <div > 
+    </nav>
+    
+    <div class="m-3 pb-3"> 
     <gmap-map
       :center="center"
       :zoom="12"
-      style="width:80%;  height: 400px; " 
+      style="width:100%;  height: 500px; border: 1px solid black; " 
     >
       <gmap-marker
         :key="index"
@@ -26,10 +25,10 @@
     </gmap-map>
 
      </div>
-    </div>
 
-  
-  
+
+
+    </div>
 </template>
 
 <script>
