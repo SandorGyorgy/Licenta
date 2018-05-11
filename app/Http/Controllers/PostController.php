@@ -17,6 +17,7 @@ class PostController extends Controller
     {   
         
         $user = auth()->user();
+        $user->only('id','name', 'email');
         $posts = $user->post()->with('location')->get();
         return response()->json(['user' => $user , 'post' => $posts]);
         

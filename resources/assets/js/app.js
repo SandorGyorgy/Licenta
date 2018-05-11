@@ -22,7 +22,8 @@ const router = new VueRouter({
 Vue.use(VueGoogleMaps, {
     load: {
       key: "AIzaSyDIs_aEf6tp2cSDv1B-b6fJ1SLZIHATWnk",
-      libraries: "places" //necessary for places input
+      libraries: "places",
+      language: 'Ro'
     }
   });
 

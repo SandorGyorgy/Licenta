@@ -13,7 +13,8 @@ import Post from './components/AuthComponents/Post.vue'
 const routes = [
 {
     path : '/' , 
-    component: HomeComponent 
+    component: HomeComponent ,
+    name : 'home'
   
 },
 {
@@ -35,44 +36,52 @@ const routes = [
     beforeEnter(to, from, next) {
      if(store.state.router){
          next()
-     } else {
-         next('/login')
-     }  
+     } else if(store.state.token) {
+         next()
+     }  else{
+        next('/login')
+     }
     }
 },
 {
     path : '/user/posts',
     component : MyPosts,
     beforeEnter(to, from, next) {
-     if(store.state.router){
-         next()
-     } else {
-         next('/login')
-     }  
-    }
+        if(store.state.router){
+            next()
+        } else if(store.state.token) {
+            next()
+        }  else{
+           next('/login')
+        }
+       }
   
 },
 {
     path : '/user/messages',
     component : Messages,
     beforeEnter(to, from, next) {
-     if(store.state.router){
-         next()
-     } else {
-         next('/login')
-     }  
-    }
+        if(store.state.router){
+            next()
+        } else if(store.state.token) {
+            next()
+        }  else{
+           next('/login')
+        }
+       }
 },
 {
     path : '/user/account',
     component : AccountSettings,
     beforeEnter(to, from, next) {
-     if(store.state.router){
-         next()
-     } else {
-         next('/login')
-     }  
-    }
+        if(store.state.router){
+            next()
+        } else if(store.state.token) {
+            next()
+        }  else{
+           next('/login')
+        }
+       }
 },
 
 

@@ -61,7 +61,9 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <button type="submit" class="btn btn-success mb-3 bWidth">Login </button>
+                <button type="submit" class="btn btn-success mb-3 bWidth">
+                    <i class="fa fa-sign-in"></i>
+                    Login </button>
             </div>
         </div>
      </div>
@@ -86,6 +88,7 @@ export default {
               password : this.password
           }
         this.$store.dispatch('login' , loginData);
+        this.$router.push({ name : 'home' })
 
         }
     }

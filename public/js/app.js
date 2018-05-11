@@ -25987,7 +25987,8 @@ exports.default = function (input) {
 
 var routes = [{
     path: '/',
-    component: __WEBPACK_IMPORTED_MODULE_1__components_HomeComponent_vue___default.a
+    component: __WEBPACK_IMPORTED_MODULE_1__components_HomeComponent_vue___default.a,
+    name: 'home'
 
 }, {
     path: '/map',
@@ -26005,6 +26006,8 @@ var routes = [{
     beforeEnter: function beforeEnter(to, from, next) {
         if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.router) {
             next();
+        } else if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.token) {
+            next();
         } else {
             next('/login');
         }
@@ -26014,6 +26017,8 @@ var routes = [{
     component: __WEBPACK_IMPORTED_MODULE_7__components_AuthComponents_MyPosts_vue___default.a,
     beforeEnter: function beforeEnter(to, from, next) {
         if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.router) {
+            next();
+        } else if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.token) {
             next();
         } else {
             next('/login');
@@ -26025,6 +26030,8 @@ var routes = [{
     beforeEnter: function beforeEnter(to, from, next) {
         if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.router) {
             next();
+        } else if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.token) {
+            next();
         } else {
             next('/login');
         }
@@ -26034,6 +26041,8 @@ var routes = [{
     component: __WEBPACK_IMPORTED_MODULE_5__components_AuthComponents_AccountSettings_vue___default.a,
     beforeEnter: function beforeEnter(to, from, next) {
         if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.router) {
+            next();
+        } else if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.token) {
             next();
         } else {
             next('/login');
@@ -27193,7 +27202,8 @@ var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue2_google_maps__, {
     load: {
         key: "AIzaSyDIs_aEf6tp2cSDv1B-b6fJ1SLZIHATWnk",
-        libraries: "places" //necessary for places input
+        libraries: "places",
+        language: 'Ro'
     }
 });
 
@@ -54459,7 +54469,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54512,7 +54522,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // default to montreal to keep it simple
       // change this to whatever makes sense
       center: { lat: 45.508, lng: -73.587 },
-      markers: [{ position: { lat: 45.508, lng: -73.587 } }],
+      markers: [],
       places: [],
       currentPlace: null
     };
@@ -54530,12 +54540,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (this.currentPlace) {
         var marker = {
           lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
+          lng: this.currentPlace.geometry.location.lng(),
+          street: this.currentPlace.address_components[0].long_name,
+          city: this.currentPlace.address_components[1].long_name,
+          country: this.currentPlace.address_components[3].long_name
+
         };
-        this.markers.push({ position: marker });
+        this.markers.push(marker);
         this.places.push(this.currentPlace);
         this.center = marker;
         this.currentPlace = null;
+        console.log(this.markers);
       }
     },
 
@@ -54547,7 +54562,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        console.log(position.coords.latitude);
       });
     }
   }
@@ -54572,7 +54586,10 @@ var render = function() {
         _c(
           "label",
           [
-            _c("gmap-autocomplete", { on: { place_changed: _vm.setPlace } }),
+            _c("gmap-autocomplete", {
+              staticStyle: { width: "300px" },
+              on: { place_changed: _vm.setPlace }
+            }),
             _vm._v(" "),
             _c("button", { on: { click: _vm.addMarker } }, [_vm._v("Add")])
           ],
@@ -54597,22 +54614,8 @@ var render = function() {
             },
             attrs: { center: _vm.center, zoom: 12 }
           },
-          [
-            _c("gmap-info-window", [_vm._v("Hello world!")]),
-            _vm._v(" "),
-            _vm._l(_vm.markers, function(m, index) {
-              return _c("gmap-marker", {
-                key: index,
-                attrs: { position: m.position },
-                on: {
-                  click: function($event) {
-                    _vm.center = m.position
-                  }
-                }
-              })
-            })
-          ],
-          2
+          [_c("gmap-info-window", [_vm._v("Hello world!")])],
+          1
         )
       ],
       1
@@ -54798,6 +54801,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -54815,6 +54820,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 password: this.password
             };
             this.$store.dispatch('login', loginData);
+            this.$router.push({ name: 'home' });
         }
     }
 
@@ -54981,7 +54987,10 @@ var staticRenderFns = [
             staticClass: "btn btn-success mb-3 bWidth",
             attrs: { type: "submit" }
           },
-          [_vm._v("Login ")]
+          [
+            _c("i", { staticClass: "fa fa-sign-in" }),
+            _vm._v("\r\n                    Login ")
+          ]
         )
       ])
     ])
@@ -55229,6 +55238,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 password: this.password
             };
             this.$store.dispatch('register', formData);
+            this.$router.push({ name: 'home' });
         }
     }
 });
@@ -55753,23 +55763,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            posts: []
+
+        };
+    },
+
+    mounted: function mounted() {
+        this.get();
     },
 
     methods: {
         get: function get() {
-            var userId = localStorage.getItem('userId');
+            var _this = this;
+
             var token = localStorage.getItem('token');
             axios({
                 method: 'get',
                 url: '/api/user/posts',
                 headers: { 'Authorization': 'Bearer ' + token }
             }).then(function (response) {
-                return console.log(response);
+                var data = response.data.post;
+                for (var i in data) {
+                    var post = {
+                        id: data[i].id,
+                        title: data[i].title,
+                        body: data[i].description,
+                        price_month: data[i].price_month,
+                        room_nr: data[i].room_nr,
+                        county: data[i].location.county,
+                        city: data[i].location.city
+                    };
+                    _this.posts.push(post);
+                }
+
+                // this.room_nr : data[i]room_nr
             }).catch(function (error) {
                 return console.log(error);
             });
@@ -55786,11 +55824,26 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("My posts work !")]),
-    _vm._v(" "),
-    _c("button", { on: { click: _vm.get } }, [_vm._v("Click")])
-  ])
+  return _c(
+    "div",
+    _vm._l(_vm.posts, function(post) {
+      return _c("div", { key: post.id }, [
+        _c("h1", [_vm._v("My posts work !")]),
+        _vm._v(" "),
+        _c("h4", [_vm._v(" Titlu : " + _vm._s(post.title) + " ")]),
+        _vm._v(" "),
+        _c("h4", [_vm._v(" Descriere : " + _vm._s(post.body) + " ")]),
+        _vm._v(" "),
+        _c("h4", [_vm._v(" Pret pe luna : " + _vm._s(post.price_month) + " ")]),
+        _vm._v(" "),
+        _c("h4", [_vm._v(" Numar Camere : " + _vm._s(post.room_nr) + " ")]),
+        _vm._v(" "),
+        _c("h4", [_vm._v(" Judet : " + _vm._s(post.county) + " ")]),
+        _vm._v(" "),
+        _c("h4", [_vm._v(" Oras : " + _vm._s(post.city) + " ")])
+      ])
+    })
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55807,15 +55860,19 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(135)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(137)
 /* template */
 var __vue_template__ = __webpack_require__(115)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -55857,16 +55914,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c(
+      "nav",
+      {
+        staticClass: "navbar navbar-light navbar-inverse",
+        attrs: { role: "navigation" }
+      },
+      [
+        _c(
+          "label",
+          [
+            _c("gmap-autocomplete", {
+              staticStyle: { width: "300px" },
+              on: { place_changed: _vm.setPlace }
+            }),
+            _vm._v(" "),
+            _c("button", { on: { click: _vm.addMarker } }, [_vm._v("Add")])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("br")
+      ]
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("New post works !")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -56201,6 +56275,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     logOut: function logOut() {
       this.$store.dispatch('logOut');
+      this.$router.push({ name: 'home' });
     }
   }
 
@@ -57046,6 +57121,113 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(136);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("3bad6af0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-263a0d57\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Post.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-263a0d57\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Post.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      markers: [],
+      places: [],
+      currentPlace: null
+    };
+  },
+  mounted: function mounted() {},
+
+
+  methods: {
+    setPlace: function setPlace(place) {
+      this.currentPlace = place;
+    },
+    addMarker: function addMarker() {
+      var type = this.currentPlace.types[0];
+      if (this.currentPlace && type === "street_address") {
+
+        var marker = {
+          lat: this.currentPlace.geometry.location.lat(),
+          lng: this.currentPlace.geometry.location.lng()
+          //street: this.currentPlace.address_components[2].long_name,
+          //city: this.currentPlace.address_components[3].long_name,
+          //county: this.currentPlace.address_components[4].long_name,
+
+        };
+        this.markers.push(marker);
+        this.places.push(this.currentPlace);
+        this.center = marker;
+        console.log(this.currentPlace);
+        this.currentPlace = null;
+      } else {
+        console.log('Works');
+      }
+    }
+  }
+});
 
 /***/ })
 /******/ ]);

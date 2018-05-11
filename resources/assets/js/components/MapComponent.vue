@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light navbar-inverse" role="navigation" >
       <label>
         <gmap-autocomplete
-          @place_changed="setPlace">
+          @place_changed="setPlace" style="width: 300px">
         </gmap-autocomplete>
         <button @click="addMarker">Add</button>
       </label>
@@ -18,12 +18,12 @@
     >
 
     <gmap-info-window>Hello world!</gmap-info-window>
-      <gmap-marker
+      <!-- <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
         :position="m.position"
         @click="center=m.position"
-      ></gmap-marker>
+      ></gmap-marker> -->
     </gmap-map>
 
      </div>
@@ -40,7 +40,7 @@ export default {
       // default to montreal to keep it simple
       // change this to whatever makes sense
       center: { lat: 45.508, lng: -73.587 },
-      markers: [ { position:{lat:45.508, lng:-73.587}}],
+      markers: [],
       places: [],
       currentPlace: null
     };
@@ -58,12 +58,17 @@ export default {
       if (this.currentPlace) {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
+          lng: this.currentPlace.geometry.location.lng(),
+          street: this.currentPlace.address_components[0].long_name,
+          city: this.currentPlace.address_components[1].long_name,
+          country: this.currentPlace.address_components[3].long_name,
+          
         };
-        this.markers.push({ position: marker });
+        this.markers.push(marker);
         this.places.push(this.currentPlace);
         this.center = marker;
         this.currentPlace = null;
+        console.log(this.markers);
       }
     },
     geolocate: function() {
@@ -72,7 +77,7 @@ export default {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        console.log(position.coords.latitude);
+        
         
       });
     }

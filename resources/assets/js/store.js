@@ -102,8 +102,8 @@ export const store = new Vuex.Store({
                 localStorage.setItem('token' , response.data.token)
                 dispatch('authUserData')
             })
-
             .catch(error => console.log(error))
+
           
         },
         //End of the login action
