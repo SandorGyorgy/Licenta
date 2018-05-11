@@ -10,9 +10,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    public function user(){
+    public function post(){
         return $this->hasMany('App\Post');
     }
+
+   
 
    
     protected $fillable = [

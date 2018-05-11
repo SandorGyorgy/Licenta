@@ -16,6 +16,8 @@
       :zoom="12"
       style="width:100%;  height: 500px; border: 1px solid black; " 
     >
+
+    <gmap-info-window>Hello world!</gmap-info-window>
       <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
@@ -33,13 +35,12 @@
 
 <script>
 export default {
-  name: "GoogleMap",
   data() {
     return {
       // default to montreal to keep it simple
       // change this to whatever makes sense
       center: { lat: 45.508, lng: -73.587 },
-      markers: [ {lat:45.508, lng:-73.587}],
+      markers: [ { position:{lat:45.508, lng:-73.587}}],
       places: [],
       currentPlace: null
     };
@@ -71,6 +72,8 @@ export default {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+        console.log(position.coords.latitude);
+        
       });
     }
   }

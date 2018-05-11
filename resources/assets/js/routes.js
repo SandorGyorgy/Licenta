@@ -33,7 +33,7 @@ const routes = [
     path : '/user/post',
     component : Post,
     beforeEnter(to, from, next) {
-     if(store.state.token){
+     if(store.state.router){
          next()
      } else {
          next('/login')
@@ -44,7 +44,7 @@ const routes = [
     path : '/user/posts',
     component : MyPosts,
     beforeEnter(to, from, next) {
-     if(store.state.token){
+     if(store.state.router){
          next()
      } else {
          next('/login')
@@ -56,7 +56,7 @@ const routes = [
     path : '/user/messages',
     component : Messages,
     beforeEnter(to, from, next) {
-     if(store.state.token){
+     if(store.state.router){
          next()
      } else {
          next('/login')
@@ -67,7 +67,7 @@ const routes = [
     path : '/user/account',
     component : AccountSettings,
     beforeEnter(to, from, next) {
-     if(store.state.token){
+     if(store.state.router){
          next()
      } else {
          next('/login')

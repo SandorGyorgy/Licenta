@@ -3,39 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
+use App\Location;
 use Illuminate\Http\Request;
+use JWTFactory;
+use JWTAuth;
+use Response;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+  
+    public function userPosts()
+    {   
+        
+        $user = auth()->user();
+        $posts = $user->post()->with('location')->get();
+        return response()->json(['user' => $user , 'post' => $posts]);
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
-        //
+            $user_id = $request->id;
+            $user = User::findOrFail($user_id);
+
+            $location = new Location;
+            $location->county = $request->county;
+            $location->city = $request->city;
+            $location->n_hood = $request->n_hood;
+            $location->address = $request->address;
+            $location->lat = $request->lat;
+            $location->lng = $request->lng;
+
+            $post = new Post;
+            $post->title = $request->title ;
+            $post->description = $request->description ;
+            $post->room_nr = $request->room_nr;
+            $post->price_month = $request->price_month ;
+            $post->price_half_year = $request->price_half_year ;
+            $post->price_year = $request->price_year ;
+
+            $location->save();
+            $post->save();
+
+            $post->user_id = $user_id;
+            $post->location_id = $location->id;
+            $location->post_id = $post->id;
+
+            $location->update();
+            $post->update();
+
+
     }
 
     /**

@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
         userName: null,
         userId : null,
         userEmail: null,
-        userPhone : null
+        userPhone : null,
+        router: localStorage.getItem('token')
        
     },
     mutations:{
@@ -100,8 +101,6 @@ export const store = new Vuex.Store({
             .then( response => {  
                 localStorage.setItem('token' , response.data.token)
                 dispatch('authUserData')
-               
-                
             })
 
             .catch(error => console.log(error))

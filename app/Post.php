@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    public function post(){
+    public function location(){
             return $this->hasOne('App\Location');
 
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User');
     }
 
 
