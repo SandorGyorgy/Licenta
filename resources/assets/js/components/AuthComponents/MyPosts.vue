@@ -2,13 +2,13 @@
 
     <div >
         <div v-for="post in posts" :key="post.id">
-            <h1>My posts work !</h1>
             <h4> Titlu : {{ post.title }} </h4>
             <h4> Descriere : {{ post.body }} </h4>
             <h4> Pret pe luna : {{ post.price_month }} </h4>
             <h4> Numar Camere : {{ post.room_nr }} </h4>
             <h4> Judet : {{ post.county }} </h4>
             <h4> Oras : {{ post.city }} </h4>
+            <hr>
            
         </div> 
 
@@ -25,7 +25,7 @@ export default {
          
         }
     },
-    mounted: function(){
+    created: function(){
         this.get()
     },
 

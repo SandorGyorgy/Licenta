@@ -132,6 +132,24 @@ export const store = new Vuex.Store({
                 localStorage.setItem('userPhone' , response.data.phone)
             })
             .catch(error => console.log(error))
+        },
+        createPost(chirie){
+            const token = localStorage.getItem('token')
+            // axios({
+            //     method: 'post',
+            //     url: '/user/post',
+            //     headers: {'Authorization' : `Bearer ${token}`,
+            //     chirie
+                
+            // }
+            // })
+                        
+            axios.post('/user/post', chirie, {
+            headers: {'Authorization' : `Bearer ${token}`
+            }});
+
+
+            
         }
 
 

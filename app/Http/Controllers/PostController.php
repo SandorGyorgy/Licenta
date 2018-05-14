@@ -62,6 +62,7 @@ class PostController extends Controller
             $post->update();
 
 
+
     }
 
     /**

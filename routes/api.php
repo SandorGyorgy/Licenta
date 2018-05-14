@@ -20,7 +20,6 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('/user' ,  function(Request $request) {
         return auth()->user()->only('id' , 'name' , 'email' , 'phone' , 'is_admin');
     });
-
     
     Route::post('/user/post' , 'PostController@store');
     Route::get('/user/posts' , 'PostController@UserPosts');
@@ -31,3 +30,4 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     });
 Route::post('user/register', 'APIRegisterController@register');
 Route::post('user/login', 'APILoginController@login');
+

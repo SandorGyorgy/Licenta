@@ -3,6 +3,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import axiosAuth from './axios-auth';
 import VueRouter from 'vue-router';
 import * as VueGoogleMaps from "vue2-google-maps";
 import routes from './routes';
@@ -36,6 +37,7 @@ const app = new Vue({
     render: h => h(App),
     router,
     axios,
-    store
+    store,
+    
 });
 //Vue core instance

@@ -18,12 +18,15 @@
     >
 
     <gmap-info-window>Hello world!</gmap-info-window>
-      <!-- <gmap-marker
+     <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
+        :clickable="true"
         :position="m.position"
-        @click="center=m.position"
-      ></gmap-marker> -->
+      ></gmap-marker> 
+
+    
+
     </gmap-map>
 
      </div>
@@ -37,10 +40,8 @@
 export default {
   data() {
     return {
-      // default to montreal to keep it simple
-      // change this to whatever makes sense
       center: { lat: 45.508, lng: -73.587 },
-      markers: [],
+      markers: [ {position :{ lat: 45.508, lng: -73.587 } }],
       places: [],
       currentPlace: null
     };
@@ -59,12 +60,9 @@ export default {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng(),
-          street: this.currentPlace.address_components[0].long_name,
-          city: this.currentPlace.address_components[1].long_name,
-          country: this.currentPlace.address_components[3].long_name,
           
         };
-        this.markers.push(marker);
+        this.markers.push({ position : marker });
         this.places.push(this.currentPlace);
         this.center = marker;
         this.currentPlace = null;
@@ -80,7 +78,12 @@ export default {
         
         
       });
-    }
+    },
+    openInfoWindowTemplate(item){
+        this.setInfoWindowTemplate(item)
+        this.infoWindow.position = this.getCoordinates(item)
+        this.infoWindow.open = true
+   }
   }
 };
 </script>
