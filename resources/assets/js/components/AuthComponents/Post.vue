@@ -294,26 +294,29 @@ export default {
         //const type = this.currentPlace.types[0]
       
         const chirie = {
-          lat: '45.5841',//this.currentPlace.geometry.location.lat(),
-          lng: '47.2541', //this.currentPlace.geometry.location.lng(),
-          city: 'Baia Mare',//this.currentPlace.address_components[3].long_name,
-          county: 'Maramures' ,//this.currentPlace.address_components[4].long_name,
-          n_hood: 'Hatvan',
-          title: 'Test',//this.titlu,
-          description: 'Test test test',//this.descriere,
-          room_nr: '45',//this.nrCamere,
-          dimension: '45',//this.metriiPatrati,
-          price_month: '450',//this.pretLuna,
+          lat: this.currentPlace.geometry.location.lat(),
+          lng: this.currentPlace.geometry.location.lng(),
+          address: this.currentPlace.formatted_address,
+          title: this.titlu,
+          description: this.descriere,
+          room_nr: this.nrCamere,
+          dimension: this.metriiPatrati,
+          price_month: this.pretLuna,
           price_half_year: this.pretJumateAn,
           price_year: this.pretAn,
           id: this.id
 
         };
+
+
+        console.log(chirie);
             
+           // console.log(this.currentPlace.formatted_address);
+           // console.log(this.currentPlace);
+
             axiosAuth.post(`/user/post`, chirie )
             .then(response => console.log(response))
             .catch(error => console.log(error));
-          
       
     },
   

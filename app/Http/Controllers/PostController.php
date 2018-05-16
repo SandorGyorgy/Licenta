@@ -11,8 +11,14 @@ use JWTAuth;
 use Response;
 
 class PostController extends Controller
-{
-  
+{   
+    public function index(){
+       $post = Post::with('location')->with('user')->get();
+
+            return response()->json($post);
+
+    }
+    
     public function userPosts()
     {   
         
@@ -36,9 +42,6 @@ class PostController extends Controller
             $user = User::findOrFail($user_id);
 
             $location = new Location;
-            $location->county = $request->county;
-            $location->city = $request->city;
-            $location->n_hood = $request->n_hood;
             $location->address = $request->address;
             $location->lat = $request->lat;
             $location->lng = $request->lng;

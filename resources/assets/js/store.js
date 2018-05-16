@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import routes from'./routes'
 
+
 Vue.use(Vuex);
 
 
@@ -46,16 +47,8 @@ export const store = new Vuex.Store({
 
         //Register action : sends the request to the register api and gets back the JWT commits it to the
         // store state 
-        register({commit} , formData){
+        register({commit , dispatch} , formData){
             axios.post('/api/user/register' , formData)
-            .then( response => {
-                commit('authUser' , {
-                    token: response.data.token,
-                    
-                })
-
-                localStorage.setItem('token' , response.data.token)
-            })
             .catch(error => console.log(error))
         },
         // End of the register action
@@ -133,24 +126,7 @@ export const store = new Vuex.Store({
             })
             .catch(error => console.log(error))
         },
-        createPost(chirie){
-            const token = localStorage.getItem('token')
-            // axios({
-            //     method: 'post',
-            //     url: '/user/post',
-            //     headers: {'Authorization' : `Bearer ${token}`,
-            //     chirie
-                
-            // }
-            // })
-                        
-            axios.post('/user/post', chirie, {
-            headers: {'Authorization' : `Bearer ${token}`
-            }});
-
-
-            
-        }
+       
 
 
 

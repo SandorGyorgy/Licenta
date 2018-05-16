@@ -19,4 +19,8 @@ class Location extends Model
         'latitude'
     ];
 
+    protected $hidden = [
+        'updated_at' , 'created_at'
+    ];
+
 }

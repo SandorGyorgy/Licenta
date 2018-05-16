@@ -28,4 +28,7 @@ class Post extends Model
     'price_year' 
 
 ];
+protected $hidden = [
+      'created_at'
+];
 }
