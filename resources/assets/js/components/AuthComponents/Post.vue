@@ -122,7 +122,9 @@
                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 
                         <gmap-autocomplete
-                            @place_changed="setPlace"  class="form-control" placeholder="Selectati adresa chiriei cautate">
+                            @place_changed="setPlace"  
+                            class="form-control" 
+                            placeholder="Selectati adresa chiriei cautate">
                        </gmap-autocomplete>
                  </div>
                     
@@ -238,6 +240,36 @@
 
         </div> 
 
+           <div class="row">
+            <div class="col-md-3 field-label-responsive"> </div>
+            <div class="col-md-6">
+                <div class="form-group has-danger">
+                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+
+              
+
+                     <div class="input-group mb-2 mr-sm-2 mb-sm-0" >
+                        <input 
+                         type="file" 
+                         class="form-control" 
+                         placeholder="Selectati poza"
+                         required autofocus>
+                    </div>
+                        
+                 </div>
+                    
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-control-feedback">
+                        <span class="text-danger align-middle">
+
+                        </span>
+                </div>
+            </div>
+        </div>
+
   
 
         
@@ -308,11 +340,6 @@ export default {
 
         };
 
-
-        console.log(chirie);
-            
-           // console.log(this.currentPlace.formatted_address);
-           // console.log(this.currentPlace);
 
             axiosAuth.post(`/user/post`, chirie )
             .then(response => console.log(response))

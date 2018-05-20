@@ -179,7 +179,7 @@ module.exports = function normalizeComponent (
 "use strict";
 
 
-var bind = __webpack_require__(17);
+var bind = __webpack_require__(16);
 var isBuffer = __webpack_require__(36);
 
 /*global toString:true*/
@@ -573,7 +573,7 @@ exports.default = function (options) {
 
 exports.mappedPropsToVueProps = mappedPropsToVueProps;
 
-var _bindEvents = __webpack_require__(12);
+var _bindEvents = __webpack_require__(11);
 
 var _bindEvents2 = _interopRequireDefault(_bindEvents);
 
@@ -1112,7 +1112,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 exports.getPropsValues = getPropsValues;
 exports.bindProps = bindProps;
 
-var _WatchPrimitiveProperties = __webpack_require__(13);
+var _WatchPrimitiveProperties = __webpack_require__(12);
 
 var _WatchPrimitiveProperties2 = _interopRequireDefault(_WatchPrimitiveProperties);
 
@@ -1226,10 +1226,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(19);
+    adapter = __webpack_require__(18);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(19);
+    adapter = __webpack_require__(18);
   }
   return adapter;
 }
@@ -1304,7 +1304,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
 /* 10 */
@@ -12274,24 +12274,6 @@ module.exports = Vue;
 
 /***/ }),
 /* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-
-
-var instance = __WEBPACK_IMPORTED_MODULE_0_axios___default.a.create({
-    baseURL: 'http://licenta.test/api'
-});
-
-var token = localStorage.getItem('token');
-instance.defaults.headers.Authorization = 'Bearer ' + token;
-
-/* harmony default export */ __webpack_exports__["a"] = (instance);
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12337,7 +12319,7 @@ exports.default = function (vueInst, googleMapsInst, events) {
 };
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12396,7 +12378,7 @@ function WatchPrimitiveProperties(vueInst, propertiesToTrack, handler) {
 }
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12467,7 +12449,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14996,7 +14978,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -25367,7 +25349,7 @@ return jQuery;
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25385,7 +25367,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -25575,7 +25557,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25586,7 +25568,7 @@ var settle = __webpack_require__(39);
 var buildURL = __webpack_require__(41);
 var parseHeaders = __webpack_require__(42);
 var isURLSameOrigin = __webpack_require__(43);
-var createError = __webpack_require__(20);
+var createError = __webpack_require__(19);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(44);
 
 module.exports = function xhrAdapter(config) {
@@ -25762,7 +25744,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25787,7 +25769,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25799,7 +25781,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25823,6 +25805,24 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+var instance = __WEBPACK_IMPORTED_MODULE_0_axios___default.a.create({
+    baseURL: 'http://licenta.test/api'
+});
+
+var token = localStorage.getItem('token');
+instance.defaults.headers.Authorization = 'Bearer ' + token;
+
+/* harmony default export */ __webpack_exports__["a"] = (instance);
 
 /***/ }),
 /* 23 */
@@ -27183,7 +27183,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_axios__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__axios_auth__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__axios_auth__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_router__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue2_google_maps__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue2_google_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue2_google_maps__);
@@ -27243,7 +27243,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 window._ = __webpack_require__(32);
-window.Popper = __webpack_require__(15).default;
+window.Popper = __webpack_require__(14).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -27252,7 +27252,7 @@ window.Popper = __webpack_require__(15).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(16);
+  window.$ = window.jQuery = __webpack_require__(15);
 
   __webpack_require__(34);
 } catch (e) {}
@@ -44449,7 +44449,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(16), __webpack_require__(15)) :
+   true ? factory(exports, __webpack_require__(15), __webpack_require__(14)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -48378,7 +48378,7 @@ module.exports = function(module) {
 
 
 var utils = __webpack_require__(1);
-var bind = __webpack_require__(17);
+var bind = __webpack_require__(16);
 var Axios = __webpack_require__(37);
 var defaults = __webpack_require__(9);
 
@@ -48413,9 +48413,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(22);
+axios.Cancel = __webpack_require__(21);
 axios.CancelToken = __webpack_require__(51);
-axios.isCancel = __webpack_require__(21);
+axios.isCancel = __webpack_require__(20);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -48568,7 +48568,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(20);
+var createError = __webpack_require__(19);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -49001,7 +49001,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(48);
-var isCancel = __webpack_require__(21);
+var isCancel = __webpack_require__(20);
 var defaults = __webpack_require__(9);
 var isAbsoluteURL = __webpack_require__(49);
 var combineURLs = __webpack_require__(50);
@@ -49161,7 +49161,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(22);
+var Cancel = __webpack_require__(21);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -49513,7 +49513,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(17)))
 
 /***/ }),
 /* 55 */
@@ -52223,7 +52223,7 @@ var _mapElementFactory = __webpack_require__(2);
 
 var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
 
-var _mountableMixin = __webpack_require__(14);
+var _mountableMixin = __webpack_require__(13);
 
 var _mountableMixin2 = _interopRequireDefault(_mountableMixin);
 
@@ -53126,13 +53126,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _manager = __webpack_require__(6);
 
-var _bindEvents = __webpack_require__(12);
+var _bindEvents = __webpack_require__(11);
 
 var _bindEvents2 = _interopRequireDefault(_bindEvents);
 
 var _bindProps = __webpack_require__(7);
 
-var _mountableMixin = __webpack_require__(14);
+var _mountableMixin = __webpack_require__(13);
 
 var _mountableMixin2 = _interopRequireDefault(_mountableMixin);
 
@@ -53140,7 +53140,7 @@ var _TwoWayBindingWrapper = __webpack_require__(24);
 
 var _TwoWayBindingWrapper2 = _interopRequireDefault(_TwoWayBindingWrapper);
 
-var _WatchPrimitiveProperties = __webpack_require__(13);
+var _WatchPrimitiveProperties = __webpack_require__(12);
 
 var _WatchPrimitiveProperties2 = _interopRequireDefault(_WatchPrimitiveProperties);
 
@@ -53459,13 +53459,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _manager = __webpack_require__(6);
 
-var _bindEvents = __webpack_require__(12);
+var _bindEvents = __webpack_require__(11);
 
 var _bindEvents2 = _interopRequireDefault(_bindEvents);
 
 var _bindProps = __webpack_require__(7);
 
-var _mountableMixin = __webpack_require__(14);
+var _mountableMixin = __webpack_require__(13);
 
 var _mountableMixin2 = _interopRequireDefault(_mountableMixin);
 
@@ -53473,7 +53473,7 @@ var _TwoWayBindingWrapper = __webpack_require__(24);
 
 var _TwoWayBindingWrapper2 = _interopRequireDefault(_TwoWayBindingWrapper);
 
-var _WatchPrimitiveProperties = __webpack_require__(13);
+var _WatchPrimitiveProperties = __webpack_require__(12);
 
 var _WatchPrimitiveProperties2 = _interopRequireDefault(_WatchPrimitiveProperties);
 
@@ -54485,7 +54485,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.infoWindowStyles{\r\n\r\n  width: 250px;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -54534,24 +54534,101 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      center: { lat: 45.508, lng: -73.587 },
-      markers: [{ position: { lat: 45.508, lng: -73.587 } }],
+      center: { lat: 47.6567, lng: 23.5850 },
+      markers: [],
       places: [],
-      currentPlace: null
+      currentPlace: null,
+      infoWinOpen: false,
+      infoWindowPos: null,
+      detalii: {
+        titlu: '',
+        descriere: '',
+        camere: '',
+        dimensiune: '',
+        pret: '',
+        adresa: ''
+      },
+
+      infoOptions: {
+        pixelOffset: {
+          width: 0,
+          height: -35
+        }
+      }
+
     };
   },
   mounted: function mounted() {
     this.geolocate();
+    this.showMarker();
   },
 
 
   methods: {
     setPlace: function setPlace(place) {
       this.currentPlace = place;
+    },
+    showMarker: function showMarker() {
+      var _this = this;
+
+      axios.get('/api/posts').then(function (response) {
+        var data = response.data;
+        for (var i in data) {
+          var marker = {
+            lat: data[i].location.lat,
+            lng: data[i].location.lng
+
+          };
+          var info = {
+            titlu: data[i].title,
+            descriere: data[i].description,
+            camere: data[i].room_nr,
+            pret: data[i].price_month,
+            adresa: data[i].location.address
+
+          };
+
+          _this.markers.push({ position: marker, info: info });
+        }
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    },
+    toggleInfoWindow: function toggleInfoWindow(m, index) {
+      this.infoWindowPos = m.position;
+      this.infoWinOpen = !this.infoWinOpen;
+      this.detalii.titlu = m.info.titlu;
+      this.detalii.descriere = m.info.descriere;
+      this.detalii.camere = m.info.camere;
+      this.detalii.pret = m.info.pret;
+      this.detalii.adresa = m.info.adresa;
     },
     addMarker: function addMarker() {
       if (this.currentPlace) {
@@ -54560,29 +54637,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           lng: this.currentPlace.geometry.location.lng()
 
         };
-        this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
         this.center = marker;
         this.currentPlace = null;
-        console.log(this.markers);
       }
     },
 
     geolocate: function geolocate() {
-      var _this = this;
+      var _this2 = this;
 
       navigator.geolocation.getCurrentPosition(function (position) {
-        _this.center = {
+        _this2.center = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
       });
-    },
-    openInfoWindowTemplate: function openInfoWindowTemplate(item) {
-      this.setInfoWindowTemplate(item);
-      this.infoWindow.position = this.getCoordinates(item);
-      this.infoWindow.open = true;
     }
+
   }
 });
 
@@ -54634,14 +54704,66 @@ var render = function() {
             attrs: { center: _vm.center, zoom: 12 }
           },
           [
-            _c("gmap-info-window", [_vm._v("Hello world!")]),
-            _vm._v(" "),
             _vm._l(_vm.markers, function(m, index) {
               return _c("gmap-marker", {
                 key: index,
-                attrs: { clickable: true, position: m.position }
+                attrs: { clickable: true, position: m.position },
+                on: {
+                  click: function($event) {
+                    _vm.toggleInfoWindow(m, index)
+                  }
+                }
               })
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "gmap-info-window",
+              {
+                attrs: {
+                  opened: _vm.infoWinOpen,
+                  position: _vm.infoWindowPos,
+                  options: _vm.infoOptions
+                },
+                on: {
+                  click: function($event) {
+                    _vm.infoWinOpen = false
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "infoWindowStyles container" }, [
+                  _vm._v(
+                    "\n        Titlu : " +
+                      _vm._s(_vm.detalii.titlu) +
+                      "\n        "
+                  ),
+                  _c("hr"),
+                  _vm._v(
+                    "\n        Descriere : " +
+                      _vm._s(_vm.detalii.descriere) +
+                      "\n        "
+                  ),
+                  _c("hr"),
+                  _vm._v(
+                    "\n        Numar camere : " +
+                      _vm._s(_vm.detalii.camere) +
+                      "\n        "
+                  ),
+                  _c("hr"),
+                  _vm._v(
+                    "\n        Pret :  " +
+                      _vm._s(_vm.detalii.pret) +
+                      "\n        "
+                  ),
+                  _c("hr"),
+                  _vm._v(
+                    "\n          Adresa : " +
+                      _vm._s(_vm.detalii.adresa) +
+                      "\n    "
+                  )
+                ])
+              ]
+            )
           ],
           2
         )
@@ -55828,9 +55950,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         title: data[i].title,
                         body: data[i].description,
                         price_month: data[i].price_month,
-                        room_nr: data[i].room_nr,
-                        county: data[i].location.county,
-                        city: data[i].location.city
+                        room_nr: data[i].room_nr
+
                     };
                     _this.posts.push(post);
                 }
@@ -55863,10 +55984,6 @@ var render = function() {
         _c("h4", [_vm._v(" Pret pe luna : " + _vm._s(post.price_month) + " ")]),
         _vm._v(" "),
         _c("h4", [_vm._v(" Numar Camere : " + _vm._s(post.room_nr) + " ")]),
-        _vm._v(" "),
-        _c("h4", [_vm._v(" Judet : " + _vm._s(post.county) + " ")]),
-        _vm._v(" "),
-        _c("h4", [_vm._v(" Oras : " + _vm._s(post.city) + " ")]),
         _vm._v(" "),
         _c("hr")
       ])
@@ -55969,7 +56086,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55980,7 +56097,39 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__axios_auth__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__axios_auth__ = __webpack_require__(22);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -56287,11 +56436,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         id: this.id
 
       };
-
-      console.log(chirie);
-
-      // console.log(this.currentPlace.formatted_address);
-      // console.log(this.currentPlace);
 
       __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post('/user/post', chirie).then(function (response) {
         return console.log(response);
@@ -56703,7 +56847,9 @@ var render = function() {
               _vm._m(8)
             ]),
             _vm._v(" "),
-            _vm._m(9)
+            _vm._m(9),
+            _vm._v(" "),
+            _vm._m(10)
           ])
         ]
       )
@@ -56802,6 +56948,38 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-md-3" }, [
       _c("div", { staticClass: "form-control-feedback" }, [
         _c("span", { staticClass: "text-danger align-middle" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group has-danger" }, [
+          _c("div", { staticClass: "input-group mb-2 mr-sm-2 mb-sm-0" }, [
+            _c("div", { staticClass: "input-group mb-2 mr-sm-2 mb-sm-0" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "file",
+                  placeholder: "Selectati poza",
+                  required: "",
+                  autofocus: ""
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "form-control-feedback" }, [
+          _c("span", { staticClass: "text-danger align-middle" })
+        ])
       ])
     ])
   },
