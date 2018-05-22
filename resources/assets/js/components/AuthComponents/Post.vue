@@ -252,7 +252,6 @@
                         <input 
                          type="file" 
                          class="form-control" 
-                         placeholder="Selectati poza"
                          required autofocus>
                     </div>
                         
@@ -292,10 +291,8 @@
 </template>
 
 <script>
-
-import axiosAuth from '../../axios-auth';
+import axiosAuth from "../../axios-auth";
 export default {
-      
   data() {
     return {
       markers: [],
@@ -303,57 +300,48 @@ export default {
       currentPlace: null,
       plata_jumate_an: false,
       plata_an: false,
-      titlu : '',
-      descriere : '',
-      nrCamere: '',
-      metriiPatrati: '',
-      pretLuna: '',
-      pretJumateAn: '',
-      pretAn: '',
-      id: localStorage.getItem('userId')
+      titlu: "",
+      descriere: "",
+      nrCamere: "",
+      metriiPatrati: "",
+      pretLuna: "",
+      pretJumateAn: "",
+      pretAn: "",
+      id: localStorage.getItem("userId")
     };
   },
 
-  mounted() {
-    
-  },
+  mounted() {},
 
   methods: {
     setPlace(place) {
       this.currentPlace = place;
     },
     addMarker() {
-        //const type = this.currentPlace.types[0]
-      
-        const chirie = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng(),
-          address: this.currentPlace.formatted_address,
-          title: this.titlu,
-          description: this.descriere,
-          room_nr: this.nrCamere,
-          dimension: this.metriiPatrati,
-          price_month: this.pretLuna,
-          price_half_year: this.pretJumateAn,
-          price_year: this.pretAn,
-          id: this.id
+      //const type = this.currentPlace.types[0]
 
-        };
+      const chirie = {
+        lat: this.currentPlace.geometry.location.lat(),
+        lng: this.currentPlace.geometry.location.lng(),
+        address: this.currentPlace.formatted_address,
+        title: this.titlu,
+        description: this.descriere,
+        room_nr: this.nrCamere,
+        dimension: this.metriiPatrati,
+        price_month: this.pretLuna,
+        price_half_year: this.pretJumateAn,
+        price_year: this.pretAn,
+        id: this.id
+      };
 
-
-            axiosAuth.post(`/user/post`, chirie )
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
-      
-    },
-  
-  
+      axiosAuth
+        .post(`/user/post`, chirie)
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }
   }
 };
 </script>
 
 <style>
-
-
-
 </style>

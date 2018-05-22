@@ -139,27 +139,21 @@
 
 
 <script>
-    export default {
-        data: function(){
-            return{
-                contactIconClass: 'fa mr-3 fa-2x',
-                socialIconStyle: ' fa-2x colorBlack',
-                socialIconStyle2 : 'fa white-text mr-4',
-                columnTitle: 'text-uppercase font-weight-bold'
-
-            }
-
-        }
-    }
-
+export default {
+  data: function() {
+    return {
+      contactIconClass: "fa mr-3 fa-2x",
+      socialIconStyle: " fa-2x colorBlack",
+      socialIconStyle2: "fa white-text mr-4",
+      columnTitle: "text-uppercase font-weight-bold"
+    };
+  }
+};
 </script>
 
 
 <style>
-
-    .colorBlack{
-        color: black;
-
-    }
-
+.colorBlack {
+  color: black;
+}
 </style>

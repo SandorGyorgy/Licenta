@@ -86,35 +86,24 @@
 
 </template>
 <script>
-
 export default {
-    data : function() {
-        return{
-            formClasses: 'form-group float-right mr-1'
-        }
-    }
-
-}
-
-
+  data: function() {
+    return {
+      formClasses: "form-group float-right mr-1"
+    };
+  }
+};
 </script>
 
 <style scoped >
-
-.alignCenter{
-
-    text-align: center;
-    align-items: center;
-
+.alignCenter {
+  text-align: center;
+  align-items: center;
 }
-#form-container{
-    width: 250px;
-    border: 1px solid black;
-    border-radius: 5px;
-    height: 350px;
-
-
+#form-container {
+  width: 250px;
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 350px;
 }
-   
-
 </style>

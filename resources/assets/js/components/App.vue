@@ -11,60 +11,55 @@
 </template>
 
 <script>
-import NavbarComponent from './LayoutComponents/NavbarComponent.vue'
-import FooterComponent from './LayoutComponents/FooterComponent.vue'
+import NavbarComponent from "./LayoutComponents/NavbarComponent.vue";
+import FooterComponent from "./LayoutComponents/FooterComponent.vue";
 export default {
-    components: {
-        NavbarComponent,
-        FooterComponent
-    },
-    created(){
-        this.$store.dispatch('tryAutoLogin')
-    }
-  
-}
+  components: {
+    NavbarComponent,
+    FooterComponent
+  },
+  created() {
+    this.$store.dispatch("tryAutoLogin");
+  }
+};
 </script>
 
  <style>
-         body{
-            background-color : #C5DBE3       ;
-         }
+body {
+  background-color: #c5dbe3;
+}
 
-          .pageStyle{
-                background-color: white;
-                border-radius: 5px;}
-               
-       .slide-enter-active{
-           animation: slide-in 150ms ease-out forwards;
+.pageStyle {
+  background-color: white;
+  border-radius: 5px;
+}
 
-       }
-       .slide-leave-active{
-           animation: slide-out 150ms ease-out forwards;
-       }
-       @keyframes slide-in{
-           from {
-               transform: translateY(20px);
-               opacity : 0;
-           }
-           to {
-               transform: translateX(0);
-               opacity: 1;
-           }
-       }
+.slide-enter-active {
+  animation: slide-in 150ms ease-out forwards;
+}
+.slide-leave-active {
+  animation: slide-out 150ms ease-out forwards;
+}
+@keyframes slide-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
-       @keyframes slide-out{
-           from {
-   transform: translateX(0);
-   opacity: 1;
-           }
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
 
-           to {
- transform: translateY(-20px);
-               opacity : 0;
-           }
-
-       }
-    
-
-   
-         </style>
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+</style>

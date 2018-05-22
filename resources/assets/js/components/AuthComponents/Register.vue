@@ -61,8 +61,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <input v-model="phone" type="text" name="phone" class="form-control" id="phone"
-                               placeholder="Numar Telefon" required autofocus>
+                        <input 
+                        v-model="phone" 
+                        type="text" 
+                        name="phone" class="form-control" 
+                        id="phone"
+                        placeholder="Numar Telefon" 
+                        required autofocus>
                     </div>
                 </div>
             </div>
@@ -114,44 +119,35 @@
 </template>
 
 <script>
-
 export default {
-    data() {
-        return {
-            name: '',
-            email: '',
-            phone: '',
-            password: '',
-        }
-    },
-    methods:{
-        onSubmit(){
-            const formData = {
-                name : this.name,
-                email : this.email,
-                phone : this.phone,
-                password : this.password
-            }
-            this.$store.dispatch('register', formData)
-             this.$router.push({ name : 'login' })
-        
-        }
-
+  data() {
+    return {
+      name: "",
+      email: "",
+      phone: "",
+      password: ""
+    };
+  },
+  methods: {
+    onSubmit() {
+      const formData = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        password: this.password
+      };
+      this.$store.dispatch("register", formData);
+      this.$router.push({ name: "login" });
     }
-}
-
-
+  }
+};
 </script>
 
 <style scoped>
-
-
-
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .field-label-responsive {
-    padding-top: .5rem;
+    padding-top: 0.5rem;
     text-align: right;
   }
 }
-
 </style>

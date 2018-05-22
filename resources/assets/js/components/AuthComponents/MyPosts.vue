@@ -17,57 +17,41 @@
 </template>
 
 <script>
-
 export default {
-    data(){
-        return{
-            posts: [],
-         
-        }
-    },
-    created: function(){
-        this.get()
-    },
+  data() {
+    return {
+      posts: []
+    };
+  },
+  created: function() {
+    this.get();
+  },
 
-    methods:{
-        get(){
-            const token = localStorage.getItem('token')
-           axios({
-                method: 'get',
-                url: '/api/user/posts',
-                headers: {'Authorization' : `Bearer ${token}`}
-            })
-            .then(response => {
-              const  data = response.data.post
-                for(var i in data)
-               { 
-                   const post = {
-                    id: data[i].id ,
-                    title: data[i].title,
-                    body: data[i].description,
-                    price_month: data[i].price_month,
-                    room_nr : data[i].room_nr ,
-                  
-                   
-                }
-                this.posts.push(post);
-                
-                }
+  methods: {
+    get() {
+      const token = localStorage.getItem("token");
+      axios({
+        method: "get",
+        url: "/api/user/posts",
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(response => {
+          const data = response.data.post;
+          for (var i in data) {
+            const post = {
+              id: data[i].id,
+              title: data[i].title,
+              body: data[i].description,
+              price_month: data[i].price_month,
+              room_nr: data[i].room_nr
+            };
+            this.posts.push(post);
+          }
 
-                
-              
-             
-                
-                // this.room_nr : data[i]room_nr
-            })
-            .catch(error => console.log(error))
-        },
+          // this.room_nr : data[i]room_nr
+        })
+        .catch(error => console.log(error));
     }
-
-
-
-}
-
-
-
+  }
+};
 </script>

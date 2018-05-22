@@ -12,19 +12,16 @@
 
 <script>
 export default {
-  data(){
-      return{
-        
-      }
+  data() {
+    return {};
   },
   computed: {
-      phone(){
-      return  this.$store.state.userPhone 
-      },
-      email(){
-          return this.$store.state.userEmail
-      }
+    phone() {
+      return this.$store.state.userPhone;
+    },
+    email() {
+      return this.$store.state.userEmail;
+    }
   }
-
-}
+};
 </script>

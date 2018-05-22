@@ -74,39 +74,31 @@
 
 <script>
 export default {
-    data() {
-        return{
-            email: '',
-            password: ''
-        }
-    },
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
 
-    methods: {
-        onSubmit(){
-          const  loginData = {
-              email : this.email,
-              password : this.password
-          }
-        this.$store.dispatch('login' , loginData);
-        this.$router.push({ name : 'home' })
-
-        }
+  methods: {
+    onSubmit() {
+      const loginData = {
+        email: this.email,
+        password: this.password
+      };
+      this.$store.dispatch("login", loginData);
+      this.$router.push({ name: "home" });
     }
-
-}
-
-
+  }
+};
 </script>
 
 <style scoped>
-
-
-
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .field-label-responsive {
-    padding-top: .5rem;
+    padding-top: 0.5rem;
     text-align: right;
   }
 }
-
 </style>

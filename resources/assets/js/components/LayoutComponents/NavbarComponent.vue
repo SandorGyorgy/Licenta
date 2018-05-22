@@ -81,54 +81,42 @@
 
 <script>
 export default {
-    data(){
-      return {  
-        buttonClass: 'btn btn-info btnWidth mr-lg-2 mb-sm-2 mb-lg-0 mb-xs-2  ',
-        logedIn: true ,
-        dropdownIcons : ' fa mr-1 '
-        }
+  data() {
+    return {
+      buttonClass: "btn btn-info btnWidth mr-lg-2 mb-sm-2 mb-lg-0 mb-xs-2  ",
+      logedIn: true,
+      dropdownIcons: " fa mr-1 "
+    };
+  },
+  computed: {
+    auth() {
+      return this.$store.getters.isAuth;
     },
-    computed: {
-        auth(){
-          return this.$store.getters.isAuth
-        },
 
-        userName(){
-          return this.$store.state.userName
-        }
-
-
-    },
-    methods:{
-      logOut(){
-        this.$store.dispatch('logOut')
-         this.$router.push({ name : 'home' })
-      }
+    userName() {
+      return this.$store.state.userName;
     }
-
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch("logOut");
+      this.$router.push({ name: "home" });
+    }
+  }
 };
 </script>
 
 <style scoped>
-
-.navbarCustom{
-
-margin-right: 25%;
-
+.navbarCustom {
+  margin-right: 25%;
 }
-.btnWidth{
-
+.btnWidth {
   width: 100px;
-
 }
-#accountButton{
-
-    width: 130px;
+#accountButton {
+  width: 130px;
 }
-a{
- 
- text-decoration: none;
+a {
+  text-decoration: none;
 }
-
-
 </style>

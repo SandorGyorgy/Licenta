@@ -59,41 +59,36 @@
 </template>
 
 <script>
-
-
 export default {
   data() {
     return {
-      center: { lat: 47.6567, lng: 23.5850 },
+      center: { lat: 47.6567, lng: 23.585 },
       markers: [],
       places: [],
       currentPlace: null,
-      infoWinOpen : false,
-      infoWindowPos : null,
-      detalii: { 
-            titlu: '' ,
-           descriere: '' , 
-           camere: '' ,
-           dimensiune: '',
-           pret: '',
-           adresa: '' 
-         },
-
+      infoWinOpen: false,
+      infoWindowPos: null,
+      detalii: {
+        titlu: "",
+        descriere: "",
+        camere: "",
+        dimensiune: "",
+        pret: "",
+        adresa: ""
+      },
 
       infoOptions: {
-            pixelOffset: {
-              width: 0,
-              height: -35
-            }
-          }
-      
+        pixelOffset: {
+          width: 0,
+          height: -35
+        }
+      }
     };
   },
 
   mounted() {
     this.geolocate();
     this.showMarker();
-
   },
 
   methods: {
@@ -101,55 +96,44 @@ export default {
       this.currentPlace = place;
     },
 
-  showMarker(){
-     axios.get('/api/posts')
-     .then(response => 
-            {
-                const data = response.data
-                for(var i in data){
-                  const marker ={
-                    lat : data[i].location.lat,
-                    lng : data[i].location.lng,
-                  
-                   
-                  }
-                  const info = {
-                    titlu : data[i].title,
-                    descriere : data[i].description,
-                    camere : data[i].room_nr,
-                    pret: data[i].price_month,
-                   adresa : data[i].location.address
-                
-                  }
-                
-            
-                   this.markers.push({position : marker , info: info})
-                   
-                }
-             
-            })
-     .catch(error => console.log(error))
-     
+    showMarker() {
+      axios
+        .get("/api/posts")
+        .then(response => {
+          const data = response.data;
+          for (var i in data) {
+            const marker = {
+              lat: data[i].location.lat,
+              lng: data[i].location.lng
+            };
+            const info = {
+              titlu: data[i].title,
+              descriere: data[i].description,
+              camere: data[i].room_nr,
+              pret: data[i].price_month,
+              adresa: data[i].location.address
+            };
 
-  },
-  toggleInfoWindow(m , index){
-    this.infoWindowPos = m.position;
-    this.infoWinOpen = !this.infoWinOpen;
-    this.detalii.titlu = m.info.titlu;
-    this.detalii.descriere = m.info.descriere;
-    this.detalii.camere = m.info.camere;
-    this.detalii.pret = m.info.pret;
-    this.detalii.adresa = m.info.adresa;
- 
-
-  },
+            this.markers.push({ position: marker, info: info });
+          }
+        })
+        .catch(error => console.log(error));
+    },
+    toggleInfoWindow(m, index) {
+      this.infoWindowPos = m.position;
+      this.infoWinOpen = !this.infoWinOpen;
+      this.detalii.titlu = m.info.titlu;
+      this.detalii.descriere = m.info.descriere;
+      this.detalii.camere = m.info.camere;
+      this.detalii.pret = m.info.pret;
+      this.detalii.adresa = m.info.adresa;
+    },
 
     addMarker() {
       if (this.currentPlace) {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng(),
-          
+          lng: this.currentPlace.geometry.location.lng()
         };
         this.center = marker;
         this.currentPlace = null;
@@ -161,21 +145,14 @@ export default {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        
-        
       });
-    },
-    
+    }
   }
 };
 </script>
 
 <style>
-
-.infoWindowStyles{
-
+.infoWindowStyles {
   width: 250px;
-
 }
-
 </style>
