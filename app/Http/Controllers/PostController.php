@@ -64,6 +64,8 @@ class PostController extends Controller
             $location->update();
             $post->update();
 
+            return $request->attachments;
+
 
 
     }

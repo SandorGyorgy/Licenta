@@ -1,7 +1,11 @@
 <template>
   <div>
      <div class="container">
-    <form  @submit.prevent="addMarker" class="form-horizontal" role="form">
+    <form  @submit.prevent="addMarker" 
+    class="form-horizontal" 
+    role="form"
+    enctype="multipart/form-data"
+    >
      <div class="text-center">   
         <div class="row">
             <div class="col-md-3"></div>
@@ -240,34 +244,26 @@
 
         </div> 
 
-           <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
-            <div class="col-md-6">
-                <div class="form-group has-danger">
-                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 
-              
 
-                     <div class="input-group mb-2 mr-sm-2 mb-sm-0" >
-                        <input 
-                         type="file" 
-                         class="form-control" 
-                         required autofocus>
-                    </div>
-                        
-                 </div>
-                    
-                </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
 
-                        </span>
-                </div>
-            </div>
-        </div>
+<div v-if="!images">
+    <input type="file" @change="onFileChange" multiple>
+  </div>
+  <div v-else class="tz-gallery" >
+
+      <div class="row">
+      <div v-for="image in images" :key="image.index"  class="col-sm-6 col-md-4">
+  <div class="lightbox">
+      <img :src="image"  class="imageStyle">
+   </div>
+ 
+    </div>
+      </div>
+    
+    <button class="btn btn-danger mt-4"  @click="removeImage">Remove image</button>
+  </div>
 
   
 
@@ -307,19 +303,47 @@ export default {
       pretLuna: "",
       pretJumateAn: "",
       pretAn: "",
-      id: localStorage.getItem("userId")
+      id: localStorage.getItem("userId"),
+      images: ""
     };
   },
 
-  mounted() {},
+
 
   methods: {
     setPlace(place) {
       this.currentPlace = place;
     },
-    addMarker() {
-      //const type = this.currentPlace.types[0]
 
+
+     onFileChange(e){
+      var files = e.target.files;
+      var vm = this;  
+    var photos = [];
+      if(files){
+        var files_count = files.length;
+        for (let i=0; i<files_count; i++){
+          var reader = new FileReader();
+          var image = '';
+         
+          reader.onload = function(e){
+            image = e.target.result;
+            photos.push(image); 
+          }
+          reader.readAsDataURL(files[i]);
+        }
+        vm.images = photos;
+      }
+  },
+
+
+    removeImage: function (e) {
+      this.images = '';
+    },
+
+   
+
+    addMarker() {
       const chirie = {
         lat: this.currentPlace.geometry.location.lat(),
         lng: this.currentPlace.geometry.location.lng(),
@@ -331,17 +355,53 @@ export default {
         price_month: this.pretLuna,
         price_half_year: this.pretJumateAn,
         price_year: this.pretAn,
-        id: this.id
+        id: this.id ,
+        photos: this.images
       };
 
-      axiosAuth
-        .post(`/user/post`, chirie)
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
+    console.log(chirie);
+    //   axiosAuth
+    //     .post(`/user/post`, chirie)
+    //     .then(response => console.log(response))
+    //     .catch(error => console.log(error));
     }
   }
 };
 </script>
 
 <style>
+
+
+.imageStyle{
+
+    width: 350px;
+    height: 250px;
+
+}
+
+.tz-gallery {
+    padding: 40px;
+}
+
+/* Override bootstrap column paddings */
+.tz-gallery .row > div {
+    padding: 2px;
+}
+
+.tz-gallery .lightbox img {
+    width: 100%;
+    border-radius: 0;
+    position: relative;
+}
+
+
+
+
+@media(max-width: 768px) {
+    body {
+        padding: 0;
+    }
+}
+
+
 </style>
