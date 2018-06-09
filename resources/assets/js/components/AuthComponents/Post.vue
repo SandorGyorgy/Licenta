@@ -260,7 +260,7 @@
       <div class="row">
       <div v-for="image in images" :key="image.index"  class="col-sm-6 col-md-4">
   <div class="lightbox preview">
-      <button class="btn btn-danger profilebutton">X</button>
+      <h3 class="btn profilebutton">X</h3>
       <img :src="image"  class="imageStyle" alt="Show">
       
    </div>
@@ -268,7 +268,7 @@
     </div>
       </div>
     
-              </div>   
+              </div>  
         </div>
     </div>
     </div>
@@ -379,8 +379,17 @@ export default {
 .profilebutton {
     z-index: 2;
     position: absolute;
+    right: -6px;
+    top: -6px;
     float: right;
     margin: auto;
+    font-weight: bold;
+    }
+    h3{
+        color: rgb(102, 102, 102);
+    }
+    h3:hover{
+        color: red;
     }
 
 

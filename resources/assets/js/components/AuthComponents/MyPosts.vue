@@ -6,7 +6,12 @@
             <h4> Descriere : {{ post.body }} </h4>
             <h4> Pret pe luna : {{ post.price_month }} </h4>
             <h4> Numar Camere : {{ post.room_nr }} </h4>
-            <img v-for="image  in post.images" :key="image.index"  :src="image" height="300px" width="300px">
+              <img v-for="image  in post.images" 
+              :key="image.index" 
+              v-if="image"  
+              :src="image" 
+              height="300px" 
+              width="300px">
             <hr>
            
         </div> 

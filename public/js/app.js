@@ -55915,6 +55915,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -55982,10 +55987,12 @@ var render = function() {
           _c("h4", [_vm._v(" Numar Camere : " + _vm._s(post.room_nr) + " ")]),
           _vm._v(" "),
           _vm._l(post.images, function(image) {
-            return _c("img", {
-              key: image.index,
-              attrs: { src: image, height: "300px", width: "300px" }
-            })
+            return image
+              ? _c("img", {
+                  key: image.index,
+                  attrs: { src: image, height: "300px", width: "300px" }
+                })
+              : _vm._e()
           }),
           _vm._v(" "),
           _c("hr")
@@ -56091,7 +56098,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.profilebutton {\r\n    z-index: 2;\r\n    position: absolute;\r\n    float: right;\r\n    margin: auto;\n}\n.imageStyle {\r\n  width: 250px;\r\n  height: 150px;\n}\n.tz-gallery {\r\n  padding: 40px;\n}\r\n\r\n/* Override bootstrap column paddings */\n.tz-gallery .row > div {\r\n  padding: 2px;\n}\n.tz-gallery .lightbox img {\r\n  width: 100%;\r\n  border-radius: 0;\r\n  position: relative;\n}\n@media (max-width: 768px) {\nbody {\r\n    padding: 0;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.profilebutton {\r\n    z-index: 2;\r\n    position: absolute;\r\n    right: -6px;\r\n    top: -6px;\r\n    float: right;\r\n    margin: auto;\r\n    font-weight: bold;\n}\nh3{\r\n        color: rgb(102, 102, 102);\n}\nh3:hover{\r\n        color: red;\n}\n.imageStyle {\r\n  width: 250px;\r\n  height: 150px;\n}\n.tz-gallery {\r\n  padding: 40px;\n}\r\n\r\n/* Override bootstrap column paddings */\n.tz-gallery .row > div {\r\n  padding: 2px;\n}\n.tz-gallery .lightbox img {\r\n  width: 100%;\r\n  border-radius: 0;\r\n  position: relative;\n}\n@media (max-width: 768px) {\nbody {\r\n    padding: 0;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -56913,10 +56920,9 @@ var render = function() {
                                           { staticClass: "lightbox preview" },
                                           [
                                             _c(
-                                              "button",
+                                              "h3",
                                               {
-                                                staticClass:
-                                                  "btn btn-danger profilebutton"
+                                                staticClass: "btn profilebutton"
                                               },
                                               [_vm._v("X")]
                                             ),
