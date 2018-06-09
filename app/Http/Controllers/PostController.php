@@ -39,69 +39,51 @@ class PostController extends Controller
    
     public function store(Request $request)
     {
-            // $user_id = $request->id;
-            // $user = User::findOrFail($user_id);
+            $user_id = $request->id;
+            $user = User::findOrFail($user_id);
 
-            // $location = new Location;
-            // $location->address = $request->address;
-            // $location->lat = $request->lat;
-            // $location->lng = $request->lng;
-
-
+            $location = new Location;
+            $location->address = $request->address;
+            $location->lat = $request->lat;
+            $location->lng = $request->lng;
 
 
             $images = new Images;
-          
-                $gallery = [];
-                $gallery = $request->images;
+            $gallery = $request->file('images');
+            for($i = 0 ; $i < sizeof($gallery) ; $i++){
+               $extention = $gallery[$i]->getClientOriginalExtension();
+               $imageName = time().str_random().".".$extention;
+               $destinationPath = public_path().'/images';
+               $gallery[$i]->move($destinationPath , $imageName);
+               $column = 'image'.$i;
+               $images->{$column} = $destinationPath."/".$imageName;
+            }
 
-               
-                $image = $request->images[0];
-                $image = str_replace('data:image/png;base64,', '', $image);
-                $image = str_replace(' ', '+', $image);
-                $imageName = 'test242.jpg';
-                $destinationPath = public_path().'/images' . $imageName;
-                $file = base64_decode($image);
-                $file->move($destinationPath , $imageName );
-               //\File::put(public_path().'/images'. '/' . $imageName, base64_decode($image));
-                
-
-
-
-            // for($i = 0 ; $i < sizeof($gallery) ; $i++){
-               
-            //    $fileName = "product-".time().".png";
-            //    base64_decode($gallery[$i])->move(public_path().'/images'. $fileName, $fileName);
-            //    $destinationPath = public_path().'/images' . $fileName;
-            //     $column = 'image'.$i;
-            //     $images->{$column} = $gallery[$i];
-            // }
-
-            $images->save();
+           $images->save();
            
-            // $post = new Post;
-            // $post->title = $request->title ;
-            // $post->description = $request->description ;
-            // $post->room_nr = $request->room_nr;
-            // $post->price_month = $request->price_month ;
-            // $post->price_half_year = $request->price_half_year ;
-            // $post->price_year = $request->price_year ;
+            $post = new Post;
+            $post->title = $request->title ;
+            $post->description = $request->description ;
+            $post->room_nr = $request->room_nr;
+            $post->price_month = $request->price_month ;
+            $post->price_half_year = $request->price_half_year ;
+            $post->price_year = $request->price_year ;
 
-            // $location->save();
-            // $post->save();
+            $location->save();
+            $post->save();
 
-            // $post->user_id = $user_id;
-            // $post->location_id = $location->id;
-            // $images->post_id = $post->id;
-            // $location->post_id = $post->id;
+            $post->user_id = $user_id;
+            $post->location_id = $location->id;
+            $images->post_id = $post->id;
+            $location->post_id = $post->id;
 
-            // $location->update();
-            // $post->update();
+            $location->update();
+            $post->update();
 
         
         
             
-
+                
     }
 
     /**

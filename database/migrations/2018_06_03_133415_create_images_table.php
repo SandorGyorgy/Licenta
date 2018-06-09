@@ -24,11 +24,6 @@ class CreateImagesTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE images MODIFY image0 MEDIUMBLOB;');
-        DB::statement('ALTER TABLE images MODIFY image1 MEDIUMBLOB;');
-        DB::statement('ALTER TABLE images MODIFY image2 MEDIUMBLOB;');
-        DB::statement('ALTER TABLE images MODIFY image3 MEDIUMBLOB;');
-        DB::statement('ALTER TABLE images MODIFY image4 MEDIUMBLOB;');
     }
 
     

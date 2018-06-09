@@ -56478,7 +56478,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     onFileChange: function onFileChange(e) {
       var files = e.target.files;
-      this.files = files;
+      this.files = files; // aici sunt fisierele care le bag in formdata
+      console.log(this.files);
       var vm = this;
       var photos = [];
       if (files) {
@@ -56504,20 +56505,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addMarker: function addMarker() {
 
       var chirie = new FormData();
-      chirie.append("lat", this.currentPlace.geometry.location.lat());
-      chirie.append("lng", this.currentPlace.geometry.location.lng());
-      chirie.append("address", this.currentPlace.formatted_address);
+      // chirie.append("lat" ,this.currentPlace.geometry.location.lat());
+      // chirie.append("lng" ,this.currentPlace.geometry.location.lng());
+      // chirie.append("address" , this.currentPlace.formatted_address);
       chirie.append("title", this.titlu);
-      chirie.append("description", this.descriere);
-      chirie.append("room_nr", this.nrCamere);
-      chirie.append("dimension", this.metriiPatrati);
-      chirie.append("price_month", this.pretLuna);
-      chirie.append("price_half_year", this.pretJumateAn);
-      chirie.append("price_year", this.pretAn);
-      chirie.append("id", this.id);
-      chirie.append("images", this.files);
+      // chirie.append("description" , this.descriere);
+      // chirie.append("room_nr" , this.nrCamere);
+      // chirie.append("dimension" , this.metriiPatrati);
+      // chirie.append("price_month" , this.pretLuna);
+      // chirie.append("price_half_year" , this.pretJumateAn);
+      // chirie.append("price_year" , this.pretAn);
+      // chirie.append("id" , this.id);
 
-      // for (const pair of chirie.entries()) { console.log(pair[0] , pair[1]); }
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var item = _step.value;
+
+          chirie.append("images[]", item);
+        }
+
+        // for (const pair of chirie.entries()) { console.log(pair[0] , pair[1]); }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
 
       __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post("/user/post", chirie).then(function (response) {
         return console.log(response);

@@ -255,7 +255,7 @@
 
 <div v-if="!images">
     <input type="file" @change="onFileChange" multiple>
-  </div>
+  </div> 
   <div v-else class="tz-gallery" >
       <div class="row">
       <div v-for="image in images" :key="image.index"  class="col-sm-6 col-md-4">
@@ -331,7 +331,8 @@ export default {
 
     onFileChange(e) {
       var files = e.target.files;
-      this.files = files;
+      this.files = files; // aici sunt fisierele care le bag in formdata
+      console.log(this.files);
       var vm = this;
       var photos = [];
       if (files) {
@@ -356,20 +357,24 @@ export default {
     addMarker() {
 
         var chirie = new FormData();
-        chirie.append("lat" ,this.currentPlace.geometry.location.lat());
-        chirie.append("lng" ,this.currentPlace.geometry.location.lng());
-        chirie.append("address" , this.currentPlace.formatted_address);
-        chirie.append("title" , this.titlu);
-        chirie.append("description" , this.descriere);
-        chirie.append("room_nr" , this.nrCamere);
-        chirie.append("dimension" , this.metriiPatrati);
-        chirie.append("price_month" , this.pretLuna);
-        chirie.append("price_half_year" , this.pretJumateAn);
-        chirie.append("price_year" , this.pretAn);
-        chirie.append("id" , this.id);
-        chirie.append("images" , this.files);
+        // chirie.append("lat" ,this.currentPlace.geometry.location.lat());
+        // chirie.append("lng" ,this.currentPlace.geometry.location.lng());
+        // chirie.append("address" , this.currentPlace.formatted_address);
+         chirie.append("title" , this.titlu);
+        // chirie.append("description" , this.descriere);
+        // chirie.append("room_nr" , this.nrCamere);
+        // chirie.append("dimension" , this.metriiPatrati);
+        // chirie.append("price_month" , this.pretLuna);
+        // chirie.append("price_half_year" , this.pretJumateAn);
+        // chirie.append("price_year" , this.pretAn);
+        // chirie.append("id" , this.id);
 
- // for (const pair of chirie.entries()) { console.log(pair[0] , pair[1]); }
+
+        for(const item of this.files){
+            chirie.append("images[]" , item);
+        }
+
+// for (const pair of chirie.entries()) { console.log(pair[0] , pair[1]); }
 
         axiosAuth
           .post(`/user/post`, chirie)
