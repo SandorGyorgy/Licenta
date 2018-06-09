@@ -27,7 +27,7 @@
                         type="text"  
                         class="form-control"
                         v-model="titlu" 
-                        placeholder="Titlu" required autofocus>
+                        placeholder="Titlu">
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                         <textarea   
                         class="form-control" 
                         v-model="descriere"
-                        placeholder="Descriere" required autofocus>
+                        placeholder="Descriere">
                         </textarea>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                         type="number"  
                         class="form-control" 
                         v-model="nrCamere"
-                        placeholder="Numar camere" required autofocus>
+                        placeholder="Numar camere">
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                         type="number"
                         v-model="metriiPatrati"  
                         class="form-control" 
-                        placeholder="Metrii patrati" required autofocus>
+                        placeholder="Metrii patrati" >
                     </div>
                 </div>
             </div>
@@ -157,7 +157,7 @@
                         type="number"  
                         class="form-control" 
                         v-model="pretLuna"
-                        placeholder="Pret pe luna " required autofocus>
+                        placeholder="Pret pe luna ">
                     </div>
                 </div>
             </div>
@@ -190,7 +190,7 @@
                          type="number" 
                          class="form-control" 
                          v-model="pretJumateAn"
-                         placeholder="Pret pe jumatate de an  " required autofocus>
+                         placeholder="Pret pe jumatate de an  ">
                     </div>
                         
                  </div>
@@ -225,7 +225,7 @@
                         <input type="number"  
                         class="form-control" 
                         v-model="pretAn"
-                        placeholder="Pret pe jumatate de an  " required autofocus>
+                        placeholder="Pret pe jumatate de an  " >
                     </div>
                     
 
@@ -246,23 +246,38 @@
 
 
 
-
+    <div class="row">
+            <div class="col-md-3 field-label-responsive"> </div>
+            <div class="col-md-6">
+                <div class="form-group has-danger">
+                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                   <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 
 <div v-if="!images">
     <input type="file" @change="onFileChange" multiple>
   </div>
   <div v-else class="tz-gallery" >
-
       <div class="row">
       <div v-for="image in images" :key="image.index"  class="col-sm-6 col-md-4">
-  <div class="lightbox">
-      <img :src="image"  class="imageStyle">
+  <div class="lightbox preview">
+      <button class="btn btn-danger profilebutton">X</button>
+      <img :src="image"  class="imageStyle" alt="Show">
+      
    </div>
  
     </div>
       </div>
     
-    <button class="btn btn-danger mt-4"  @click="removeImage">Remove image</button>
+              </div>   
+        </div>
+    </div>
+    </div>
+
+</div> 
+
+
+
+    
   </div>
 
   
@@ -304,66 +319,63 @@ export default {
       pretJumateAn: "",
       pretAn: "",
       id: localStorage.getItem("userId"),
-      images: ""
+      images: "",
+      files:[]
     };
   },
-
-
 
   methods: {
     setPlace(place) {
       this.currentPlace = place;
     },
 
-
-     onFileChange(e){
+    onFileChange(e) {
       var files = e.target.files;
-      var vm = this;  
-    var photos = [];
-      if(files){
+      this.files = files;
+      var vm = this;
+      var photos = [];
+      if (files) {
         var files_count = files.length;
-        for (let i=0; i<files_count; i++){
+        for (let i = 0; i < files_count; i++) {
           var reader = new FileReader();
-          var image = '';
-         
-          reader.onload = function(e){
+          var image = "";
+          reader.onload = function(e) {
             image = e.target.result;
-            photos.push(image); 
-          }
+            photos.push(image);
+          };
           reader.readAsDataURL(files[i]);
         }
-        vm.images = photos;
+        vm.images = photos
       }
-  },
-
-
-    removeImage: function (e) {
-      this.images = '';
     },
 
-   
+    removeImage: function(e) {
+      this.images = "";
+    },
 
     addMarker() {
-      const chirie = {
-        lat: this.currentPlace.geometry.location.lat(),
-        lng: this.currentPlace.geometry.location.lng(),
-        address: this.currentPlace.formatted_address,
-        title: this.titlu,
-        description: this.descriere,
-        room_nr: this.nrCamere,
-        dimension: this.metriiPatrati,
-        price_month: this.pretLuna,
-        price_half_year: this.pretJumateAn,
-        price_year: this.pretAn,
-        id: this.id ,
-        photos: this.images
-      };
 
-    console.log(chirie);
-    //   axiosAuth
-    //     .post(`/user/post`, chirie)
-    //     .then(response => console.log(response))
-    //     .catch(error => console.log(error));
+        var chirie = new FormData();
+        chirie.append("lat" ,this.currentPlace.geometry.location.lat());
+        chirie.append("lng" ,this.currentPlace.geometry.location.lng());
+        chirie.append("address" , this.currentPlace.formatted_address);
+        chirie.append("title" , this.titlu);
+        chirie.append("description" , this.descriere);
+        chirie.append("room_nr" , this.nrCamere);
+        chirie.append("dimension" , this.metriiPatrati);
+        chirie.append("price_month" , this.pretLuna);
+        chirie.append("price_half_year" , this.pretJumateAn);
+        chirie.append("price_year" , this.pretAn);
+        chirie.append("id" , this.id);
+        chirie.append("images" , this.files);
+
+ // for (const pair of chirie.entries()) { console.log(pair[0] , pair[1]); }
+
+        axiosAuth
+          .post(`/user/post`, chirie)
+          .then(response => console.log(response))
+          .catch(error => console.log(error));
+    
     }
   }
 };
@@ -371,37 +383,37 @@ export default {
 
 <style>
 
+.profilebutton {
+    z-index: 2;
+    position: absolute;
+    float: right;
+    margin: auto;
+    }
 
-.imageStyle{
 
-    width: 350px;
-    height: 250px;
-
+.imageStyle {
+  width: 250px;
+  height: 150px;
 }
 
 .tz-gallery {
-    padding: 40px;
+  padding: 40px;
 }
 
 /* Override bootstrap column paddings */
 .tz-gallery .row > div {
-    padding: 2px;
+  padding: 2px;
 }
 
 .tz-gallery .lightbox img {
-    width: 100%;
-    border-radius: 0;
-    position: relative;
+  width: 100%;
+  border-radius: 0;
+  position: relative;
 }
 
-
-
-
-@media(max-width: 768px) {
-    body {
-        padding: 0;
-    }
+@media (max-width: 768px) {
+  body {
+    padding: 0;
+  }
 }
-
-
 </style>
