@@ -53,10 +53,10 @@ class PostController extends Controller
             for($i = 0 ; $i < sizeof($gallery) ; $i++){
                $extention = $gallery[$i]->getClientOriginalExtension();
                $imageName = time().str_random().".".$extention;
-               $destinationPath = public_path().'/images';
+               $destinationPath = public_path('images');
                $gallery[$i]->move($destinationPath , $imageName);
                $column = 'image'.$i;
-               $images->{$column} = $destinationPath."/".$imageName;
+               $images->{$column} = "http://licenta.test/images/".$imageName;
             }
 
            $images->save();
@@ -87,46 +87,23 @@ class PostController extends Controller
                 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Post $post)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Post $post)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Post $post)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Post $post)
     {
         //

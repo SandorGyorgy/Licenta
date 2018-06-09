@@ -6,13 +6,7 @@
             <h4> Descriere : {{ post.body }} </h4>
             <h4> Pret pe luna : {{ post.price_month }} </h4>
             <h4> Numar Camere : {{ post.room_nr }} </h4>
-            <img v-if="post.images.image0" :src="post.images.image0" height="300px" width="300px">
-            <img v-if="post.images.image1" :src="post.images.image1" height="300px" width="300px">
-            <img v-if="post.images.image2" :src="post.images.image2" height="300px" width="300px">
-            <img v-if="post.images.image3" :src="post.images.image3" height="300px" width="300px">
-            <img v-if="post.images.image4" :src="post.images.image4" height="300px" width="300px">
-
-
+            <img v-for="image  in post.images" :key="image.index"  :src="image" height="300px" width="300px">
             <hr>
            
         </div> 
@@ -52,7 +46,6 @@ export default {
               images: data[i].images
             };
             this.posts.push(post);
-           
           }
           
         })

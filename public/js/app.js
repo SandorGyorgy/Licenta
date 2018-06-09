@@ -55915,12 +55915,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -55973,67 +55967,31 @@ var render = function() {
   return _c(
     "div",
     _vm._l(_vm.posts, function(post) {
-      return _c("div", { key: post.id }, [
-        _c("h4", [_vm._v(" Titlu : " + _vm._s(post.title) + " ")]),
-        _vm._v(" "),
-        _c("h4", [_vm._v(" Descriere : " + _vm._s(post.body) + " ")]),
-        _vm._v(" "),
-        _c("h4", [_vm._v(" Pret pe luna : " + _vm._s(post.price_month) + " ")]),
-        _vm._v(" "),
-        _c("h4", [_vm._v(" Numar Camere : " + _vm._s(post.room_nr) + " ")]),
-        _vm._v(" "),
-        post.images.image0
-          ? _c("img", {
-              attrs: {
-                src: post.images.image0,
-                height: "300px",
-                width: "300px"
-              }
+      return _c(
+        "div",
+        { key: post.id },
+        [
+          _c("h4", [_vm._v(" Titlu : " + _vm._s(post.title) + " ")]),
+          _vm._v(" "),
+          _c("h4", [_vm._v(" Descriere : " + _vm._s(post.body) + " ")]),
+          _vm._v(" "),
+          _c("h4", [
+            _vm._v(" Pret pe luna : " + _vm._s(post.price_month) + " ")
+          ]),
+          _vm._v(" "),
+          _c("h4", [_vm._v(" Numar Camere : " + _vm._s(post.room_nr) + " ")]),
+          _vm._v(" "),
+          _vm._l(post.images, function(image) {
+            return _c("img", {
+              key: image.index,
+              attrs: { src: image, height: "300px", width: "300px" }
             })
-          : _vm._e(),
-        _vm._v(" "),
-        post.images.image1
-          ? _c("img", {
-              attrs: {
-                src: post.images.image1,
-                height: "300px",
-                width: "300px"
-              }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        post.images.image2
-          ? _c("img", {
-              attrs: {
-                src: post.images.image2,
-                height: "300px",
-                width: "300px"
-              }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        post.images.image3
-          ? _c("img", {
-              attrs: {
-                src: post.images.image3,
-                height: "300px",
-                width: "300px"
-              }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        post.images.image4
-          ? _c("img", {
-              attrs: {
-                src: post.images.image4,
-                height: "300px",
-                width: "300px"
-              }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _c("hr")
-      ])
+          }),
+          _vm._v(" "),
+          _c("hr")
+        ],
+        2
+      )
     })
   )
 }
