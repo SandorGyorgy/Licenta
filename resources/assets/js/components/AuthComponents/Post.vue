@@ -374,7 +374,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 .profilebutton {
     z-index: 2;

@@ -14,7 +14,7 @@ use Response;
 class PostController extends Controller
 {   
     public function index(){
-       $post = Post::with('location')->with('user')->get();
+       $post = Post::with(['location' , 'images'])->with('user')->get();
 
             return response()->json($post);
 

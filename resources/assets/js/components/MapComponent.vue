@@ -35,16 +35,36 @@
             @click="infoWinOpen=false"
             :options="infoOptions"
             >
-      <div class="infoWindowStyles container">
+
+      <div class="infoWindowStyles container ml-3">
+
+        <div  v-for="number in [currentNumber]"
+          :key="number" 
+          v-if="currentImage">
+         <img :src="currentImage" height="200px" width="230px" class="mt-2 ">
+         <div class="arrowLeft">
+           <i @click="prev" class="fa fa-chevron-left fa-3x"></i>
+         </div>
+        <div class="arrowRight">
+          <i @click="next" class="fa fa-chevron-right fa-3x highLight"></i>
+        </div>
+         
+        </div>
+       
+
+
           Titlu : {{ detalii.titlu }}
           <hr>
           Descriere : {{ detalii.descriere }}
           <hr>
-          Numar camere : {{detalii.camere}}
+          <p>
+      <a @click="prev" href='#'>Previous</a> || <a @click="next" href='#'>Next</a>
+    </p>
+          <!-- Numar camere : {{detalii.camere}}
           <hr>
           Pret :  {{detalii.pret}}
           <hr>
-            Adresa : {{detalii.adresa}}
+            Adresa : {{detalii.adresa}} -->
       </div>
         </gmap-info-window>
     
@@ -68,13 +88,15 @@ export default {
       currentPlace: null,
       infoWinOpen: false,
       infoWindowPos: null,
+      currentNumber:0,
       detalii: {
         titlu: "",
         descriere: "",
         camere: "",
         dimensiune: "",
         pret: "",
-        adresa: ""
+        adresa: "",
+        poze:[]
       },
 
       infoOptions: {
@@ -90,6 +112,13 @@ export default {
     this.geolocate();
     this.showMarker();
   },
+  computed:{
+
+    currentImage(){
+      	return this.detalii.poze[Math.abs(this.currentNumber) % this.detalii.poze.length];
+    }
+
+  },
 
   methods: {
     setPlace(place) {
@@ -101,6 +130,7 @@ export default {
         .get("/api/posts")
         .then(response => {
           const data = response.data;
+          
           for (var i in data) {
             const marker = {
               lat: data[i].location.lat,
@@ -111,14 +141,19 @@ export default {
               descriere: data[i].description,
               camere: data[i].room_nr,
               pret: data[i].price_month,
-              adresa: data[i].location.address
+              adresa: data[i].location.address,
+              poze: Object.values(response.data[i].images)
+             
+              
             };
-
             this.markers.push({ position: marker, info: info });
           }
+
         })
         .catch(error => console.log(error));
     },
+
+
     toggleInfoWindow(m, index) {
       this.infoWindowPos = m.position;
       this.infoWinOpen = !this.infoWinOpen;
@@ -127,7 +162,30 @@ export default {
       this.detalii.camere = m.info.camere;
       this.detalii.pret = m.info.pret;
       this.detalii.adresa = m.info.adresa;
+      this.detalii.poze =  this.filter_array(m.info.poze);
+      
     },
+
+     filter_array(test_array) {
+    var index = -1,
+        arr_length = test_array ? test_array.length : 0,
+        resIndex = -1,
+        result = [];
+       while (++index < arr_length) {
+        var value = test_array[index];
+        if (value) {
+            result[++resIndex] = value;
+        }
+    }
+    return result;
+},
+
+    next: function() {
+            this.currentNumber += 1
+        },
+        prev: function() {
+            this.currentNumber -= 1
+        },
 
     addMarker() {
       if (this.currentPlace) {
@@ -154,5 +212,26 @@ export default {
 <style>
 .infoWindowStyles {
   width: 250px;
+ 
 }
+
+ .infoWindowStyles .arrowRight {
+ 
+    position: absolute;
+  top: 85px;
+  left: 229px;
+    }
+
+    .infoWindowStyles .arrowLeft {
+ 
+    position: absolute;
+  top: 89px;
+  right: 229px;
+    }
+
+    .highLight :hover{
+      color: aliceblue;
+    }
+
+
 </style>
