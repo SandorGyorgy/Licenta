@@ -56439,15 +56439,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -56478,7 +56469,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     onFileChange: function onFileChange(e) {
       var files = e.target.files;
-      this.files = files; // aici sunt fisierele care le bag in formdata
+      this.files = files;
       console.log(this.files);
       var vm = this;
       var photos = [];
@@ -56505,18 +56496,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addMarker: function addMarker() {
 
       var chirie = new FormData();
-      // chirie.append("lat" ,this.currentPlace.geometry.location.lat());
-      // chirie.append("lng" ,this.currentPlace.geometry.location.lng());
-      // chirie.append("address" , this.currentPlace.formatted_address);
+      chirie.append("lat", this.currentPlace.geometry.location.lat());
+      chirie.append("lng", this.currentPlace.geometry.location.lng());
+      chirie.append("address", this.currentPlace.formatted_address);
       chirie.append("title", this.titlu);
-      // chirie.append("description" , this.descriere);
-      // chirie.append("room_nr" , this.nrCamere);
-      // chirie.append("dimension" , this.metriiPatrati);
-      // chirie.append("price_month" , this.pretLuna);
-      // chirie.append("price_half_year" , this.pretJumateAn);
-      // chirie.append("price_year" , this.pretAn);
-      // chirie.append("id" , this.id);
-
+      chirie.append("description", this.descriere);
+      chirie.append("room_nr", this.nrCamere);
+      chirie.append("dimension", this.metriiPatrati);
+      chirie.append("price_month", this.pretLuna);
+      chirie.append("price_half_year", this.pretJumateAn);
+      chirie.append("price_year", this.pretAn);
+      chirie.append("id", this.id);
 
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -56528,8 +56518,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
           chirie.append("images[]", item);
         }
-
-        // for (const pair of chirie.entries()) { console.log(pair[0] , pair[1]); }
       } catch (err) {
         _didIteratorError = true;
         _iteratorError = err;

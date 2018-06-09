@@ -79,6 +79,7 @@ class PostController extends Controller
 
             $location->update();
             $post->update();
+            $images->update();
 
         
         
