@@ -10,7 +10,16 @@ import routes from './routes';
 import App from './components/App.vue';
 import Vuex from 'vuex';
 import { store } from './store';
-// ----- Imports
+import Snotify from 'vue-snotify';
+import 'vue-snotify/styles/material.css'; 
+
+
+
+Vue.use(Snotify);
+
+
+
+
 
 // Router
 Vue.use(VueRouter);
@@ -31,13 +40,17 @@ Vue.use(VueGoogleMaps, {
 window.Vue = require('vue');
 
 
+
+
 // Vue core instance
 const app = new Vue({
     el: '#app',
     render: h => h(App),
     router,
     axios,
-    store,
+    store
+   
+  
     
 });
 //Vue core instance

@@ -35,7 +35,7 @@ class APILoginController extends Controller
         }
 
        
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token] ,200);
 
     }
 }

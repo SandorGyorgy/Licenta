@@ -41,30 +41,26 @@
         <div  v-for="number in [currentNumber]"
           :key="number" 
           v-if="currentImage">
-         <img :src="currentImage" height="200px" width="230px" class="mt-2 ">
-         <div class="arrowLeft">
-           <i @click="prev" class="fa fa-chevron-left fa-3x"></i>
-         </div>
-        <div class="arrowRight">
-          <i @click="next" class="fa fa-chevron-right fa-3x highLight"></i>
+             <img :src="currentImage" height="200px" width="230px" class="mt-2 ">
+
+              <div class="arrowLeft">
+                <i @click="prev" class="fa fa-chevron-left fa-3x"></i>
+              </div>
+
+              <div class="arrowRight">
+                <i @click="next" class="fa fa-chevron-right fa-3x"></i>
+              </div>
         </div>
-         
-        </div>
+          <div class="container mt-3">
+
+            <div>
+              $ {{ detalii.pret }}
+            </div>
+
+          </div>
+        
        
-
-
-          Titlu : {{ detalii.titlu }}
-          <hr>
-          Descriere : {{ detalii.descriere }}
-          <hr>
-          <p>
-      <a @click="prev" href='#'>Previous</a> || <a @click="next" href='#'>Next</a>
-    </p>
-          <!-- Numar camere : {{detalii.camere}}
-          <hr>
-          Pret :  {{detalii.pret}}
-          <hr>
-            Adresa : {{detalii.adresa}} -->
+         
       </div>
         </gmap-info-window>
     
@@ -109,7 +105,6 @@ export default {
   },
 
   mounted() {
-    this.geolocate();
     this.showMarker();
   },
   computed:{
@@ -197,14 +192,7 @@ export default {
         this.currentPlace = null;
       }
     },
-    geolocate: function() {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-      });
-    }
+   
   }
 };
 </script>
@@ -229,9 +217,7 @@ export default {
   right: 229px;
     }
 
-    .highLight :hover{
-      color: aliceblue;
-    }
+   
 
 
 </style>

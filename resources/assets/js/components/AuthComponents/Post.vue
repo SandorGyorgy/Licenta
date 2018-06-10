@@ -1,5 +1,7 @@
 <template>
   <div>
+
+      
      <div class="container">
     <form  @submit.prevent="addMarker" 
     class="form-horizontal" 
@@ -289,11 +291,14 @@
      </div>
     </form>
 </div>
+
+  <vue-snotify></vue-snotify>
     </div>
 </template>
 
 <script>
 import axiosAuth from "../../axios-auth";
+import {SnotifyPosition, SnotifyStyle} from 'vue-snotify';
 export default {
   data() {
     return {
@@ -323,7 +328,6 @@ export default {
     onFileChange(e) {
       var files = e.target.files;
       this.files = files; 
-      console.log(this.files);
       var vm = this;
       var photos = [];
       if (files) {
@@ -345,8 +349,29 @@ export default {
       this.images = "";
     },
 
-    addMarker() {
+    error(text , continut){
+        this.$snotify.create({
+            title: text,
+            body: continut,
+            config: {
+                    position: SnotifyPosition.rightTop,
+                    type : SnotifyStyle.error,
+            }
+        })
+    },
+      success(text , continut){
+        this.$snotify.create({
+            title: text,
+            body: continut,
+            config: {
+                    position: SnotifyPosition.rightTop,
+                    type : SnotifyStyle.success,
+            }
+        })
+    },
 
+    addMarker() {
+       
         var chirie = new FormData();
         chirie.append("lat" ,this.currentPlace.geometry.location.lat());
         chirie.append("lng" ,this.currentPlace.geometry.location.lng());
@@ -366,7 +391,13 @@ export default {
 
         axiosAuth
           .post(`/user/post`, chirie)
-          .then(response => console.log(response))
+          .then( function(response){
+              if(response.status == 200){
+                 this.success("Succes!","Chiria a fost adaugata!");
+              }else{
+                   this.error("Eroare!" , "A aparut o eroare , incercati din nou!")
+              }
+          })
           .catch(error => console.log(error));
     
     }

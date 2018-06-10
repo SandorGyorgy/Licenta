@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import routes from './routes'
+import routes from './routes';
 
 
 Vue.use(Vuex);
@@ -46,6 +46,7 @@ export const store = new Vuex.Store({
     },
 
     actions: {
+
 
         //Register action : sends the request to the register api and gets back the JWT commits it to the
         // store state 
