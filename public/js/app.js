@@ -58467,6 +58467,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__axios_auth__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_snotify__ = __webpack_require__(29);
 //
 //
 //
@@ -58530,28 +58532,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      status: ''
     };
   },
 
-  created: function created() {
-    this.get();
-  },
+  created: function created() {},
 
-  methods: {
+  computed: {
     get: function get() {
       var _this = this;
 
       var token = localStorage.getItem("token");
-      axios({
-        method: "get",
-        url: "/api/user/posts",
-        headers: { Authorization: "Bearer " + token }
-      }).then(function (response) {
+      __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].get("user/posts").then(function (response) {
         var data = response.data.post;
         for (var i in data) {
           var post = {
@@ -58567,8 +58566,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {
         return console.log(error);
       });
+    }
+  },
+
+  methods: {
+    error: function error(text, continut) {
+      this.$snotify.create({
+        title: text,
+        body: continut,
+        config: {
+          position: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["a" /* SnotifyPosition */].rightTop,
+          type: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["b" /* SnotifyStyle */].error
+        }
+      });
     },
-    trash: function trash(id) {}
+    success: function success(text, continut) {
+      this.$snotify.create({
+        title: text,
+        body: continut,
+        config: {
+          position: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["a" /* SnotifyPosition */].rightTop,
+          type: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["b" /* SnotifyStyle */].success
+        }
+      });
+    },
+    trash: function trash(id, index) {
+      var data = {
+        id: id,
+        userId: localStorage.getItem("userId")
+      };
+      var vm = this;
+      __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post("post/delete", data).then(function (response) {
+        if (response.status == 200) {
+          vm.success('Succes!', 'Chirie Stearsa!');
+        } else {
+          vm.error('Eroare!', 'A aparut o eroare !');
+        }
+      }).catch(function (error) {
+        return console.log(error);
+      });
+      this.posts.splice(index, 1);
+    }
   }
 });
 
@@ -59085,14 +59123,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post("/user/post", chirie).then(function (response) {
-        if (response.status == 200) {
-          this.success("Succes!", "Chiria a fost adaugata!");
-        } else {
-          this.error("Eroare!", "A aparut o eroare , incercati din nou!");
-        }
+        if (response.status == 200) {} else {}
       }).catch(function (error) {
         return console.log(error);
       });
+
+      this.success("Succes!", "Chiria a fost adaugata!");
     }
   }
 });
@@ -61410,57 +61446,63 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h3", { staticClass: "text-center" }, [
-      _vm._v("\r\n    Anunturile mele\r\n      ")
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table  table-hover" }, [
-      _vm._m(0),
+  return _c(
+    "div",
+    [
+      _c("vue-snotify"),
+      _vm._v("\r\n" + _vm._s(_vm.get) + "\r\n       "),
+      _c("h3", { staticClass: "text-center" }, [
+        _vm._v("\r\n    Anunturile mele\r\n      ")
+      ]),
       _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.posts, function(post) {
-          return _c("tr", { key: post.id, staticClass: "text-center" }, [
-            _c("td", { staticClass: "p-0" }, [
-              _c("img", {
-                attrs: {
-                  src: post.images.image0,
-                  height: "60px",
-                  width: "90px"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post.title))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post.price_month))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post.room_nr))]),
-            _vm._v(" "),
-            _c("td", { staticClass: "float-right" }, [
-              _vm._m(1, true),
-              _vm._v(" "),
-              _vm._m(2, true),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger",
-                  on: {
-                    click: function($event) {
-                      _vm.trash(post.id)
-                    }
+      _c("table", { staticClass: "table  table-hover" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.posts, function(post, index) {
+            return _c("tr", { key: post.id, staticClass: "text-center" }, [
+              _c("td", { staticClass: "p-0" }, [
+                _c("img", {
+                  attrs: {
+                    src: post.images.image0,
+                    height: "60px",
+                    width: "90px"
                   }
-                },
-                [_c("i", { staticClass: "fa fa-trash" })]
-              )
+                })
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(post.title))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(post.price_month))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(post.room_nr))]),
+              _vm._v(" "),
+              _c("td", { staticClass: "float-right" }, [
+                _vm._m(1, true),
+                _vm._v(" "),
+                _vm._m(2, true),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    on: {
+                      click: function($event) {
+                        _vm.trash(post.id, index)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-trash" })]
+                )
+              ])
             ])
-          ])
-        })
-      )
-    ])
-  ])
+          })
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {

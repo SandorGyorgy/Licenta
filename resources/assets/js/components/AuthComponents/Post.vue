@@ -393,13 +393,14 @@ export default {
           .post(`/user/post`, chirie)
           .then( function(response){
               if(response.status == 200){
-                 this.success("Succes!","Chiria a fost adaugata!");
+                   
               }else{
-                   this.error("Eroare!" , "A aparut o eroare , incercati din nou!")
+                
               }
           })
           .catch(error => console.log(error));
     
+    this.success("Succes!","Chiria a fost adaugata!");
     }
   }
 };

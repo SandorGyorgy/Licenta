@@ -1,8 +1,8 @@
 <template>
 <div>
  
-       
-
+       <vue-snotify></vue-snotify>
+{{get}}
        <h3 class="text-center">
     Anunturile mele
       </h3>
@@ -19,7 +19,7 @@
     </thead>
   <tbody>
 
-  <tr  v-for="post in posts" 
+  <tr  v-for="(post , index) in posts" 
   :key="post.id"
   class="text-center"
   >
@@ -44,7 +44,7 @@
 
             <button 
             class="btn btn-danger"
-            @click="trash(post.id)">
+            @click="trash(post.id , index)">
                <i class="fa fa-trash"></i>
             </button> 
       </td>
@@ -62,24 +62,23 @@
 </div>
 </template>
 <script>
+import axiosAuth from "../../axios-auth";
+import {SnotifyPosition, SnotifyStyle} from 'vue-snotify';
 export default {
   data() {
     return {
-      posts: []
+      posts: [],
+      status:''
     };
   },
   created: function() {
-    this.get();
+    
   },
 
-  methods: {
-    get() {
+  computed:{
+ get() {
       const token = localStorage.getItem("token");
-      axios({
-        method: "get",
-        url: "/api/user/posts",
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      axiosAuth.get("user/posts")
         .then(response => {
           const data = response.data.post;
           for (var i in data) {
@@ -96,11 +95,55 @@ export default {
           
         })
         .catch(error => console.log(error));
-    },
-
-    trash(id){
-        
     }
+  },
+
+  methods: {
+
+     error(text , continut){
+        this.$snotify.create({
+            title: text,
+            body: continut,
+            config: {
+                    position: SnotifyPosition.rightTop,
+                    type : SnotifyStyle.error,
+            }
+        })
+    },
+      success(text , continut){
+        this.$snotify.create({
+            title: text,
+            body: continut,
+            config: {
+                    position: SnotifyPosition.rightTop,
+                    type : SnotifyStyle.success,
+            }
+        })
+    },
+   
+
+    trash(id ,index){
+       const data ={
+         id: id,
+         userId: localStorage.getItem("userId")
+       } 
+       const vm = this;
+       axiosAuth.post("post/delete" , data)
+       .then(response => {
+         if(response.status == 200){
+           vm.success('Succes!' , 'Chirie Stearsa!');
+         }else{
+           vm.error('Eroare!' , 'A aparut o eroare !');
+         }
+       })
+       .catch(error => console.log(error)); 
+       this.posts.splice(index , 1);
+
+   
+      
+     
+    
+  }
 
 
 
