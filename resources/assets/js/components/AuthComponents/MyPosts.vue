@@ -131,18 +131,14 @@ export default {
        axiosAuth.post("post/delete" , data)
        .then(response => {
          if(response.status == 200){
+           vm.posts.splice(index , 1);
            vm.success('Succes!' , 'Chirie Stearsa!');
          }else{
            vm.error('Eroare!' , 'A aparut o eroare !');
          }
        })
        .catch(error => console.log(error)); 
-       this.posts.splice(index , 1);
-
-   
-      
-     
-    
+       
   }
 
 

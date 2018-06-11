@@ -58598,6 +58598,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var vm = this;
       __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post("post/delete", data).then(function (response) {
         if (response.status == 200) {
+          vm.posts.splice(index, 1);
           vm.success('Succes!', 'Chirie Stearsa!');
         } else {
           vm.error('Eroare!', 'A aparut o eroare !');
@@ -58605,7 +58606,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {
         return console.log(error);
       });
-      this.posts.splice(index, 1);
     }
   }
 });
@@ -59012,125 +59012,142 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      markers: [],
-      places: [],
-      currentPlace: null,
-      plata_jumate_an: false,
-      plata_an: false,
-      titlu: "",
-      descriere: "",
-      nrCamere: "",
-      metriiPatrati: "",
-      pretLuna: "",
-      pretJumateAn: "",
-      pretAn: "",
-      id: localStorage.getItem("userId"),
-      images: "",
-      files: []
-    };
-  },
-
-
-  methods: {
-    setPlace: function setPlace(place) {
-      this.currentPlace = place;
-    },
-    onFileChange: function onFileChange(e) {
-      var files = e.target.files;
-      this.files = files;
-      var vm = this;
-      var photos = [];
-      if (files) {
-        var files_count = files.length;
-        for (var i = 0; i < files_count; i++) {
-          var reader = new FileReader();
-          var image = "";
-          reader.onload = function (e) {
-            image = e.target.result;
-            photos.push(image);
-          };
-          reader.readAsDataURL(files[i]);
-        }
-        vm.images = photos;
-      }
+    data: function data() {
+        return {
+            form: {
+                currentPlace: null,
+                titlu: "",
+                descriere: "",
+                nrCamere: "",
+                metriiPatrati: "",
+                pretLuna: "",
+                pretJumateAn: "",
+                pretAn: "",
+                images: "",
+                files: []
+            },
+            id: localStorage.getItem("userId"),
+            plata_jumate_an: false,
+            plata_an: false
+        };
     },
 
 
-    removeImage: function removeImage(e) {
-      this.images = "";
-    },
+    methods: {
+        setPlace: function setPlace(place) {
+            this.form.currentPlace = place;
+        },
+        onFileChange: function onFileChange(e) {
+            var files = e.target.files;
+            this.form.files = files;
+            var vm = this;
+            var photos = [];
+            if (files) {
+                var files_count = files.length;
+                for (var i = 0; i < files_count; i++) {
+                    var reader = new FileReader();
+                    var image = "";
+                    reader.onload = function (e) {
+                        image = e.target.result;
+                        photos.push(image);
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+                vm.form.images = photos;
+            }
+        },
 
-    error: function error(text, continut) {
-      this.$snotify.create({
-        title: text,
-        body: continut,
-        config: {
-          position: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["a" /* SnotifyPosition */].rightTop,
-          type: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["b" /* SnotifyStyle */].error
+
+        removeImage: function removeImage(e) {
+            this.form.images = "";
+        },
+
+        error: function error(text, continut) {
+            this.$snotify.create({
+                title: text,
+                body: continut,
+                config: {
+                    position: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["a" /* SnotifyPosition */].rightTop,
+                    type: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["b" /* SnotifyStyle */].error
+                }
+            });
+        },
+        success: function success(text, continut) {
+            this.$snotify.create({
+                title: text,
+                body: continut,
+                config: {
+                    position: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["a" /* SnotifyPosition */].rightTop,
+                    type: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["b" /* SnotifyStyle */].success
+                }
+            });
+        },
+        reset: function reset() {
+            this.form = {
+                currentPlace: null,
+                titlu: "",
+                descriere: "",
+                nrCamere: "",
+                metriiPatrati: "",
+                pretLuna: "",
+                pretJumateAn: "",
+                pretAn: "",
+                images: "",
+                files: []
+            };
+        },
+        addMarker: function addMarker() {
+            var vm = this;
+            var chirie = new FormData();
+            chirie.append("lat", this.form.currentPlace.geometry.location.lat());
+            chirie.append("lng", this.form.currentPlace.geometry.location.lng());
+            chirie.append("address", this.form.currentPlace.formatted_address);
+            chirie.append("title", this.form.titlu);
+            chirie.append("description", this.form.descriere);
+            chirie.append("room_nr", this.form.nrCamere);
+            chirie.append("dimension", this.form.metriiPatrati);
+            chirie.append("price_month", this.form.pretLuna);
+            chirie.append("price_half_year", this.form.pretJumateAn);
+            chirie.append("price_year", this.form.pretAn);
+            chirie.append("id", this.id);
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = this.form.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var item = _step.value;
+
+                    chirie.append("images[]", item);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post("/user/post", chirie).then(function (response) {
+                if (response.status == 200) {
+                    vm.success("Succes!", "Chiria a fost adaugata!");
+                    vm.reset();
+                } else {
+                    vm.error("Eroare!", "A aparut o eroare , incercati din nou mai tarziu!");
+                }
+            }).catch(function (error) {
+                return console.log(error);
+            });
         }
-      });
-    },
-    success: function success(text, continut) {
-      this.$snotify.create({
-        title: text,
-        body: continut,
-        config: {
-          position: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["a" /* SnotifyPosition */].rightTop,
-          type: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["b" /* SnotifyStyle */].success
-        }
-      });
-    },
-    addMarker: function addMarker() {
-
-      var chirie = new FormData();
-      chirie.append("lat", this.currentPlace.geometry.location.lat());
-      chirie.append("lng", this.currentPlace.geometry.location.lng());
-      chirie.append("address", this.currentPlace.formatted_address);
-      chirie.append("title", this.titlu);
-      chirie.append("description", this.descriere);
-      chirie.append("room_nr", this.nrCamere);
-      chirie.append("dimension", this.metriiPatrati);
-      chirie.append("price_month", this.pretLuna);
-      chirie.append("price_half_year", this.pretJumateAn);
-      chirie.append("price_year", this.pretAn);
-      chirie.append("id", this.id);
-
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = this.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var item = _step.value;
-
-          chirie.append("images[]", item);
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
-      __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post("/user/post", chirie).then(function (response) {
-        if (response.status == 200) {} else {}
-      }).catch(function (error) {
-        return console.log(error);
-      });
-
-      this.success("Succes!", "Chiria a fost adaugata!");
     }
-  }
 });
 
 /***/ }),
@@ -59175,19 +59192,19 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.titlu,
-                              expression: "titlu"
+                              value: _vm.form.titlu,
+                              expression: "form.titlu"
                             }
                           ],
                           staticClass: "form-control",
                           attrs: { type: "text", placeholder: "Titlu" },
-                          domProps: { value: _vm.titlu },
+                          domProps: { value: _vm.form.titlu },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.titlu = $event.target.value
+                              _vm.$set(_vm.form, "titlu", $event.target.value)
                             }
                           }
                         })
@@ -59213,19 +59230,23 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.descriere,
-                              expression: "descriere"
+                              value: _vm.form.descriere,
+                              expression: "form.descriere"
                             }
                           ],
                           staticClass: "form-control",
                           attrs: { placeholder: "Descriere" },
-                          domProps: { value: _vm.descriere },
+                          domProps: { value: _vm.form.descriere },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.descriere = $event.target.value
+                              _vm.$set(
+                                _vm.form,
+                                "descriere",
+                                $event.target.value
+                              )
                             }
                           }
                         })
@@ -59251,8 +59272,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.nrCamere,
-                              expression: "nrCamere"
+                              value: _vm.form.nrCamere,
+                              expression: "form.nrCamere"
                             }
                           ],
                           staticClass: "form-control",
@@ -59260,13 +59281,17 @@ var render = function() {
                             type: "number",
                             placeholder: "Numar camere"
                           },
-                          domProps: { value: _vm.nrCamere },
+                          domProps: { value: _vm.form.nrCamere },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.nrCamere = $event.target.value
+                              _vm.$set(
+                                _vm.form,
+                                "nrCamere",
+                                $event.target.value
+                              )
                             }
                           }
                         })
@@ -59292,8 +59317,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.metriiPatrati,
-                              expression: "metriiPatrati"
+                              value: _vm.form.metriiPatrati,
+                              expression: "form.metriiPatrati"
                             }
                           ],
                           staticClass: "form-control",
@@ -59301,13 +59326,17 @@ var render = function() {
                             type: "number",
                             placeholder: "Metrii patrati"
                           },
-                          domProps: { value: _vm.metriiPatrati },
+                          domProps: { value: _vm.form.metriiPatrati },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.metriiPatrati = $event.target.value
+                              _vm.$set(
+                                _vm.form,
+                                "metriiPatrati",
+                                $event.target.value
+                              )
                             }
                           }
                         })
@@ -59358,8 +59387,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.pretLuna,
-                              expression: "pretLuna"
+                              value: _vm.form.pretLuna,
+                              expression: "form.pretLuna"
                             }
                           ],
                           staticClass: "form-control",
@@ -59367,13 +59396,17 @@ var render = function() {
                             type: "number",
                             placeholder: "Pret pe luna "
                           },
-                          domProps: { value: _vm.pretLuna },
+                          domProps: { value: _vm.form.pretLuna },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.pretLuna = $event.target.value
+                              _vm.$set(
+                                _vm.form,
+                                "pretLuna",
+                                $event.target.value
+                              )
                             }
                           }
                         })
@@ -59423,8 +59456,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.pretJumateAn,
-                                      expression: "pretJumateAn"
+                                      value: _vm.form.pretJumateAn,
+                                      expression: "form.pretJumateAn"
                                     }
                                   ],
                                   staticClass: "form-control",
@@ -59432,13 +59465,17 @@ var render = function() {
                                     type: "number",
                                     placeholder: "Pret pe jumatate de an  "
                                   },
-                                  domProps: { value: _vm.pretJumateAn },
+                                  domProps: { value: _vm.form.pretJumateAn },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
-                                      _vm.pretJumateAn = $event.target.value
+                                      _vm.$set(
+                                        _vm.form,
+                                        "pretJumateAn",
+                                        $event.target.value
+                                      )
                                     }
                                   }
                                 })
@@ -59491,8 +59528,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.pretAn,
-                                      expression: "pretAn"
+                                      value: _vm.form.pretAn,
+                                      expression: "form.pretAn"
                                     }
                                   ],
                                   staticClass: "form-control",
@@ -59500,13 +59537,17 @@ var render = function() {
                                     type: "number",
                                     placeholder: "Pret pe jumatate de an  "
                                   },
-                                  domProps: { value: _vm.pretAn },
+                                  domProps: { value: _vm.form.pretAn },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
-                                      _vm.pretAn = $event.target.value
+                                      _vm.$set(
+                                        _vm.form,
+                                        "pretAn",
+                                        $event.target.value
+                                      )
                                     }
                                   }
                                 })
@@ -59534,7 +59575,7 @@ var render = function() {
                           "div",
                           { staticClass: "input-group mb-2 mr-sm-2 mb-sm-0" },
                           [
-                            !_vm.images
+                            !_vm.form.images
                               ? _c("div", [
                                   _c("input", {
                                     attrs: { type: "file", multiple: "" },
@@ -59545,11 +59586,14 @@ var render = function() {
                                   _c(
                                     "div",
                                     { staticClass: "row" },
-                                    _vm._l(_vm.images, function(image) {
+                                    _vm._l(_vm.form.images, function(
+                                      image,
+                                      index
+                                    ) {
                                       return _c(
                                         "div",
                                         {
-                                          key: image.index,
+                                          key: index,
                                           staticClass: "col-sm-6 col-md-4"
                                         },
                                         [

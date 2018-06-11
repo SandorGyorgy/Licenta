@@ -28,7 +28,7 @@
                         <input 
                         type="text"  
                         class="form-control"
-                        v-model="titlu" 
+                        v-model="form.titlu" 
                         placeholder="Titlu">
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <textarea   
                         class="form-control" 
-                        v-model="descriere"
+                        v-model="form.descriere"
                         placeholder="Descriere">
                         </textarea>
                     </div>
@@ -80,7 +80,7 @@
                         <input 
                         type="number"  
                         class="form-control" 
-                        v-model="nrCamere"
+                        v-model="form.nrCamere"
                         placeholder="Numar camere">
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <input 
                         type="number"
-                        v-model="metriiPatrati"  
+                        v-model="form.metriiPatrati"  
                         class="form-control" 
                         placeholder="Metrii patrati" >
                     </div>
@@ -158,7 +158,7 @@
                         <input 
                         type="number"  
                         class="form-control" 
-                        v-model="pretLuna"
+                        v-model="form.pretLuna"
                         placeholder="Pret pe luna ">
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                         <input 
                          type="number" 
                          class="form-control" 
-                         v-model="pretJumateAn"
+                         v-model="form.pretJumateAn"
                          placeholder="Pret pe jumatate de an  ">
                     </div>
                         
@@ -226,7 +226,7 @@
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0" v-if="plata_an">
                         <input type="number"  
                         class="form-control" 
-                        v-model="pretAn"
+                        v-model="form.pretAn"
                         placeholder="Pret pe jumatate de an  " >
                     </div>
                     
@@ -255,12 +255,12 @@
                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 
-<div v-if="!images">
+<div v-if="!form.images">
     <input type="file" @change="onFileChange" multiple>
   </div> 
   <div v-else class="tz-gallery" >
       <div class="row">
-      <div v-for="image in images" :key="image.index"  class="col-sm-6 col-md-4">
+      <div v-for="(image , index) in form.images" :key="index"  class="col-sm-6 col-md-4">
   <div class="lightbox preview">
       <h3 class="btn profilebutton">X</h3>
       <img :src="image"  class="imageStyle" alt="Show">
@@ -302,32 +302,32 @@ import {SnotifyPosition, SnotifyStyle} from 'vue-snotify';
 export default {
   data() {
     return {
-      markers: [],
-      places: [],
-      currentPlace: null,
-      plata_jumate_an: false,
-      plata_an: false,
-      titlu: "",
-      descriere: "",
-      nrCamere: "",
-      metriiPatrati: "",
-      pretLuna: "",
-      pretJumateAn: "",
-      pretAn: "",
-      id: localStorage.getItem("userId"),
-      images: "",
-      files:[]
+        form: {
+            currentPlace: null,
+            titlu: "",
+            descriere: "",
+            nrCamere: "",
+            metriiPatrati: "",
+            pretLuna: "",
+            pretJumateAn: "",
+            pretAn: "",
+            images: "",
+            files:[],
+        },
+        id: localStorage.getItem("userId"),
+        plata_jumate_an: false,
+        plata_an: false,
     };
   },
 
   methods: {
     setPlace(place) {
-      this.currentPlace = place;
+      this.form.currentPlace = place;
     },
 
     onFileChange(e) {
       var files = e.target.files;
-      this.files = files; 
+      this.form.files = files; 
       var vm = this;
       var photos = [];
       if (files) {
@@ -341,12 +341,12 @@ export default {
           };
           reader.readAsDataURL(files[i]);
         }
-        vm.images = photos
+        vm.form.images = photos
       }
     },
 
     removeImage: function(e) {
-      this.images = "";
+      this.form.images = "";
     },
 
     error(text , continut){
@@ -369,23 +369,37 @@ export default {
             }
         })
     },
+    reset(){
+         this.form = {
+            currentPlace: null,
+            titlu: "",
+            descriere: "",
+            nrCamere: "",
+            metriiPatrati: "",
+            pretLuna: "",
+            pretJumateAn: "",
+            pretAn: "",
+            images: "",
+            files:[],
+        }
+    },
 
     addMarker() {
-       
+        const vm = this;
         var chirie = new FormData();
-        chirie.append("lat" ,this.currentPlace.geometry.location.lat());
-        chirie.append("lng" ,this.currentPlace.geometry.location.lng());
-        chirie.append("address" , this.currentPlace.formatted_address);
-        chirie.append("title" , this.titlu);
-        chirie.append("description" , this.descriere);
-        chirie.append("room_nr" , this.nrCamere);
-        chirie.append("dimension" , this.metriiPatrati);
-        chirie.append("price_month" , this.pretLuna);
-        chirie.append("price_half_year" , this.pretJumateAn);
-        chirie.append("price_year" , this.pretAn);
+        chirie.append("lat" ,this.form.currentPlace.geometry.location.lat());
+        chirie.append("lng" ,this.form.currentPlace.geometry.location.lng());
+        chirie.append("address" , this.form.currentPlace.formatted_address);
+        chirie.append("title" , this.form.titlu);
+        chirie.append("description" , this.form.descriere);
+        chirie.append("room_nr" , this.form.nrCamere);
+        chirie.append("dimension" , this.form.metriiPatrati);
+        chirie.append("price_month" , this.form.pretLuna);
+        chirie.append("price_half_year" , this.form.pretJumateAn);
+        chirie.append("price_year" , this.form.pretAn);
         chirie.append("id" , this.id);
 
-        for(const item of this.files){
+        for(const item of this.form.files){
             chirie.append("images[]" , item);
         }
 
@@ -393,14 +407,14 @@ export default {
           .post(`/user/post`, chirie)
           .then( function(response){
               if(response.status == 200){
-                   
+                   vm.success("Succes!" , "Chiria a fost adaugata!");
+                   vm.reset();
               }else{
-                
+                  vm.error("Eroare!" , "A aparut o eroare , incercati din nou mai tarziu!");
               }
           })
           .catch(error => console.log(error));
-    
-    this.success("Succes!","Chiria a fost adaugata!");
+   
     }
   }
 };
