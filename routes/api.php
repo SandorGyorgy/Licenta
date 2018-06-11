@@ -24,9 +24,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
    
     Route::post('/user/post' , 'PostController@store');
     Route::get('/user/posts' , 'PostController@UserPosts');
-
-
-
+    Route::post('/post/delete' , 'PostController@destroy');
 
     });
 Route::post('user/register', 'APIRegisterController@register');

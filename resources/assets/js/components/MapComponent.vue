@@ -18,7 +18,7 @@
     >
 
     
-    
+  
      <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
@@ -26,14 +26,14 @@
         :position="m.position"
         @click="toggleInfoWindow(m,index)"
       >
-    
       </gmap-marker> 
-
+     
         <gmap-info-window
             :opened="infoWinOpen" 
             :position="infoWindowPos"
             @click="infoWinOpen=false"
             :options="infoOptions"
+            
             >
 
       <div class="infoWindowStyles container ml-3">

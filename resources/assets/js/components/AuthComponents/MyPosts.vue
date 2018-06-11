@@ -1,25 +1,66 @@
 <template>
+<div>
+ 
+       
 
-    <div >
-        <div v-for="post in posts" :key="post.id">
-            <h4> Titlu : {{ post.title }} </h4>
-            <h4> Descriere : {{ post.body }} </h4>
-            <h4> Pret pe luna : {{ post.price_month }} </h4>
-            <h4> Numar Camere : {{ post.room_nr }} </h4>
-              <img v-for="image  in post.images" 
-              :key="image.index" 
-              v-if="image"  
-              :src="image" 
-              height="300px" 
-              width="300px">
-            <hr>
-           
-        </div> 
+       <h3 class="text-center">
+    Anunturile mele
+      </h3>
+     
+  <table class="table  table-hover">
+    <thead class="text-center">
+      <th>Imagine</th>
+      <th>Titlu</th>
+      <th>Pret</th>
+      <th>Camere</th>
+      <th class="float-right">Vizualizeaza/Editeaza/Sterge</th>
+     
 
-    </div>
+    </thead>
+  <tbody>
 
+  <tr  v-for="post in posts" 
+  :key="post.id"
+  class="text-center"
+  >
+    
+    <td class="p-0">
+      <img 
+      :src="post.images.image0"
+      height="60px"
+      width="90px"
+      >
+      </td>
+      <td>{{ post.title }}</td>
+      <td>{{ post.price_month }}</td>
+      <td>{{ post.room_nr }}</td>
+      <td class="float-right"> <button class="btn btn-success ">
+         <i class="fa fa-eye"></i>
+           </button> 
+
+            <button class="btn btn-info ">
+              <i class="fa fa-edit"></i>
+            </button> 
+
+            <button 
+            class="btn btn-danger"
+            @click="trash(post.id)">
+               <i class="fa fa-trash"></i>
+            </button> 
+      </td>
+
+
+    </tr>
+
+
+
+  
+  </tbody>
+</table>
+
+
+</div>
 </template>
-
 <script>
 export default {
   data() {
@@ -55,7 +96,23 @@ export default {
           
         })
         .catch(error => console.log(error));
+    },
+
+    trash(id){
+        
     }
+
+
+
   }
 };
 </script>
+
+<style scoped>
+.table {
+    border-radius: 5px;
+    width: 80%;
+    margin: 0px auto;
+    float: none;
+}
+</style>

@@ -15,19 +15,16 @@ class PostController extends Controller
 {   
     public function index(){
        $post = Post::with(['location' , 'images'])->with('user')->get();
-
             return response()->json($post);
 
     }
     
     public function userPosts()
     {   
-        
         $user = auth()->user();
         $user->only('id','name', 'email');
         $posts = $user->post()->with(['location' , 'images'])->get();
         return response()->json(['user' => $user , 'post' => $posts]);
-        
     }
 
    
@@ -80,10 +77,6 @@ class PostController extends Controller
             $location->update();
             $post->update();
             $images->update();
-
-        
-        
-            
                 
     }
 
@@ -104,8 +97,35 @@ class PostController extends Controller
         //
     }
 
-    public function destroy(Post $post)
+    public function destroy(Request $request)
     {
-        //
+        
+        $id = $request->id;
+        $userId = $request->userId;
+        $post = Post::findOrFail($id);
+       
+      
+        if($userId == $post->user_id && $post){
+            $location = Location::where('post_id' , $id)->firstOrFail();
+            $images = Images::where('post_id' , $id)->firstOrFail();
+         for($i = 0 ; $i<5 ; $i++){
+            $iteration = 'image'.$i;
+            $image = $images->$iteration;
+            if($image){
+                $name = explode('http://licenta.test/images/' , $image);
+                $path = public_path('images').'/'.$name[1];
+                \File::delete($path);
+               
+            }
+         }
+         $images->delete();
+         $location->delete();
+         $post->delete();
+         return response()->json('Postare strearsa cu succes' , 200);
+        }else{
+            return response()->json('Error');
+        }
+            
+
     }
 }
