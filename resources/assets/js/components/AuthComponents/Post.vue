@@ -409,11 +409,13 @@ export default {
               if(response.status == 200){
                    vm.success("Succes!" , "Chiria a fost adaugata!");
                    vm.reset();
-              }else{
-                  vm.error("Eroare!" , "A aparut o eroare , incercati din nou mai tarziu!");
               }
           })
-          .catch(error => console.log(error));
+          .catch(error =>{
+              if(error){
+                  vm.error("Eroare!" , "A aparut o eroare , incercati din nou mai tarziu!");
+              }
+          });
    
     }
   }

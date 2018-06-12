@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('description');
             $table->string('room_nr');
             $table->integer('price_month');
+            $table->integer('dimension');
             $table->integer('price_half_year')->nullable();
             $table->integer('price_year')->nullable();
             $table->integer('user_id')->nullable();

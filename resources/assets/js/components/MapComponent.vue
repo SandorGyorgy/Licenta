@@ -178,8 +178,8 @@ export default {
     next: function() {
             this.currentNumber += 1
         },
-        prev: function() {
-            this.currentNumber -= 1
+    prev: function() {
+           this.currentNumber -= 1
         },
 
     addMarker() {

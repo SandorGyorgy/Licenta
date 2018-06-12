@@ -30,7 +30,8 @@ class Post extends Model
     'room_nr',
     'price_month' ,
     'price_half_year',
-    'price_year' 
+    'price_year' ,
+    'dimension'
 
 ];
 protected $hidden = [

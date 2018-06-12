@@ -65,6 +65,7 @@ class PostController extends Controller
             $post->price_month = $request->price_month ;
             $post->price_half_year = $request->price_half_year ;
             $post->price_year = $request->price_year ;
+            $post->dimension = $request->dimension ;
 
             $location->save();
             $post->save();
@@ -81,9 +82,17 @@ class PostController extends Controller
     }
 
     
-    public function show(Post $post)
+    public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $location = Location::where('post_id' , $id)->firstOrFail();
+        $images = Images::where('post_id' , $id)->firstOrFail();
+    
+        return response()->json([
+            'post' => $post , 
+            'location' => $location , 
+            'images' => $images
+        ]);
     }
 
 
@@ -99,7 +108,6 @@ class PostController extends Controller
 
     public function destroy(Request $request)
     {
-        
         $id = $request->id;
         $userId = $request->userId;
         $post = Post::findOrFail($id);
