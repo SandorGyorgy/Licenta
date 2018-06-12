@@ -8,6 +8,7 @@ import AccountSettings from './components/AuthComponents/AccountSettings.vue'
 import Messages from './components/AuthComponents/Messages.vue'
 import MyPosts from './components/AuthComponents/MyPosts.vue'
 import Post from './components/AuthComponents/Post.vue'
+import ViewPost from './components/SinglePost.vue'
 
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
     {
         path: '/map',
         component: MapComponent
+
+    },
+    {
+        path: '/view/post',
+        component: ViewPost
 
     },
     {

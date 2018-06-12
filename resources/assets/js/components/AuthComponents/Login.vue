@@ -88,7 +88,9 @@ export default {
         password: this.password
       };
       this.$store.dispatch("login", loginData);
+   
       this.$router.push({ name: "home" });
+    
     }
   }
 };

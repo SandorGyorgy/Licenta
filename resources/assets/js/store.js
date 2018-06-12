@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import routes from './routes';
-
+import axiosAuth from './axios-auth';
 
 Vue.use(Vuex);
 
@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
+        
         authUser(state, userData) {
             state.token = userData.token
             state.userId = userData.userId
@@ -58,16 +59,11 @@ export const store = new Vuex.Store({
 
         //Logout action 
         logOut({ commit }) {
-            const token = localStorage.getItem('token')
-            axios({
-                method: 'post',
-                url: '/api/user/logout',
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
+            axiosAuth.post('/user/logout')
             commit('logoutUser')
-
-
         },
+
+        
         //Stay logged in untill logout 
         tryAutoLogin({ commit }) {
             const token = localStorage.getItem('token')
@@ -93,14 +89,12 @@ export const store = new Vuex.Store({
         //Logi action : sends the user data to the api and gets back a JWT token 
         login({ commit, dispatch }, loginData) {
             axios.post('/api/user/login', loginData)
-
                 .then(response => {
                     localStorage.setItem('token', response.data.token)
                     dispatch('authUserData')
+                  
                 })
                 .catch(error => console.log(error))
-
-
         },
         //End of the login action
 
@@ -126,6 +120,7 @@ export const store = new Vuex.Store({
                     localStorage.setItem('userName', response.data.name)
                     localStorage.setItem('userEmail', response.data.email)
                     localStorage.setItem('userPhone', response.data.phone)
+                    location.reload()
                 })
                 .catch(error => console.log(error))
         },

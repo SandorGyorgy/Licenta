@@ -87,12 +87,20 @@
 </template>
 <script>
 export default {
-  data: function() {
+  data() {
     return {
       formClasses: "form-group float-right mr-1"
     };
+  },
+  created(){
+      this.getUserData
+  },
+  methods:{
+      getUserData(){
+          this.$store.dispatch("authUserData");
+      }
   }
-};
+}
 </script>
 
 <style scoped >
