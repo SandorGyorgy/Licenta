@@ -34,18 +34,32 @@
       <td>{{ post.title }}</td>
       <td>{{ post.price_month }}</td>
       <td>{{ post.room_nr }}</td>
-      <td class="float-right"> <button class="btn btn-success ">
-         <i class="fa fa-eye"></i>
-           </button> 
+      <td class="float-right"> 
 
-            <button class="btn btn-info ">
+        <router-link :to="{ name: 'post' , params:{ id: post.id } }">
+              <button 
+              class="btn btn-success"
+              @click="show(post)"
+              >
+                  <i class="fa fa-eye"></i>
+              </button> 
+        </router-link>
+          
+
+
+            <button 
+            class="btn btn-info"
+           
+            >
               <i class="fa fa-edit"></i>
             </button> 
 
             <button 
             class="btn btn-danger"
             @click="trash(post.id , index)">
+
                <i class="fa fa-trash"></i>
+
             </button> 
       </td>
 
@@ -121,6 +135,11 @@ export default {
         })
     },
    
+   show(post){
+       //localStorage.setItem('curentPost' , JSON.stringify(post))
+      //this.$router.push({ name: "viewPost" });
+
+   },
 
     trash(id ,index){
        const data ={

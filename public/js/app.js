@@ -28525,8 +28525,9 @@ var routes = [{
     component: __WEBPACK_IMPORTED_MODULE_2__components_MapComponent_vue___default.a
 
 }, {
-    path: '/view/post',
-    component: __WEBPACK_IMPORTED_MODULE_9__components_SinglePost_vue___default.a
+    path: '/post/:id',
+    component: __WEBPACK_IMPORTED_MODULE_9__components_SinglePost_vue___default.a,
+    name: 'post'
 
 }, {
     path: '/login',
@@ -58588,6 +58589,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -58645,6 +58660,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           type: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["b" /* SnotifyStyle */].success
         }
       });
+    },
+    show: function show(post) {
+      //localStorage.setItem('curentPost' , JSON.stringify(post))
+      //this.$router.push({ name: "viewPost" });
+
     },
     trash: function trash(id, index) {
       var data = {
@@ -58706,24 +58726,48 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(post.room_nr))]),
               _vm._v(" "),
-              _c("td", { staticClass: "float-right" }, [
-                _vm._m(1, true),
-                _vm._v(" "),
-                _vm._m(2, true),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    on: {
-                      click: function($event) {
-                        _vm.trash(post.id, index)
+              _c(
+                "td",
+                { staticClass: "float-right" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: { to: { name: "post", params: { id: post.id } } }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success",
+                          on: {
+                            click: function($event) {
+                              _vm.show(post)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-eye" })]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(1, true),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          _vm.trash(post.id, index)
+                        }
                       }
-                    }
-                  },
-                  [_c("i", { staticClass: "fa fa-trash" })]
-                )
-              ])
+                    },
+                    [_c("i", { staticClass: "fa fa-trash" })]
+                  )
+                ],
+                1
+              )
             ])
           })
         )
@@ -58755,15 +58799,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success " }, [
-      _c("i", { staticClass: "fa fa-eye" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-info " }, [
+    return _c("button", { staticClass: "btn btn-info" }, [
       _c("i", { staticClass: "fa fa-edit" })
     ])
   }
@@ -61700,8 +61736,10 @@ exports.push([module.i, "\n.check[data-v-286fd882]{\r\n    border: solid 1px bla
 
 /***/ }),
 /* 148 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -61748,6 +61786,25 @@ exports.push([module.i, "\n.check[data-v-286fd882]{\r\n    border: solid 1px bla
 //
 //
 //
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            post: ''
+        };
+    },
+    created: function created() {
+        this.post = JSON.parse(localStorage.getItem('curentPost'));
+    },
+    destroyed: function destroyed() {
+        localStorage.removeItem('curentPost');
+    }
+});
 
 /***/ }),
 /* 149 */
@@ -61769,38 +61826,13 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-5" }, [
           _c("img", {
             staticClass: "ml-1 mb-2 mt-2",
-            attrs: { src: "#", width: "405%", height: "300px" }
-          }),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "ml-1 mb-1",
-            attrs: { src: "#", width: "95px", height: "90px" }
-          }),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "ml-1 mb-1",
-            attrs: { src: "#", width: "95px", height: "90px" }
-          }),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "ml-1 mb-1",
-            attrs: { src: "#", width: "95px", height: "90px" }
-          }),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "ml-1 mb-1",
-            attrs: { src: "#", width: "95px", height: "90px" }
-          }),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "ml-1 mb-1",
-            attrs: { src: "#", width: "95px", height: "90px" }
+            attrs: { src: "#", width: "405px", height: "300px" }
           })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6  check mt-2 mb-2  text-center" }, [
           _c("div", { staticClass: "text-center" }, [
-            _c("h1", {}, [_vm._v("Titlu test")])
+            _c("h1", {}, [_vm._v("  test  ")])
           ]),
           _vm._v(" "),
           _c("br"),

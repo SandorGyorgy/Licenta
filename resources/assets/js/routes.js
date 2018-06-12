@@ -24,8 +24,10 @@ const routes = [
 
     },
     {
-        path: '/view/post',
-        component: ViewPost
+        path: '/post/:id',
+        component: ViewPost,
+        name: 'post'
+        
 
     },
     {
