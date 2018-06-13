@@ -11,15 +11,13 @@ import App from './components/App.vue';
 import Vuex from 'vuex';
 import { store } from './store';
 import Snotify from 'vue-snotify';
-import 'vue-snotify/styles/material.css'; 
+import 'vue-snotify/styles/material.css';
+import VueTextareaAutosize from 'vue-textarea-autosize'
+ 
 
 
-
+Vue.use(VueTextareaAutosize) 
 Vue.use(Snotify);
-
-
-
-
 
 // Router
 Vue.use(VueRouter);

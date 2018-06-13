@@ -21,10 +21,7 @@
     </head>
     <body>
 
-
-      
       <div id="app"> </div>
-
 
 
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 

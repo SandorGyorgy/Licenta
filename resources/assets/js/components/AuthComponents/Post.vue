@@ -51,12 +51,17 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <textarea   
+                        <textarea-autosize   
                         class="form-control" 
                         v-model="form.descriere"
+                        
+                        maxlength="1000"
                         placeholder="Descriere">
-                        </textarea>
+                       
+                        </textarea-autosize>
+                        
                     </div>
+                     <span class="float-right char-count">{{  charCount }}/1000</span>
                 </div>
             </div>
 
@@ -159,7 +164,7 @@
                         type="number"  
                         class="form-control" 
                         v-model="form.pretLuna"
-                        placeholder="Pret pe luna ">
+                        placeholder="Pret pe luna in euro">
                     </div>
                 </div>
             </div>
@@ -192,7 +197,7 @@
                          type="number" 
                          class="form-control" 
                          v-model="form.pretJumateAn"
-                         placeholder="Pret pe jumatate de an  ">
+                         placeholder="Pret pe jumatate de an in euro ">
                     </div>
                         
                  </div>
@@ -227,7 +232,7 @@
                         <input type="number"  
                         class="form-control" 
                         v-model="form.pretAn"
-                        placeholder="Pret pe jumatate de an  " >
+                        placeholder="Pret pe jumatate de an in euro " >
                     </div>
                     
 
@@ -418,11 +423,27 @@ export default {
           });
    
     }
-  }
+  },
+  computed:{
+      charCount(){
+          const num = this.form.descriere
+          const ber = num.length
+          return ber
+      }
+  },
+
 };
 </script>
 
 <style scoped>
+
+.char-count{
+    z-index: 3;
+    position: absolute;
+    bottom: 12px;
+    right: 18px;
+    color: rgb(168, 168, 168);
+}
 
 .profilebutton {
     z-index: 2;

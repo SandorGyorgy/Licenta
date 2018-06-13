@@ -3,6 +3,8 @@
  
        <vue-snotify></vue-snotify>
 {{get}}
+
+
        <h3 class="text-center">
     Anunturile mele
       </h3>
@@ -13,9 +15,7 @@
       <th>Titlu</th>
       <th>Pret</th>
       <th>Camere</th>
-      <th class="float-right">Vizualizeaza/Editeaza/Sterge</th>
-     
-
+      <th class="">Vizualizeaza/Editeaza/Sterge</th>
     </thead>
   <tbody>
 
@@ -34,7 +34,7 @@
       <td>{{ post.title }}</td>
       <td>{{ post.price_month }}</td>
       <td>{{ post.room_nr }}</td>
-      <td class="float-right"> 
+      <td > 
 
         <router-link :to="{ name: 'post' , params:{ id: post.id } }">
               <button 
@@ -76,7 +76,7 @@
 </div>
 </template>
 <script>
-import axiosAuth from "../../axios-auth";
+import axios from "../../axios-auth";
 import {SnotifyPosition, SnotifyStyle} from 'vue-snotify';
 export default {
   data() {
@@ -91,8 +91,8 @@ export default {
 
   computed:{
  get() {
-      const token = localStorage.getItem("token");
-      axiosAuth.get("user/posts")
+      
+      axios.get("user/posts")
         .then(response => {
           const data = response.data.post;
           for (var i in data) {
@@ -147,7 +147,7 @@ export default {
          userId: localStorage.getItem("userId")
        } 
        const vm = this;
-       axiosAuth.post("post/delete" , data)
+       axios.post("post/delete" , data)
        .then(response => {
          if(response.status == 200){
            vm.posts.splice(index , 1);
@@ -172,5 +172,15 @@ export default {
     width: 80%;
     margin: 0px auto;
     float: none;
+}
+.check{
+  border: solid 1px black
+}
+.check:hover{
+  background-color: aqua;
+}
+
+.check button{
+  float:right;
 }
 </style>

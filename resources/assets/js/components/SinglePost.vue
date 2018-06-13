@@ -4,7 +4,7 @@
 <div class="col-md-5">
 
     <div  class="mb-2 mt-2 ml-1" id="displayImage">
-            <img :src="currentImage" height="100%" width="100%">
+            <img :src="currentImage" height="100%" width="100%" class="rounded">
             <i @click="prev" class="fa fa-chevron-left fa-3x arrowLeft" align="right"></i>
             <i @click="next" class="fa fa-chevron-right fa-3x arrowRight"></i>
              
@@ -19,38 +19,48 @@
     @click="change(index)"
     width="98px" 
     height="90px" 
-    class="ml-1 mb-1">
+    class="ml-1 mb-2">
 
 
 
 </div>
 
-<div class="col-md-6  check mt-2 mb-2  text-center">
+<div class="col-md-6  check mt-2 mb-2 ">
     <div class="text-center">
       <h1 class="">  {{ post.title }}  </h1>
      
     </div>
     <br>
-    <div class="row">
-        <i class="fa fa-bed fa-2x ml-3" title="Numar camere">: {{ post.room_nr }} </i>
-        <h3 class="offset-2">  40  m<sup>2</sup> </h3>
-        <h3 class="offset-2"> {{post.price_month}}  €</h3>
-    </div>
+    
+   
+       
+          
+            <div class="row">
+             
+            <i class="fa fa-bed fa-2x ml-3 col-md-3 " title="Numar camere">: {{ post.room_nr }} </i>
+            <h3 class="col-md-3">{{post.dimension}} m<sup>2</sup> </h3>
+            <h3 class="col-md-4">Pret: {{post.price_month}}€</h3>
+            </div>
+            
+     
+
+    
+    
 
     <br><br>
-        
-        <h5> {{ post.description }} </h5>
+        <p> {{ post.description }} </p>
+
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+                <img src="https://www.e-spincorp.com/wp-content/uploads/2015/09/Retina-Network-Security-Scanner-Demo-by-E-SPIN.jpg" height="120px" width="120px" class="rounded-circle">
+
 </div>
-</div>
-
-<div class="row">
-
-<div class="col-md-5 check ml-3">
-
-        <h1> postat de catre : ...</h1>
-
-</div>
-
 </div>
 
 
@@ -84,7 +94,6 @@ this.get();
 },
 
 computed:{
- 
 
      currentImage(){
          if(this.currentNumber == this.images.length){
@@ -106,7 +115,7 @@ methods:{
      .then(response => {
        vm.post = response.data.post
        vm.images = vm.filter_array(Object.values(response.data.images))
-      // console.log(response.data)
+       console.log(response.data.post)
     })
     .catch(error => console.log(error))
 
@@ -142,7 +151,9 @@ methods:{
 
 </script>
 <style scoped>
-
+.circle{
+    border-radius: 50%;
+}
 .check{
     border: solid 1px black;
 }
