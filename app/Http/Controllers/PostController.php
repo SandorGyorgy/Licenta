@@ -44,7 +44,7 @@ class PostController extends Controller
             $location->lat = $request->lat;
             $location->lng = $request->lng;
 
-
+      
             $images = new Images;
             $gallery = $request->file('images');
             for($i = 0 ; $i < sizeof($gallery) ; $i++){
@@ -56,7 +56,7 @@ class PostController extends Controller
                $images->{$column} = "http://licenta.test/images/".$imageName;
             }
 
-           $images->save();
+            $images->save();
            
             $post = new Post;
             $post->title = $request->title ;
@@ -78,6 +78,8 @@ class PostController extends Controller
             $location->update();
             $post->update();
             $images->update();
+
+       
                 
     }
 

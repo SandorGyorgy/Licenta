@@ -29,9 +29,9 @@
       </gmap-marker> 
      
         <gmap-info-window
-            :opened="infoWinOpen" 
+            :opened="infoWinOpen"
             :position="infoWindowPos"
-            @click="infoWinOpen=false"
+            @click="infoWinOpen=!infoWinOpen"
             :options="infoOptions"
             
             >
@@ -55,6 +55,15 @@
 
             <div>
               $ {{ detalii.pret }}
+                  <br>
+                <router-link v-if="detalii.id" :to="{ name: 'post' , params:{ id : detalii.id } }">
+              <button 
+              class="btn btn-success"
+              >
+                  <i class="fa fa-eye"></i>
+              </button> 
+        </router-link>
+
             </div>
 
           </div>
@@ -86,6 +95,7 @@ export default {
       infoWindowPos: null,
       currentNumber:0,
       detalii: {
+        id: "",
         titlu: "",
         descriere: "",
         camere: "",
@@ -132,6 +142,7 @@ export default {
               lng: data[i].location.lng
             };
             const info = {
+              id: data[i].id,
               titlu: data[i].title,
               descriere: data[i].description,
               camere: data[i].room_nr,
@@ -146,12 +157,15 @@ export default {
 
         })
         .catch(error => console.log(error));
+
+        console.log(this.markers)
     },
 
 
     toggleInfoWindow(m, index) {
       this.infoWindowPos = m.position;
       this.infoWinOpen = !this.infoWinOpen;
+      this.detalii.id = m.info.id;
       this.detalii.titlu = m.info.titlu;
       this.detalii.descriere = m.info.descriere;
       this.detalii.camere = m.info.camere;

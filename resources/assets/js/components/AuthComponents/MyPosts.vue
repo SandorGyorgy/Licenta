@@ -39,7 +39,6 @@
         <router-link :to="{ name: 'post' , params:{ id: post.id } }">
               <button 
               class="btn btn-success"
-              @click="show(post)"
               >
                   <i class="fa fa-eye"></i>
               </button> 
@@ -135,12 +134,6 @@ export default {
         })
     },
    
-   show(post){
-       //localStorage.setItem('curentPost' , JSON.stringify(post))
-      //this.$router.push({ name: "viewPost" });
-
-   },
-
     trash(id ,index){
        const data ={
          id: id,

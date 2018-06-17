@@ -57114,6 +57114,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -57126,6 +57135,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       infoWindowPos: null,
       currentNumber: 0,
       detalii: {
+        id: "",
         titlu: "",
         descriere: "",
         camere: "",
@@ -57169,6 +57179,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             lng: data[i].location.lng
           };
           var info = {
+            id: data[i].id,
             titlu: data[i].title,
             descriere: data[i].description,
             camere: data[i].room_nr,
@@ -57182,10 +57193,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {
         return console.log(error);
       });
+
+      console.log(this.markers);
     },
     toggleInfoWindow: function toggleInfoWindow(m, index) {
       this.infoWindowPos = m.position;
       this.infoWinOpen = !this.infoWinOpen;
+      this.detalii.id = m.info.id;
       this.detalii.titlu = m.info.titlu;
       this.detalii.descriere = m.info.descriere;
       this.detalii.camere = m.info.camere;
@@ -57298,7 +57312,7 @@ var render = function() {
                 },
                 on: {
                   click: function($event) {
-                    _vm.infoWinOpen = false
+                    _vm.infoWinOpen = !_vm.infoWinOpen
                   }
                 }
               },
@@ -57337,13 +57351,39 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("div", { staticClass: "container mt-3" }, [
-                      _c("div", [
-                        _vm._v(
-                          "\n            $ " +
-                            _vm._s(_vm.detalii.pret) +
-                            "\n          "
-                        )
-                      ])
+                      _c(
+                        "div",
+                        [
+                          _vm._v(
+                            "\n            $ " +
+                              _vm._s(_vm.detalii.pret) +
+                              "\n                "
+                          ),
+                          _c("br"),
+                          _vm._v(" "),
+                          _vm.detalii.id
+                            ? _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "post",
+                                      params: { id: _vm.detalii.id }
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "button",
+                                    { staticClass: "btn btn-success" },
+                                    [_c("i", { staticClass: "fa fa-eye" })]
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
                     ])
                   ],
                   2
@@ -58612,7 +58652,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -58669,11 +58708,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           type: __WEBPACK_IMPORTED_MODULE_1_vue_snotify__["b" /* SnotifyStyle */].success
         }
       });
-    },
-    show: function show(post) {
-      //localStorage.setItem('curentPost' , JSON.stringify(post))
-      //this.$router.push({ name: "viewPost" });
-
     },
     trash: function trash(id, index) {
       var data = {
@@ -58744,18 +58778,9 @@ var render = function() {
                       attrs: { to: { name: "post", params: { id: post.id } } }
                     },
                     [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          on: {
-                            click: function($event) {
-                              _vm.show(post)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fa fa-eye" })]
-                      )
+                      _c("button", { staticClass: "btn btn-success" }, [
+                        _c("i", { staticClass: "fa fa-eye" })
+                      ])
                     ]
                   ),
                   _vm._v(" "),
@@ -58905,7 +58930,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.char-count[data-v-263a0d57]{\r\n    z-index: 3;\r\n    position: absolute;\r\n    bottom: 12px;\r\n    right: 18px;\r\n    color: rgb(168, 168, 168);\n}\n.profilebutton[data-v-263a0d57] {\r\n    z-index: 2;\r\n    position: absolute;\r\n    right: -6px;\r\n    top: -6px;\r\n    float: right;\r\n    margin: auto;\r\n    font-weight: bold;\n}\nh3[data-v-263a0d57]{\r\n        color: rgb(102, 102, 102);\n}\nh3[data-v-263a0d57]:hover{\r\n        color: red;\n}\n.imageStyle[data-v-263a0d57] {\r\n  width: 250px;\r\n  height: 150px;\n}\n.tz-gallery[data-v-263a0d57] {\r\n  padding: 40px;\n}\r\n\r\n/* Override bootstrap column paddings */\n.tz-gallery .row > div[data-v-263a0d57] {\r\n  padding: 2px;\n}\n.tz-gallery .lightbox img[data-v-263a0d57] {\r\n  width: 100%;\r\n  border-radius: 0;\r\n  position: relative;\n}\n@media (max-width: 768px) {\nbody[data-v-263a0d57] {\r\n    padding: 0;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.image-picker[data-v-263a0d57] {\r\n    color: white;\n}\n.char-count[data-v-263a0d57]{\r\n    z-index: 3;\r\n    position: absolute;\r\n    bottom: 12px;\r\n    right: 18px;\r\n    color: rgb(168, 168, 168);\n}\n.profilebutton[data-v-263a0d57] {\r\n    z-index: 2;\r\n    position: absolute;\r\n    right: -6px;\r\n    top: -6px;\r\n    float: right;\r\n    margin: auto;\r\n    font-weight: bold;\n}\nh3[data-v-263a0d57]{\r\n        color: rgb(102, 102, 102);\n}\nh3[data-v-263a0d57]:hover{\r\n        color: red;\n}\n.imageStyle[data-v-263a0d57] {\r\n  width: 250px;\r\n  height: 150px;\n}\n.tz-gallery[data-v-263a0d57] {\r\n  padding: 40px;\n}\r\n\r\n/* Override bootstrap column paddings */\n.tz-gallery .row > div[data-v-263a0d57] {\r\n  padding: 2px;\n}\n.tz-gallery .lightbox img[data-v-263a0d57] {\r\n  width: 100%;\r\n  border-radius: 0;\r\n  position: relative;\n}\n@media (max-width: 768px) {\nbody[data-v-263a0d57] {\r\n    padding: 0;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -58918,10 +58943,6 @@ exports.push([module.i, "\n.char-count[data-v-263a0d57]{\r\n    z-index: 3;\r\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__axios_auth__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_snotify__ = __webpack_require__(16);
-//
-//
-//
-//
 //
 //
 //
@@ -59241,7 +59262,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             id: localStorage.getItem("userId"),
             plata_jumate_an: false,
-            plata_an: false
+            plata_an: false,
+            imgCount: true
         };
     },
 
@@ -59251,30 +59273,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.currentPlace = place;
         },
         onFileChange: function onFileChange(e) {
+            var _this = this;
+
             var files = e.target.files;
-            this.form.files = files;
-            var vm = this;
-            var photos = [];
-            if (files) {
-                var files_count = files.length;
-                for (var i = 0; i < files_count; i++) {
-                    var reader = new FileReader();
-                    var image = "";
-                    reader.onload = function (e) {
-                        image = e.target.result;
-                        photos.push(image);
-                    };
-                    reader.readAsDataURL(files[i]);
-                }
-                vm.form.images = photos;
+
+            //daca exista imagini pentru preview adauga la cele existente sau creaza array gol
+            if (this.form.images) {
+                var photos = this.form.images;
+            } else {
+                var photos = [];
+            }
+            var files_count = files.length + this.form.images.length;
+            var curentFileLength = files.length;
+            if (files && files_count <= 8) {
+                var reader;
+                var image;
+
+                (function () {
+                    var vm = _this;
+                    var photos = [];
+
+                    // daca exista fisiere adauga la cele existente sau creaza array de fisiere nou
+                    if (_this.form.files) {
+                        var formFiles = _this.form.files;
+                        for (var i = 0; i < curentFileLength; i++) {
+                            formFiles.push(files[i]);
+                        }
+                        _this.form.files = formFiles;
+                    } else {
+                        _this.form.files = files;
+                    }
+
+                    for (var _i = 0; _i < curentFileLength; _i++) {
+                        reader = new FileReader();
+                        image = "";
+
+                        reader.onload = function (e) {
+                            image = e.target.result;
+                            photos.push(image);
+                        };
+                        reader.readAsDataURL(files[_i]);
+                    }
+                    vm.form.images = photos;
+                })();
+            } else {
+                this.error('Eroare', '');
             }
         },
-
-
-        removeImage: function removeImage(e) {
-            this.form.images = "";
+        trash: function trash(index) {
+            this.form.images.splice(index, 1);
+            this.form.files.splice(index, 1);
         },
-
         error: function error(text, continut) {
             this.$snotify.create({
                 title: text,
@@ -59354,6 +59403,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     vm.success("Succes!", "Chiria a fost adaugata!");
                     vm.reset();
                 }
+
+                console.log(response);
             }).catch(function (error) {
                 if (error) {
                     vm.error("Eroare!", "A aparut o eroare , incercati din nou mai tarziu!");
@@ -59366,6 +59417,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var num = this.form.descriere;
             var ber = num.length;
             return ber;
+        },
+        imgCounter: function imgCounter() {
+            var array = this.form.images;
+            var counter = array.length;
+            if (counter < 8) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -59701,9 +59761,7 @@ var render = function() {
                       ]
                     )
                   ])
-                ]),
-                _vm._v(" "),
-                _vm._m(7)
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -59774,9 +59832,7 @@ var render = function() {
                       ]
                     )
                   ])
-                ]),
-                _vm._v(" "),
-                _vm._m(8)
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -59792,55 +59848,79 @@ var render = function() {
                           "div",
                           { staticClass: "input-group mb-2 mr-sm-2 mb-sm-0" },
                           [
-                            !_vm.form.images
+                            _vm.imgCounter
                               ? _c("div", [
                                   _c("input", {
+                                    ref: "imageInput",
+                                    staticStyle: { display: "none" },
                                     attrs: { type: "file", multiple: "" },
                                     on: { change: _vm.onFileChange }
-                                  })
-                                ])
-                              : _c("div", { staticClass: "tz-gallery" }, [
+                                  }),
+                                  _vm._v(" "),
                                   _c(
-                                    "div",
-                                    { staticClass: "row" },
-                                    _vm._l(_vm.form.images, function(
-                                      image,
-                                      index
-                                    ) {
-                                      return _c(
-                                        "div",
-                                        {
-                                          key: index,
-                                          staticClass: "col-sm-6 col-md-4"
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-info",
+                                      on: {
+                                        submit: function($event) {
+                                          $event.preventDefault()
                                         },
-                                        [
-                                          _c(
-                                            "div",
-                                            { staticClass: "lightbox preview" },
-                                            [
-                                              _c(
-                                                "h3",
-                                                {
-                                                  staticClass:
-                                                    "btn profilebutton"
-                                                },
-                                                [_vm._v("X")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c("img", {
-                                                staticClass: "imageStyle",
-                                                attrs: {
-                                                  src: image,
-                                                  alt: "Show"
-                                                }
-                                              })
-                                            ]
-                                          )
-                                        ]
+                                        click: function($event) {
+                                          _vm.$refs.imageInput.click()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "image-picker" },
+                                        [_vm._v(" Selectati Imagini ")]
                                       )
-                                    })
+                                    ]
                                   )
                                 ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "tz-gallery" }, [
+                              _c(
+                                "div",
+                                { staticClass: "row" },
+                                _vm._l(_vm.form.images, function(image, index) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      key: index,
+                                      staticClass: "col-sm-6 col-md-4"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "lightbox preview" },
+                                        [
+                                          _c(
+                                            "h3",
+                                            {
+                                              staticClass: "btn profilebutton",
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.trash(index)
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("X")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("img", {
+                                            staticClass: "imageStyle",
+                                            attrs: { src: image, alt: "Show" }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                })
+                              )
+                            ])
                           ]
                         )
                       ]
@@ -59849,7 +59929,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(9)
+              _vm._m(7)
             ])
           ]
         )
@@ -59872,26 +59952,6 @@ var staticRenderFns = [
         _c("h2", [_vm._v("Adaugati o chirie noua")]),
         _vm._v(" "),
         _c("hr")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
       ])
     ])
   },

@@ -19,63 +19,64 @@
 
 
 
-            <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
+<div class="row">
+    <div class="col-md-3 field-label-responsive"> </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <input 
-                        type="text"  
-                        class="form-control"
-                        v-model="form.titlu" 
-                        placeholder="Titlu">
-                    </div>
-                </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <input 
+                type="text"  
+                class="form-control"
+                v-model="form.titlu" 
+                placeholder="Titlu">
             </div>
-
-            <div class="col-md-3">
-                <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-
-                        </span>
-                </div>
-            </div>  
         </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-control-feedback">
+                <span class="text-danger align-middle">
+
+                </span>
+        </div>
+    </div>  
+</div>
 
 
 
-         <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
+<div class="row">
+    <div class="col-md-3 field-label-responsive"> </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <textarea-autosize   
-                        class="form-control" 
-                        v-model="form.descriere"
-                        
-                        maxlength="1000"
-                        placeholder="Descriere">
-                       
-                        </textarea-autosize>
-                        
-                    </div>
-                     <span class="float-right char-count">{{  charCount }}/1000</span>
-                </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <textarea-autosize   
+                class="form-control" 
+                v-model="form.descriere"
+                
+                maxlength="1000"
+                placeholder="Descriere">
+                
+                </textarea-autosize>
+                
             </div>
-
-            <div class="col-md-3">
-                <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-
-                        </span>
-                </div>
-            </div>  
+                <span class="float-right char-count">{{  charCount }}/1000</span>
         </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-control-feedback">
+                <span class="text-danger align-middle">
+
+                </span>
+        </div>
+    </div>  
+</div>
 
 
 
+    <!-- Numar camere -->
          <div class="row">
             <div class="col-md-3 field-label-responsive"> </div>
 
@@ -100,31 +101,32 @@
             </div>  
         </div>
 
- <div class="row">
+    <!-- metri patrati -->
+        <div class="row">
             <div class="col-md-3 field-label-responsive"> </div>
 
             <div class="col-md-6">
-                <div class="form-group">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <input 
-                        type="number"
-                        v-model="form.metriiPatrati"  
-                        class="form-control" 
-                        placeholder="Metrii patrati" >
-                    </div>
+            <div class="form-group">
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <input 
+                    type="number"
+                    v-model="form.metriiPatrati"  
+                    class="form-control" 
+                    placeholder="Metrii patrati" >
                 </div>
+            </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-
+                                
                         </span>
                 </div>
             </div>  
         </div>
-        
-
+    
+    <!-- Adresa chirie -->
         <div class="row">
             <div class="col-md-3 field-label-responsive"> </div>
             <div class="col-md-6">
@@ -151,9 +153,7 @@
             </div>
         </div>
 
-        
-
-
+    <!-- plata pe luna -->
         <div class="row">
             <div class="col-md-3 field-label-responsive"> </div>
 
@@ -178,7 +178,7 @@
             </div>  
         </div>
 
-
+    <!-- plata pe jumate de an  -->
          <div class="row">
             <div class="col-md-3 field-label-responsive"> </div>
             <div class="col-md-6">
@@ -205,16 +205,10 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-
-                        </span>
-                </div>
-            </div>
+         
         </div>
 
-
+    <!-- plata pe an -->
          <div class="row">
             <div class="col-md-3 field-label-responsive"> </div>
             <div class="col-md-6">
@@ -241,47 +235,49 @@
                 </div>
             </div>
 
-           <div class="col-md-3">
-                <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-
-                        </span>
-                </div>
-            </div>
+          
 
         </div> 
 
 
+    <!-- Preview poze -->
+        <div class="row">
+                <div class="col-md-3 field-label-responsive"> </div>
+                <div class="col-md-6">
+                    <div class="form-group has-danger">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 
-    <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
-            <div class="col-md-6">
-                <div class="form-group has-danger">
-                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                   <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div v-if="imgCounter">
+                    <input type="file" 
+                    style="display: none" 
+                    ref="imageInput" 
+                    @change="onFileChange" 
+                    multiple>
+                    <a 
+                    class="btn btn-info"
+                    @submit.prevent 
+                    @click="$refs.imageInput.click()"> <span class="image-picker"> Selectati Imagini </span></a>
+                </div> 
+                <div class="tz-gallery" >
+                    <div class="row">
+                    <div v-for="(image , index) in form.images" :key="index"  class="col-sm-6 col-md-4">
+                <div class="lightbox preview">
+                    <h3 class="btn profilebutton" @click="trash(index)">X</h3>
+                    <img :src="image"  class="imageStyle" alt="Show">
+                    
+                </div>
 
-<div v-if="!form.images">
-    <input type="file" @change="onFileChange" multiple>
-  </div> 
-  <div v-else class="tz-gallery" >
-      <div class="row">
-      <div v-for="(image , index) in form.images" :key="index"  class="col-sm-6 col-md-4">
-  <div class="lightbox preview">
-      <h3 class="btn profilebutton">X</h3>
-      <img :src="image"  class="imageStyle" alt="Show">
-      
-   </div>
- 
-    </div>
-      </div>
-    
-              </div>  
+            </div>
+            </div>
+            
+                    </div>  
+                </div>
+            </div>
+            </div>
+
+            </div> 
         </div>
-    </div>
-    </div>
-
-</div> 
-  </div>
 
   
 
@@ -322,6 +318,7 @@ export default {
         id: localStorage.getItem("userId"),
         plata_jumate_an: false,
         plata_an: false,
+        imgCount: true ,
     };
   },
 
@@ -332,12 +329,33 @@ export default {
 
     onFileChange(e) {
       var files = e.target.files;
-      this.form.files = files; 
-      var vm = this;
-      var photos = [];
-      if (files) {
-        var files_count = files.length;
-        for (let i = 0; i < files_count; i++) {
+  
+  //daca exista imagini pentru preview adauga la cele existente sau creaza array gol
+      if(this.form.images){
+          var photos = this.form.images
+      }else{
+           var photos = [];
+      }
+      var files_count = files.length + this.form.images.length;
+      var curentFileLength = files.length
+      if (files && files_count <= 8) {
+        const vm = this;
+        const photos = [];
+
+ // daca exista fisiere adauga la cele existente sau creaza array de fisiere nou
+        if(this.form.files){
+            const formFiles = this.form.files
+            for(let i = 0 ; i < curentFileLength; i++ ){
+                formFiles.push(files[i])
+            }
+            this.form.files = formFiles
+        }else{
+            this.form.files = files
+        }
+
+
+
+        for (let i = 0; i < curentFileLength; i++) {
           var reader = new FileReader();
           var image = "";
           reader.onload = function(e) {
@@ -347,12 +365,17 @@ export default {
           reader.readAsDataURL(files[i]);
         }
         vm.form.images = photos
+      }else{
+          this.error('Eroare' , '')
       }
     },
 
-    removeImage: function(e) {
-      this.form.images = "";
+    trash(index){
+        this.form.images.splice(index , 1);
+        this.form.files.splice(index , 1);
+        
     },
+
 
     error(text , continut){
         this.$snotify.create({
@@ -408,6 +431,8 @@ export default {
             chirie.append("images[]" , item);
         }
 
+      
+
         axiosAuth
           .post(`/user/post`, chirie)
           .then( function(response){
@@ -415,6 +440,8 @@ export default {
                    vm.success("Succes!" , "Chiria a fost adaugata!");
                    vm.reset();
               }
+
+              console.log(response)
           })
           .catch(error =>{
               if(error){
@@ -429,13 +456,28 @@ export default {
           const num = this.form.descriere
           const ber = num.length
           return ber
+      },
+      imgCounter(){
+         const array =  this.form.images;
+         const counter = array.length; 
+         if(counter < 8){
+             return true;
+         }else{
+             return false;
+         }
+         
       }
   },
+
+ 
 
 };
 </script>
 
 <style scoped>
+.image-picker {
+    color: white;
+}
 
 .char-count{
     z-index: 3;
