@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('user/logout', 'AuthController@logout');
     Route::get('/user' ,  function(Request $request) {
-        return auth()->user()->only('id' , 'name' , 'email' , 'phone' , 'is_admin');
+        return auth()->user()->only('id' , 'name' , 'email' , 'phone' , 'profile_picture');
     });
    
     Route::post('/user/post' , 'PostController@store');

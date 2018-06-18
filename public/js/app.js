@@ -28614,7 +28614,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         userId: null,
         userEmail: null,
         userPhone: null,
-        router: localStorage.getItem('token')
+        router: localStorage.getItem('token'),
+        profilePic: null
 
     },
 
@@ -28625,15 +28626,17 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             state.userName = userData.userName;
             state.userEmail = userData.userEmail;
             state.userPhone = userData.userPhone;
+            state.profilePic = userData.profilePic;
         },
         logoutUser: function logoutUser(state) {
-            state.token = null, state.userName = null, state.userId = null, state.userEmail = null, state.userPhone = null;
+            state.token = null, state.userName = null, state.userId = null, state.userEmail = null, state.userPhone = null, state.profilePic = null;
 
             localStorage.removeItem('token');
             localStorage.removeItem('userName');
             localStorage.removeItem('userId');
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userPhone');
+            localStorage.removeItem('profilePic');
         }
     },
 
@@ -28670,6 +28673,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             var userName = localStorage.getItem('userName');
             var userEmail = localStorage.getItem('userEmail');
             var userPhone = localStorage.getItem('userPhone');
+            var profilePic = localStorage.getItem('profilePic');
             if (!token) {
                 return;
             }
@@ -28679,7 +28683,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
                 userId: userId,
                 userName: userName,
                 userEmail: userEmail,
-                userPhone: userPhone
+                userPhone: userPhone,
+                profilePic: profilePic
             });
         },
 
@@ -28715,13 +28720,15 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
                     userName: response.data.name,
                     userEmail: response.data.email,
                     userPhone: response.data.phone,
-                    token: localStorage.getItem('token')
+                    token: localStorage.getItem('token'),
+                    profilePic: response.data.profile_picture
                 });
                 //saving the user data to the local storage 
                 localStorage.setItem('userId', response.data.id);
                 localStorage.setItem('userName', response.data.name);
                 localStorage.setItem('userEmail', response.data.email);
                 localStorage.setItem('userPhone', response.data.phone);
+                localStorage.setItem('profilePic', response.data.profile_picture);
                 location.reload();
             }).catch(function (error) {
                 return console.log(error);
@@ -58510,19 +58517,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
-  },
-
-  computed: {
-    phone: function phone() {
-      return this.$store.state.userPhone;
-    },
-    email: function email() {
-      return this.$store.state.userEmail;
-    }
+    return {
+      profilePic: this.$store.state.profilePic,
+      phone: this.$store.state.userPhone,
+      email: this.$store.state.userEmail
+    };
   }
 });
 
@@ -58537,7 +58541,12 @@ var render = function() {
   return _c("div", [
     _c("p", [_vm._v(_vm._s(_vm.phone))]),
     _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.email))])
+    _c("p", [_vm._v(_vm._s(_vm.email))]),
+    _vm._v(" "),
+    _c("img", {
+      staticClass: "rounded-circle",
+      attrs: { src: _vm.profilePic, height: "180", width: "180" }
+    })
   ])
 }
 var staticRenderFns = []

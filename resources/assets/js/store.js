@@ -14,7 +14,8 @@ export const store = new Vuex.Store({
         userId: null,
         userEmail: null,
         userPhone: null,
-        router: localStorage.getItem('token')
+        router: localStorage.getItem('token'),
+        profilePic: null
 
     },
 
@@ -26,6 +27,7 @@ export const store = new Vuex.Store({
             state.userName = userData.userName
             state.userEmail = userData.userEmail
             state.userPhone = userData.userPhone
+            state.profilePic = userData.profilePic
 
         },
 
@@ -34,14 +36,15 @@ export const store = new Vuex.Store({
                 state.userName = null,
                 state.userId = null,
                 state.userEmail = null,
-                state.userPhone = null
+                state.userPhone = null,
+                state.profilePic = null
 
             localStorage.removeItem('token');
             localStorage.removeItem('userName');
             localStorage.removeItem('userId');
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userPhone');
-
+            localStorage.removeItem('profilePic');
         }
 
     },
@@ -71,6 +74,7 @@ export const store = new Vuex.Store({
             const userName = localStorage.getItem('userName')
             const userEmail = localStorage.getItem('userEmail')
             const userPhone = localStorage.getItem('userPhone')
+            const profilePic = localStorage.getItem('profilePic')
             if (!token) {
                 return
             }
@@ -80,7 +84,8 @@ export const store = new Vuex.Store({
                 userId: userId,
                 userName: userName,
                 userEmail: userEmail,
-                userPhone: userPhone
+                userPhone: userPhone,
+                profilePic: profilePic
             })
 
         },
@@ -113,13 +118,15 @@ export const store = new Vuex.Store({
                         userName: response.data.name,
                         userEmail: response.data.email,
                         userPhone: response.data.phone,
-                        token: localStorage.getItem('token')
+                        token: localStorage.getItem('token'),
+                        profilePic: response.data.profile_picture
                     })
                     //saving the user data to the local storage 
                     localStorage.setItem('userId', response.data.id)
                     localStorage.setItem('userName', response.data.name)
                     localStorage.setItem('userEmail', response.data.email)
                     localStorage.setItem('userPhone', response.data.phone)
+                    localStorage.setItem('profilePic' , response.data.profile_picture)
                     location.reload()
                 })
                 .catch(error => console.log(error))
