@@ -25,15 +25,12 @@
 
 </div>
 
-<div class="col-md-6  check mt-2 mb-2 ">
+<div class="col-md-6  mt-2 mb-2 ">
     <div class="text-center">
       <h1 class="">  {{ post.title }}  </h1>
      
     </div>
     <br>
-    
-   
-       
           
             <div class="row">
              
@@ -58,7 +55,10 @@
         <br>
         <br>
         <br>
-                <img src="https://www.e-spincorp.com/wp-content/uploads/2015/09/Retina-Network-Security-Scanner-Demo-by-E-SPIN.jpg" height="120px" width="120px" class="rounded-circle">
+<img :src="user.profile_picture" 
+     height="120px" 
+     width="120px" 
+     class="rounded-circle">
 
 </div>
 </div>
@@ -78,7 +78,8 @@ export default{
         id: this.$route.params.id,
         currentNumber: 0,
         active:'',
-        incative:''
+        incative:'',
+        user:[]
     };
 },
 watch: {
@@ -115,20 +116,26 @@ methods:{
      .then(response => {
        vm.post = response.data.post
        vm.images = vm.filter_array(Object.values(response.data.images))
-       console.log(response.data.post)
+       vm.user = response.data.user
+       
     })
     .catch(error => console.log(error))
 
     },
+
     change(index){
         this.currentNumber = index
     },
-    next: function() {
+
+    next(){
             this.currentNumber += 1
         },
-    prev: function() {
+
+    prev(){
            this.currentNumber -= 1
         },
+
+
     filter_array(test_array) {
     var index = -1,
     arr_length = test_array ? test_array.length : 0,

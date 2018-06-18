@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->mediumText('description');
+            $table->string('description' , 1000);
             $table->string('room_nr');
             $table->integer('price_month');
             $table->integer('dimension');

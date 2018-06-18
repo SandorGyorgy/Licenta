@@ -116,6 +116,7 @@
                        
                        <input type="file" @change="onFileChange" ref="imageInput" style="display:none">
                        <a 
+                    v-if="!preview"   
                     class="btn btn-info"
                     @submit.prevent 
                     @click="$refs.imageInput.click()"> <span class="image-picker"> Selectati Poza de Profil </span></a>

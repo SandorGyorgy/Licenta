@@ -87,13 +87,15 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        $location = Location::where('post_id' , $id)->firstOrFail();
+        $location = Location::where('post_id' , $id)->firstOrFail()->only('lat','lng','address');
         $images = Images::where('post_id' , $id)->firstOrFail();
+        $user = User::where('id' , $post->user_id)->firstOrFail()->only('email' , 'name' ,'phone' ,'profile_picture');
     
         return response()->json([
             'post' => $post , 
             'location' => $location , 
-            'images' => $images
+            'images' => $images,
+            'user' => $user,
         ]);
     }
 

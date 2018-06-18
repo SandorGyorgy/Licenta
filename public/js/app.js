@@ -58045,6 +58045,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -58295,25 +58296,27 @@ var render = function() {
                     on: { change: _vm.onFileChange }
                   }),
                   _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-info",
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
+                  !_vm.preview
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-info",
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                            },
+                            click: function($event) {
+                              _vm.$refs.imageInput.click()
+                            }
+                          }
                         },
-                        click: function($event) {
-                          _vm.$refs.imageInput.click()
-                        }
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "image-picker" }, [
-                        _vm._v(" Selectati Poza de Profil ")
-                      ])
-                    ]
-                  )
+                        [
+                          _c("span", { staticClass: "image-picker" }, [
+                            _vm._v(" Selectati Poza de Profil ")
+                          ])
+                        ]
+                      )
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "tz-gallery" }, [
@@ -60382,7 +60385,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             id: this.$route.params.id,
             currentNumber: 0,
             active: '',
-            incative: ''
+            incative: '',
+            user: []
         };
     },
 
@@ -60415,7 +60419,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].get(url).then(function (response) {
                 vm.post = response.data.post;
                 vm.images = vm.filter_array(Object.values(response.data.images));
-                console.log(response.data.post);
+                vm.user = response.data.user;
             }).catch(function (error) {
                 return console.log(error);
             });
@@ -60423,7 +60427,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         change: function change(index) {
             this.currentNumber = index;
         },
-
         next: function next() {
             this.currentNumber += 1;
         },
@@ -60505,7 +60508,7 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-6  check mt-2 mb-2 " }, [
+      _c("div", { staticClass: "col-md-6  mt-2 mb-2 " }, [
         _c("div", { staticClass: "text-center" }, [
           _c("h1", {}, [_vm._v("  " + _vm._s(_vm.post.title) + "  ")])
         ]),
@@ -60552,8 +60555,7 @@ var render = function() {
         _c("img", {
           staticClass: "rounded-circle",
           attrs: {
-            src:
-              "https://www.e-spincorp.com/wp-content/uploads/2015/09/Retina-Network-Security-Scanner-Demo-by-E-SPIN.jpg",
+            src: _vm.user.profile_picture,
             height: "120px",
             width: "120px"
           }
