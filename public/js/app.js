@@ -57867,7 +57867,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n@media (min-width: 768px) {\n.field-label-responsive[data-v-1cacc25a] {\r\n    padding-top: 0.5rem;\r\n    text-align: right;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.image-picker[data-v-1cacc25a] {\r\n    color: white;\n}\n.imageStyle[data-v-1cacc25a] {\r\n  width: 250px;\r\n  height: 150px;\n}\n.preview[data-v-1cacc25a]{\r\n    border-radius: 50%;\n}\n.tz-gallery[data-v-1cacc25a] {\r\n  padding: 40px;\n}\r\n\r\n/* Override bootstrap column paddings */\n.tz-gallery .row > div[data-v-1cacc25a] {\r\n  padding: 2px;\n}\n.tz-gallery .lightbox img[data-v-1cacc25a] {\r\n  width: 100%;\r\n  border-radius: 0;\r\n  position: relative;\n}\n.trash-button[data-v-1cacc25a] {\r\n    z-index: 2;\r\n    position: absolute;\r\n    right: -6px;\r\n    top: -6px;\r\n    float: right;\r\n    margin: auto;\r\n    font-weight: bold;\n}\nh3[data-v-1cacc25a]{\r\n        color: rgb(102, 102, 102);\n}\nh3[data-v-1cacc25a]:hover{\r\n        color: red;\n}\n@media (min-width: 768px) {\n.field-label-responsive[data-v-1cacc25a] {\r\n    padding-top: 0.5rem;\r\n    text-align: right;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -57998,6 +57998,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -58005,20 +58045,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       name: "",
       email: "",
       phone: "",
-      password: ""
+      password: "",
+      profilePicture: "",
+      preview: ""
     };
   },
 
   methods: {
+    onFileChange: function onFileChange(e) {
+      var files = e.target.files;
+      this.profilePicture = files[0];
+      var vm = this;
+      var photos = [];
+      if (files) {
+        var reader = new FileReader();
+        var image = '';
+        reader.onload = function (e) {
+          image = e.target.result;
+          photos.push(image);
+        };
+        reader.readAsDataURL(files[0]);
+        vm.preview = photos;
+      }
+    },
     onSubmit: function onSubmit() {
-      var formData = {
-        name: this.name,
-        email: this.email,
-        phone: this.phone,
-        password: this.password
-      };
+
+      var formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('email', this.email);
+      formData.append('phone', this.phone);
+      formData.append('password', this.password);
+      formData.append('profilePicture', this.profilePicture);
+
       this.$store.dispatch("register", formData);
       this.$router.push({ name: "login" });
+    },
+    trash: function trash(index) {
+      this.preview.splice(index, 1);
+      this.profilePicture = "";
     }
   }
 });
@@ -58211,7 +58275,80 @@ var render = function() {
             _vm._m(4)
           ]),
           _vm._v(" "),
-          _vm._m(5)
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group has-danger" }, [
+                _c("div", { staticClass: "input-group mb-2 mr-sm-2 mb-sm-0" }, [
+                  _c("input", {
+                    ref: "imageInput",
+                    staticStyle: { display: "none" },
+                    attrs: { type: "file" },
+                    on: { change: _vm.onFileChange }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-info",
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                        },
+                        click: function($event) {
+                          _vm.$refs.imageInput.click()
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "image-picker" }, [
+                        _vm._v(" Selectati Poza de Profil ")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "tz-gallery" }, [
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.preview, function(image, index) {
+                      return _c(
+                        "div",
+                        { key: index, staticClass: "col-sm-6 col-md-4" },
+                        [
+                          _c("div", { staticClass: "lightbox preview" }, [
+                            _c(
+                              "h3",
+                              {
+                                staticClass: "btn trash-button",
+                                on: {
+                                  click: function($event) {
+                                    _vm.trash(index)
+                                  }
+                                }
+                              },
+                              [_vm._v("X")]
+                            ),
+                            _vm._v(" "),
+                            _c("img", {
+                              staticClass: "imageStyle rounded-circle",
+                              attrs: { src: image, alt: "Show" }
+                            })
+                          ])
+                        ]
+                      )
+                    })
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(5)
+          ]),
+          _vm._v(" "),
+          _vm._m(6)
         ])
       ]
     )
@@ -58229,6 +58366,16 @@ var staticRenderFns = [
         _c("h2", [_vm._v("Register")]),
         _vm._v(" "),
         _c("hr")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3" }, [
+      _c("div", { staticClass: "form-control-feedback" }, [
+        _c("span", { staticClass: "text-danger align-middle" })
       ])
     ])
   },
@@ -58930,7 +59077,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.image-picker[data-v-263a0d57] {\r\n    color: white;\n}\n.char-count[data-v-263a0d57]{\r\n    z-index: 3;\r\n    position: absolute;\r\n    bottom: 12px;\r\n    right: 18px;\r\n    color: rgb(168, 168, 168);\n}\n.profilebutton[data-v-263a0d57] {\r\n    z-index: 2;\r\n    position: absolute;\r\n    right: -6px;\r\n    top: -6px;\r\n    float: right;\r\n    margin: auto;\r\n    font-weight: bold;\n}\nh3[data-v-263a0d57]{\r\n        color: rgb(102, 102, 102);\n}\nh3[data-v-263a0d57]:hover{\r\n        color: red;\n}\n.imageStyle[data-v-263a0d57] {\r\n  width: 250px;\r\n  height: 150px;\n}\n.tz-gallery[data-v-263a0d57] {\r\n  padding: 40px;\n}\r\n\r\n/* Override bootstrap column paddings */\n.tz-gallery .row > div[data-v-263a0d57] {\r\n  padding: 2px;\n}\n.tz-gallery .lightbox img[data-v-263a0d57] {\r\n  width: 100%;\r\n  border-radius: 0;\r\n  position: relative;\n}\n@media (max-width: 768px) {\nbody[data-v-263a0d57] {\r\n    padding: 0;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.image-picker[data-v-263a0d57] {\r\n    color: white;\n}\n.char-count[data-v-263a0d57]{\r\n    z-index: 3;\r\n    position: absolute;\r\n    bottom: 12px;\r\n    right: 18px;\r\n    color: rgb(168, 168, 168);\n}\n.trash-button[data-v-263a0d57] {\r\n    z-index: 2;\r\n    position: absolute;\r\n    right: -6px;\r\n    top: -6px;\r\n    float: right;\r\n    margin: auto;\r\n    font-weight: bold;\n}\nh3[data-v-263a0d57]{\r\n        color: rgb(102, 102, 102);\n}\nh3[data-v-263a0d57]:hover{\r\n        color: red;\n}\n.imageStyle[data-v-263a0d57] {\r\n  width: 250px;\r\n  height: 150px;\n}\n.tz-gallery[data-v-263a0d57] {\r\n  padding: 40px;\n}\r\n\r\n/* Override bootstrap column paddings */\n.tz-gallery .row > div[data-v-263a0d57] {\r\n  padding: 2px;\n}\n.tz-gallery .lightbox img[data-v-263a0d57] {\r\n  width: 100%;\r\n  border-radius: 0;\r\n  position: relative;\n}\n@media (max-width: 768px) {\nbody[data-v-263a0d57] {\r\n    padding: 0;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -59262,8 +59409,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             id: localStorage.getItem("userId"),
             plata_jumate_an: false,
-            plata_an: false,
-            imgCount: true
+            plata_an: false
+
         };
     },
 
@@ -59285,6 +59432,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             var files_count = files.length + this.form.images.length;
             var curentFileLength = files.length;
+            //daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
             if (files && files_count <= 8) {
                 var reader;
                 var image;
@@ -59900,7 +60048,7 @@ var render = function() {
                                           _c(
                                             "h3",
                                             {
-                                              staticClass: "btn profilebutton",
+                                              staticClass: "btn trash-button",
                                               on: {
                                                 click: function($event) {
                                                   _vm.trash(index)
@@ -59912,7 +60060,7 @@ var render = function() {
                                           _vm._v(" "),
                                           _c("img", {
                                             staticClass: "imageStyle",
-                                            attrs: { src: image, alt: "Show" }
+                                            attrs: { src: image }
                                           })
                                         ]
                                       )

@@ -13,23 +13,23 @@ class APIRegisterController extends Controller
 {
     public function register(Request $request){
 
-        $validator = Validator::make($request-> all(),[
-            'email' => 'required|string|email|max:255|unique:users',
-            'name' => 'required',
-            'password' => 'required',
-            'phone' => 'required|max:10'
-           
-        ]);
+     
 
-        if($validator -> fails()){
-            return response()-> json($validator -> errors());
-        }
+        $profilePicture = $request->profilePicture;
+
+        $extention = $profilePicture->getClientOriginalExtension();
+        $imageName = time().str_random().".".$extention;
+        $destinationPath = public_path('avatars');
+        $profilePicture->move($destinationPath , $imageName);
+        $path = "http://licenta.test/avatars/".$imageName;
+
 
         User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password')),
-            'phone' => $request->get('phone')
+            'phone' => $request->get('phone'),
+            'profile_picture' => $path
 
         ]);
 

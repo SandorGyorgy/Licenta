@@ -263,8 +263,8 @@
                     <div class="row">
                     <div v-for="(image , index) in form.images" :key="index"  class="col-sm-6 col-md-4">
                 <div class="lightbox preview">
-                    <h3 class="btn profilebutton" @click="trash(index)">X</h3>
-                    <img :src="image"  class="imageStyle" alt="Show">
+                    <h3 class="btn trash-button" @click="trash(index)">X</h3>
+                    <img :src="image"  class="imageStyle" >
                     
                 </div>
 
@@ -318,7 +318,7 @@ export default {
         id: localStorage.getItem("userId"),
         plata_jumate_an: false,
         plata_an: false,
-        imgCount: true ,
+        
     };
   },
 
@@ -338,6 +338,7 @@ export default {
       }
       var files_count = files.length + this.form.images.length;
       var curentFileLength = files.length
+//daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
       if (files && files_count <= 8) {
         const vm = this;
         const photos = [];
@@ -487,7 +488,7 @@ export default {
     color: rgb(168, 168, 168);
 }
 
-.profilebutton {
+.trash-button {
     z-index: 2;
     position: absolute;
     right: -6px;

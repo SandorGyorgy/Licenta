@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Licenta</title>
          <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-        
+        <link rel="icon" href="http://licenta.test/media/favicon.ico" >
          <meta name="csrf-token" content="{{ csrf_token() }}">
          
          <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
