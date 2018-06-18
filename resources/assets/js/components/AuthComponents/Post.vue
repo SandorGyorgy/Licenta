@@ -299,8 +299,9 @@
 
 <script>
 import axiosAuth from "../../axios-auth";
-import {SnotifyPosition, SnotifyStyle} from 'vue-snotify';
+import globalMethods from '../../mixins/globalMethods';
 export default {
+    mixins:[globalMethods],
   data() {
     return {
         form: {
@@ -377,27 +378,6 @@ export default {
         
     },
 
-
-    error(text , continut){
-        this.$snotify.create({
-            title: text,
-            body: continut,
-            config: {
-                    position: SnotifyPosition.rightTop,
-                    type : SnotifyStyle.error,
-            }
-        })
-    },
-      success(text , continut){
-        this.$snotify.create({
-            title: text,
-            body: continut,
-            config: {
-                    position: SnotifyPosition.rightTop,
-                    type : SnotifyStyle.success,
-            }
-        })
-    },
     reset(){
          this.form = {
             currentPlace: null,

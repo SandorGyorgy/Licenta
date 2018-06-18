@@ -45,13 +45,15 @@
         </router-link>
           
 
-
+        <router-link :to="{ name: 'editPost' , params:{ id: post.id} }">
             <button 
-            class="btn btn-info"
-           
-            >
-              <i class="fa fa-edit"></i>
+              class="btn btn-info">
+              <i class="fa fa-edit"
+              ></i>
             </button> 
+
+        </router-link>
+            
 
             <button 
             class="btn btn-danger"
@@ -76,8 +78,9 @@
 </template>
 <script>
 import axios from "../../axios-auth";
-import {SnotifyPosition, SnotifyStyle} from 'vue-snotify';
+import globalMethods from '../../mixins/globalMethods';
 export default {
+  mixins:[globalMethods],
   data() {
     return {
       posts: [],
@@ -113,26 +116,6 @@ export default {
 
   methods: {
 
-     error(text , continut){
-        this.$snotify.create({
-            title: text,
-            body: continut,
-            config: {
-                    position: SnotifyPosition.rightTop,
-                    type : SnotifyStyle.error,
-            }
-        })
-    },
-      success(text , continut){
-        this.$snotify.create({
-            title: text,
-            body: continut,
-            config: {
-                    position: SnotifyPosition.rightTop,
-                    type : SnotifyStyle.success,
-            }
-        })
-    },
    
     trash(id ,index){
        const data ={

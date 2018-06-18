@@ -70,7 +70,9 @@
 </template>
 <script>
 import axios from '../axios-auth'
+import globalMethods from '../mixins/globalMethods'
 export default{
+    mixins:[globalMethods],
  data() {
     return {
         post: '',
@@ -136,19 +138,7 @@ methods:{
         },
 
 
-    filter_array(test_array) {
-    var index = -1,
-    arr_length = test_array ? test_array.length : 0,
-    resIndex = -1,
-    result = [];
-    while (++index < arr_length) {
-    var value = test_array[index];
-    if (value) {
-        result[++resIndex] = value;
-    }
-    }
-    return result;
-    }
+   
 
 
 }
