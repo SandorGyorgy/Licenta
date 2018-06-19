@@ -122,23 +122,44 @@ class PostController extends Controller
 
 
         $images = Images::where('post_id' , $id)->firstOrFail();
-        $oldImages = json_decode($request->oldImages);
+
+        $oldImages = json_decode($request->oldImages ,true);
         $newImages = $request->newImages;
-        // $oldImages = get_object_vars($obj);
-        $currentFileNumber = 0 ;
+       
+        $currentFileNumber = sizeof($newImages);
+        $i = -1;
         foreach( $oldImages as $key => $value ){
-            if( $value == "" ){
-                
-
-
+            
+            if( $value != $images->{$key} ){
+                    $public = public_path('images');
+                    $oldImagePath = $images->{$key};
+                    $oldImageName = explode("http://licenta.test/images/" , $oldImagePath );
+                    $path = $public.'/'.$oldImageName[1];
+                    \File::delete($path);
+                    $images->{$key} = null;
             }
-           
-           
+
+            if($images->{$key} == null && $currentFileNumber > 0){
+                $i = $i + 1 ;
+                $currentFileNumber = $currentFileNumber -1;
+                $extention = $newImages[$i]->getClientOriginalExtension();
+                $imageName = time().str_random().".".$extention;
+                $destinationPath = public_path('images');
+                $newImages[$i]->move($destinationPath , $imageName);
+                $images->{$key} = "http://licenta.test/images/".$imageName; 
+            }
+
          }
 
-        $post->update();
+       
 
-        return response()->json($counter);
+         $images->update();
+         $post->update();
+
+        //  $oldImagePath = $images->image0;
+        // $oldImageName = explode("http://licenta.test/images/" , $oldImagePath );
+
+        //  return $oldImageName;
 
     }
 
