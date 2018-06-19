@@ -342,18 +342,17 @@ export default {
 //daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
       if (files && files_count <= 8) {
         const vm = this;
-        const photos = [];
+        //const photos = [];
 
  // daca exista fisiere adauga la cele existente sau creaza array de fisiere nou
-        if(this.form.files){
+        
             const formFiles = this.form.files
             for(let i = 0 ; i < curentFileLength; i++ ){
                 formFiles.push(files[i])
             }
             this.form.files = formFiles
-        }else{
-            this.form.files = files
-        }
+           
+        
 
 
 
@@ -394,7 +393,7 @@ export default {
     },
 
     addMarker() {
-        const vm = this;
+        
         var chirie = new FormData();
         chirie.append("lat" ,this.form.currentPlace.geometry.location.lat());
         chirie.append("lng" ,this.form.currentPlace.geometry.location.lng());

@@ -3,7 +3,7 @@
 
       
      <div class="container">
-    <form  @submit.prevent="addMarker" 
+    <form  @submit.prevent="editPost" 
     class="form-horizontal" 
     role="form"
     enctype="multipart/form-data"
@@ -134,11 +134,10 @@
                     
                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 
-                        <gmap-autocomplete
-                            @place_changed="setPlace"
-                            v-model="location.address"  
+                       <gmap-autocomplete
+                            @place_changed="editLocation"
                             class="form-control" 
-                            placeholder="Selectati adresa chiriei cautate">
+                            placeholder="Selectati adresa  din nou ">
                        </gmap-autocomplete>
                  </div>
                     
@@ -253,7 +252,7 @@
                     <input type="file" 
                     style="display: none" 
                     ref="imageInput" 
-                    
+                    @change="onFileChange"
                     multiple>
                     <a 
                     class="btn btn-info"
@@ -261,24 +260,45 @@
                     @click="$refs.imageInput.click()"> <span class="image-picker"> Selectati Imagini </span></a>
                 </div> 
                 <div class="tz-gallery" >
+                    <h4>Imagini actuale</h4>
                     <div class="row">
-                    <div v-for="(image , key) in images" :key="key" v-if="image"  class="col-sm-6 col-md-4">
-                <div class="lightbox preview">
+                    <div v-for="(image , key) in images" 
+                    :key="key" 
+                    v-if="image"  
+                    class="col-sm-6 col-md-4">
+                    <div class="lightbox preview">
                     <h3 class="btn trash-button" @click="trash(key)" >X</h3>
                     <img  :src="image"  class="imageStyle" >
-                    
-                </div>
+                   </div> 
+                   </div>
 
-            </div>
-            </div>
-            
-                    </div>  
-                </div>
-            </div>
-            </div>
+                  </div>
+               </div>   
 
-            </div> 
-        </div>
+                 <div class="tz-gallery">
+
+                      <h4 v-if="imagesPreview"> Imagini noi </h4>
+                    <div class="row">
+                    <div v-for="(newImage , index) in imagesPreview" 
+                    :key="index" 
+                    v-if="newImage"  
+                    class="col-sm-6 col-md-4">
+
+                    <div class="lightbox preview">
+                    <h3 class="btn trash-button" @click="trash(key)" >X</h3>
+                    <img  :src="newImage"  class="imageStyle" >
+
+                   </div> 
+                   </div>
+
+                    </div>
+               </div> 
+              
+</div>
+</div>
+</div>
+</div> 
+</div>
 
   
 
@@ -300,15 +320,21 @@
 
 <script>
 import axios from '../axios-auth'
-export default{
-    data(){
-        return{
+import globalMethods from '../mixins/globalMethods';
+export default {
+      mixins:[globalMethods],
+    data () {
+        return {
             id: this.$route.params.id,
             images: '',
             post:{
-                description:""
-            },
-            location:{},
+                 description:""
+             },
+            location: '',
+            imagesPreview: "",
+            newImages: [],
+            locatie: null
+          
         };
     },
     watch: {
@@ -322,36 +348,47 @@ export default{
     },
 
 
-    methods:{
+    methods: { 
+
+        editLocation(place) {
+      this.locatie = place;
+   
+      
+
+    },
 
           onFileChange(e) {
       var files = e.target.files;
   //daca exista imagini pentru preview adauga la cele existente sau creaza array gol
-      if(this.images){
-          var photos = this.form.images
+      if(this.imagesPreview){
+          var photos = this.imagesPreview
       }else{
            var photos = [];
       }
-      var files_count = files.length + this.form.images.length;
+      var databaseImages =  this.filter_array(Object.values(this.images))
+      var files_count = files.length + databaseImages.length + this.imagesPreview.length;
+
       var curentFileLength = files.length
+    
+
 //daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
       if (files && files_count <= 8) {
         const vm = this;
-        const photos = [];
+     
 
- // daca exista fisiere adauga la cele existente sau creaza array de fisiere nou
-        if(this.form.files){
-            const formFiles = this.form.files
+//salveaza fisierele propriu zise intr-un array
+            const formFiles = this.newImages
             for(let i = 0 ; i < curentFileLength; i++ ){
                 formFiles.push(files[i])
             }
-            this.form.files = formFiles
-        }else{
-            this.form.files = files
-        }
+            this.newImages = formFiles
+          
+           
+            
+    
 
 
-
+//se transforma imaginile in binar
         for (let i = 0; i < curentFileLength; i++) {
           var reader = new FileReader();
           var image = "";
@@ -361,12 +398,54 @@ export default{
           };
           reader.readAsDataURL(files[i]);
         }
-        vm.form.images = photos
+        vm.imagesPreview = photos
       }else{
           this.error('Eroare' , '')
       }
     },
 
+        editPost(){  
+        var edited = new FormData()
+    
+       
+        edited.append("id" , this.post.id);
+        edited.append("title" , this.post.title);
+        edited.append("description" , this.post.description);
+        edited.append("room_nr" , this.post.room_nr);
+        edited.append("dimension" , this.post.dimension);
+        edited.append("price_month" , this.post.price_month);
+        edited.append("price_half_year" , this.post.price_half_year);
+        edited.append("price_year" , this.post.price_year);
+
+        var oldImages = JSON.stringify(this.images)
+
+        edited.append('oldImages' , oldImages);
+
+        if(this.locatie == null){
+            edited.append('lat' , this.location.lat);
+            edited.append('lng' , this.location.lng);
+            edited.append('address' , this.location.address)
+        }else{
+            edited.append("lat" ,this.locatie.geometry.location.lat());
+            edited.append("lng" ,this.locatie.geometry.location.lng());
+            edited.append("address" , this.locatie.formatted_address);
+        }
+       
+       
+        
+         for(const item of this.newImages){
+            edited.append("newImages[]" , item);
+        }
+
+    //     for (var pair of edited.entries()) {
+    // console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+
+        axios.post('/post/edit' , edited)
+        .then(response=> console.log(response))
+        .catch(error =>console.log(error))
+
+        },
 
 
         get(){
@@ -378,6 +457,7 @@ export default{
          vm.images = response.data.images
          vm.post = response.data.post
          vm.location = response.data.location
+         
        
     })
     .catch(error => console.log(error))
@@ -390,8 +470,7 @@ export default{
 
      trash(key){
         this.images[key] = ""
-       
-        
+        //console.log(this.images)
     }
 
     
@@ -404,8 +483,8 @@ export default{
           return ber
       },
       imgCounter(){
-         const array =  Object.values(this.images);
-         const counter = array.length; 
+         const array = this.filter_array(Object.values(this.images));
+         const counter = array.length+this.imagesPreview.length; 
          if(counter < 8){
              return true;
          }else{
@@ -456,7 +535,7 @@ export default{
 }
 
 .tz-gallery {
-  padding: 40px;
+  padding: 15px;
 }
 
 /* Override bootstrap column paddings */

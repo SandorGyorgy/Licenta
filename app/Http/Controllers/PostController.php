@@ -100,9 +100,46 @@ class PostController extends Controller
     }
 
 
-    public function edit(Post $post)
-    {
-        //
+    public function edit(Request $request)
+    {   $id = $request->id;
+        $post = Post::findOrFail($id);
+
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->room_nr = $request->room_nr;
+        $post->price_month = $request->price_month ;
+        $post->price_half_year = $request->price_half_year ;
+        $post->price_year = $request->price_year ;
+        $post->dimension = $request->dimension;
+
+      
+
+        $location = Location::where('post_id' , $id)->firstOrFail();
+
+        $location->address = $request->address;
+        $location->lat = $request->lat;
+        $location->lng = $request->lng;
+
+
+        $images = Images::where('post_id' , $id)->firstOrFail();
+        $oldImages = json_decode($request->oldImages);
+        $newImages = $request->newImages;
+        // $oldImages = get_object_vars($obj);
+        $currentFileNumber = 0 ;
+        foreach( $oldImages as $key => $value ){
+            if( $value == "" ){
+                
+
+
+            }
+           
+           
+         }
+
+        $post->update();
+
+        return response()->json($counter);
+
     }
 
     public function update(Request $request, Post $post)
