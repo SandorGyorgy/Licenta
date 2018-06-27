@@ -21,10 +21,11 @@
   
      <gmap-marker
         :key="index"
-        v-for="(m, index) in markers"
+        v-for="(m, index) in coordonates"
         :clickable="true"
-        :position="m.position"
-        @click="toggleInfoWindow(m,index)"
+        :position="{ lat : m.lat , lng : m.lng}"
+        @click="toggleInfoWindow(m.coordIndex , { lat : m.lat , lng : m.lng})"
+        
       >
       </gmap-marker> 
      
@@ -36,36 +37,31 @@
             
             >
 
-      <div class="infoWindowStyles container ml-3">
+      <div class="infoWindowStyles container ml-3 text-center">
 
-        <div  v-for="number in [currentNumber]"
-          :key="number" 
-          v-if="currentImage">
-             <img :src="currentImage" height="200px" width="230px" class="mt-2 ">
-
-              <div class="arrowLeft">
-                <i @click="prev" class="fa fa-chevron-left fa-3x"></i>
-              </div>
-
-              <div class="arrowRight">
-                <i @click="next" class="fa fa-chevron-right fa-3x"></i>
-              </div>
-        </div>
+        <div v-for="(post , index) in openedInfowindow"
+        :key="index"
+         >
+         <img :src="post.imagine" height="200px" width="230px" class="mt-2 ">
+        <h5>  {{post.titlu}} </h5> 
+        <p> {{post.descriere}}... </p> 
+       
           <div class="container mt-3">
 
             <div>
-              $ {{ detalii.pret }}
+            
                   <br>
-                <router-link v-if="detalii.id" :to="{ name: 'post' , params:{ id : detalii.id } }">
+                <router-link v-if="post.id" :to="{ name: 'post' , params:{ id : post.id } }">
               <button 
-              class="btn btn-success"
+              class="btn btn-success ml-3"
               >
-                  <i class="fa fa-eye"></i>
+                  Vizualizeaza Chiria
               </button> 
         </router-link>
 
             </div>
-
+      </div>
+      <hr v-if="openedInfowindow.length > 1">
           </div>
         
        
@@ -94,23 +90,15 @@ export default {
       infoWinOpen: false,
       infoWindowPos: null,
       currentNumber:0,
-      detalii: {
-        id: "",
-        titlu: "",
-        descriere: "",
-        camere: "",
-        dimensiune: "",
-        pret: "",
-        adresa: "",
-        poze:[]
-      },
-
-      infoOptions: {
+       infoOptions: {
         pixelOffset: {
           width: 0,
           height: -35
         }
-      }
+      },
+      coordonates:[],
+      openedInfowindow:[]
+   
     };
   },
 
@@ -120,7 +108,7 @@ export default {
   computed:{
 
     currentImage(){
-      	return this.detalii.poze[Math.abs(this.currentNumber) % this.detalii.poze.length];
+      	// return this.detalii.poze[Math.abs(this.currentNumber) % this.detalii.poze.length];
     }
 
   },
@@ -134,44 +122,58 @@ export default {
       axios
         .get("/api/posts")
         .then(response => {
-          const data = response.data;
-          
+          var data = response.data;
+        
           for (var i in data) {
-            const marker = {
-              lat: data[i].location.lat,
-              lng: data[i].location.lng
-            };
-            const info = {
-              id: data[i].id,
-              titlu: data[i].title,
-              descriere: data[i].description,
-              camere: data[i].room_nr,
-              pret: data[i].price_month,
-              adresa: data[i].location.address,
-              poze: Object.values(response.data[i].images)
-             
-              
-            };
-            this.markers.push({ position: marker, info: info });
+           this.markers.push(data[i])
+          
+            
           }
 
+          for(var i in this.markers){
+            const test = this.markers[i]
+            const numarApartamente = test.length
+            const position = {
+              lat : test[0].location.lat,
+              lng : test[0].location.lng,
+              coordIndex : i ,
+              numarApartamente : numarApartamente
+            }
+             console.log(position.numarApartamente)
+            this.coordonates.push(position)
+           
+          }   
+              
         })
         .catch(error => console.log(error));
 
-        console.log(this.markers)
+        
     },
 
 
-    toggleInfoWindow(m, index) {
-      this.infoWindowPos = m.position;
+    toggleInfoWindow(index , position) {
+      this.openedInfowindow = [];
+      for(var i in this.markers[index]){
+        const test = this.markers[index]
+        const info = test[i]
+        this.infoWindowPos = position
+        var imagini = Object.values(info.images)
+        var descriere = info.description.substring( 0 , 30)
+        var detalii = {
+            titlu : info.title,
+            descriere : descriere,
+            pret : info.price_month ,
+            imagine : imagini[0] ,
+            camere : info.room_nr,
+            dimensiune : info.dimension,
+            id : info.id
+
+        }
+        this.openedInfowindow.push(detalii)
+      }
+     
       this.infoWinOpen = !this.infoWinOpen;
-      this.detalii.id = m.info.id;
-      this.detalii.titlu = m.info.titlu;
-      this.detalii.descriere = m.info.descriere;
-      this.detalii.camere = m.info.camere;
-      this.detalii.pret = m.info.pret;
-      this.detalii.adresa = m.info.adresa;
-      this.detalii.poze =  this.filter_array(m.info.poze);
+    console.log(this.openedInfowindow)
       
     },
 
@@ -214,6 +216,7 @@ export default {
 <style>
 .infoWindowStyles {
   width: 250px;
+  height: 350px;
  
 }
 

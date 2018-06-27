@@ -26072,7 +26072,16 @@ var routes = [{
 }, {
     path: '/edit/:id',
     component: __WEBPACK_IMPORTED_MODULE_10__components_EditPost_vue___default.a,
-    name: 'editPost'
+    name: 'editPost',
+    beforeEnter: function beforeEnter(to, from, next) {
+        if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.router) {
+            next();
+        } else if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.token) {
+            next();
+        } else {
+            next('/login');
+        }
+    }
 }, {
     path: '/login',
     component: __WEBPACK_IMPORTED_MODULE_3__components_AuthComponents_Login_vue___default.a,
@@ -56778,42 +56787,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      formClasses: "form-group float-right mr-1"
-    };
-  },
-  created: function created() {
-    this.getUserData;
-  },
+    data: function data() {
+        return {
+            formClasses: "form-group float-right mr-1",
+            topPlaces: ''
+        };
+    },
+    created: function created() {
+        this.getUserData;
+        this.getBestPlaces();
+    },
 
-  methods: {
-    getUserData: function getUserData() {
-      this.$store.dispatch("authUserData");
+    methods: {
+        getUserData: function getUserData() {
+            this.$store.dispatch("authUserData");
+        },
+        getBestPlaces: function getBestPlaces() {
+            var _this = this;
+
+            axios.get('api/test').then(function (response) {
+                _this.topPlaces = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
-  }
 });
 
 /***/ }),
@@ -56825,11 +56825,82 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "p-3 " }, [
-    _c("div", { staticClass: "row mb-4 ml-1 mr-1" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-deck text-center mr-1 " }, [
+      _vm.topPlaces[0]
+        ? _c("div", { staticClass: "card ", staticStyle: { width: "18rem" } }, [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: {
+                src:
+                  "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
+                alt: ""
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body " }, [
+              _c("h5", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(_vm.topPlaces[0].address))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [
+                _vm._v(
+                  "Some quick example text to build on the card title and make up the bulk of the card's content."
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "a",
+                { staticClass: "btn btn-primary", attrs: { href: "#" } },
+                [_vm._v("Go somewhere")]
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.topPlaces[1]
+        ? _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: {
+                src:
+                  "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
+                alt: ""
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.topPlaces[2]
+        ? _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: {
+                src:
+                  "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
+                alt: ""
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(2)
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mb-4 ml-1 mr-1" }, [
       _c(
         "div",
         {
-          staticClass: " text-center col-md-4 mb-2 container mx-auto",
+          staticClass: " text-center col-md-12 mb-2 container mx-auto",
           staticStyle: { width: "250px" },
           attrs: { id: "form-container" }
         },
@@ -56838,27 +56909,7 @@ var render = function() {
             _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body " }, [
-              _c("div", { staticClass: "card-text" }, [
-                _c("div", { class: _vm.formClasses }, [
-                  _c("label", { attrs: { for: "oras" } }, [_vm._v(" Oras : ")]),
-                  _vm._v(" "),
-                  _c("input", { attrs: { type: "text", id: "oras" } })
-                ]),
-                _vm._v(" "),
-                _c("div", { class: _vm.formClasses }, [
-                  _c("label", { attrs: { for: "pret" } }, [_vm._v(" Pret : ")]),
-                  _vm._v(" "),
-                  _c("input", { attrs: { type: "text", id: "pret" } })
-                ]),
-                _vm._v(" "),
-                _c("div", { class: _vm.formClasses }, [
-                  _c("label", { attrs: { for: "camere" } }, [
-                    _vm._v(" Camere : ")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", { attrs: { type: "text", id: "camere" } })
-                ])
-              ]),
+              _c("div", { staticClass: "card-text" }),
               _vm._v(" "),
               _c("a", { staticClass: "btn btn-primary mt-3" }, [
                 _vm._v("Go somewhere")
@@ -56868,126 +56919,42 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }),
-      _vm._v(" "),
-      _vm._m(0)
-    ]),
-    _vm._v(" "),
-    _vm._m(1)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "card mr-2 mx-auto ", staticStyle: { width: "20rem" } },
-      [
-        _c("img", {
-          staticClass: "card-img-top",
-          attrs: {
-            src:
-              "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
-            alt: ""
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body " }, [
-          _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
-          _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [
-            _vm._v(
-              "Some quick example text to build on the card title and make up the bulk of the card's content."
-            )
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-            _vm._v("Go somewhere")
-          ])
-        ])
-      ]
-    )
+      _c("div", { staticClass: "col-md-4" })
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-deck text-center mr-1 " }, [
-      _c("div", { staticClass: "card ", staticStyle: { width: "18rem" } }, [
-        _c("img", {
-          staticClass: "card-img-top",
-          attrs: {
-            src:
-              "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
-            alt: ""
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body " }, [
-          _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
-          _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [
-            _vm._v(
-              "Some quick example text to build on the card title and make up the bulk of the card's content."
-            )
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-            _vm._v("Go somewhere")
-          ])
-        ])
+    return _c("div", { staticClass: "card-body " }, [
+      _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "card-text" }, [
+        _vm._v(
+          "Some quick example text to build on the card title and make up the bulk of the card's content."
+        )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
-        _c("img", {
-          staticClass: "card-img-top",
-          attrs: {
-            src:
-              "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
-            alt: ""
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body " }, [
-          _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
-          _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [
-            _vm._v(
-              "Some quick example text to build on the card title and make up the bulk of the card's content."
-            )
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-            _vm._v("Go somewhere")
-          ])
-        ])
+      _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+        _vm._v("Go somewhere")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body " }, [
+      _c("h5", { staticClass: "card-title " }, [_vm._v("Card title")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "card-text " }, [
+        _vm._v(
+          "Some quick example text to build on the card title and make up the bulk of the card's content."
+        )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
-        _c("img", {
-          staticClass: "card-img-top",
-          attrs: {
-            src:
-              "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
-            alt: ""
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body " }, [
-          _c("h5", { staticClass: "card-title " }, [_vm._v("Card title")]),
-          _vm._v(" "),
-          _c("p", { staticClass: "card-text " }, [
-            _vm._v(
-              "Some quick example text to build on the card title and make up the bulk of the card's content."
-            )
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "btn btn-primary  ", attrs: { href: "#" } }, [
-            _vm._v("Go somewhere")
-          ])
-        ])
+      _c("a", { staticClass: "btn btn-primary  ", attrs: { href: "#" } }, [
+        _vm._v("Go somewhere")
       ])
     ])
   }
@@ -57087,7 +57054,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.infoWindowStyles {\r\n  width: 250px;\n}\n.infoWindowStyles .arrowRight {\r\n \r\n    position: absolute;\r\n  top: 85px;\r\n  left: 229px;\n}\n.infoWindowStyles .arrowLeft {\r\n \r\n    position: absolute;\r\n  top: 89px;\r\n  right: 229px;\n}\r\n\r\n   \r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.infoWindowStyles {\r\n  width: 250px;\r\n  height: 350px;\n}\n.infoWindowStyles .arrowRight {\r\n \r\n    position: absolute;\r\n  top: 85px;\r\n  left: 229px;\n}\n.infoWindowStyles .arrowLeft {\r\n \r\n    position: absolute;\r\n  top: 89px;\r\n  right: 229px;\n}\r\n\r\n   \r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -57098,10 +57065,6 @@ exports.push([module.i, "\n.infoWindowStyles {\r\n  width: 250px;\n}\n.infoWindo
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -57194,23 +57157,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       infoWinOpen: false,
       infoWindowPos: null,
       currentNumber: 0,
-      detalii: {
-        id: "",
-        titlu: "",
-        descriere: "",
-        camere: "",
-        dimensiune: "",
-        pret: "",
-        adresa: "",
-        poze: []
-      },
-
       infoOptions: {
         pixelOffset: {
           width: 0,
           height: -35
         }
-      }
+      },
+      coordonates: [],
+      openedInfowindow: []
+
     };
   },
   mounted: function mounted() {
@@ -57219,7 +57174,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {
     currentImage: function currentImage() {
-      return this.detalii.poze[Math.abs(this.currentNumber) % this.detalii.poze.length];
+      // return this.detalii.poze[Math.abs(this.currentNumber) % this.detalii.poze.length];
     }
   },
 
@@ -57234,38 +57189,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var data = response.data;
 
         for (var i in data) {
-          var marker = {
-            lat: data[i].location.lat,
-            lng: data[i].location.lng
-          };
-          var info = {
-            id: data[i].id,
-            titlu: data[i].title,
-            descriere: data[i].description,
-            camere: data[i].room_nr,
-            pret: data[i].price_month,
-            adresa: data[i].location.address,
-            poze: Object.values(response.data[i].images)
+          _this.markers.push(data[i]);
+        }
 
+        for (var i in _this.markers) {
+          var test = _this.markers[i];
+          var numarApartamente = test.length;
+          var position = {
+            lat: test[0].location.lat,
+            lng: test[0].location.lng,
+            coordIndex: i,
+            numarApartamente: numarApartamente
           };
-          _this.markers.push({ position: marker, info: info });
+          console.log(position.numarApartamente);
+          _this.coordonates.push(position);
         }
       }).catch(function (error) {
         return console.log(error);
       });
-
-      console.log(this.markers);
     },
-    toggleInfoWindow: function toggleInfoWindow(m, index) {
-      this.infoWindowPos = m.position;
+    toggleInfoWindow: function toggleInfoWindow(index, position) {
+      this.openedInfowindow = [];
+      for (var i in this.markers[index]) {
+        var test = this.markers[index];
+        var info = test[i];
+        this.infoWindowPos = position;
+        var imagini = Object.values(info.images);
+        var descriere = info.description.substring(0, 30);
+        var detalii = {
+          titlu: info.title,
+          descriere: descriere,
+          pret: info.price_month,
+          imagine: imagini[0],
+          camere: info.room_nr,
+          dimensiune: info.dimension,
+          id: info.id
+
+        };
+        this.openedInfowindow.push(detalii);
+      }
+
       this.infoWinOpen = !this.infoWinOpen;
-      this.detalii.id = m.info.id;
-      this.detalii.titlu = m.info.titlu;
-      this.detalii.descriere = m.info.descriere;
-      this.detalii.camere = m.info.camere;
-      this.detalii.pret = m.info.pret;
-      this.detalii.adresa = m.info.adresa;
-      this.detalii.poze = this.filter_array(m.info.poze);
+      console.log(this.openedInfowindow);
     },
     filter_array: function filter_array(test_array) {
       var index = -1,
@@ -57350,13 +57315,19 @@ var render = function() {
             attrs: { center: _vm.center, zoom: 12 }
           },
           [
-            _vm._l(_vm.markers, function(m, index) {
+            _vm._l(_vm.coordonates, function(m, index) {
               return _c("gmap-marker", {
                 key: index,
-                attrs: { clickable: true, position: m.position },
+                attrs: {
+                  clickable: true,
+                  position: { lat: m.lat, lng: m.lng }
+                },
                 on: {
                   click: function($event) {
-                    _vm.toggleInfoWindow(m, index)
+                    _vm.toggleInfoWindow(m.coordIndex, {
+                      lat: m.lat,
+                      lng: m.lng
+                    })
                   }
                 }
               })
@@ -57379,74 +57350,62 @@ var render = function() {
               [
                 _c(
                   "div",
-                  { staticClass: "infoWindowStyles container ml-3" },
-                  [
-                    _vm._l([_vm.currentNumber], function(number) {
-                      return _vm.currentImage
-                        ? _c("div", { key: number }, [
-                            _c("img", {
-                              staticClass: "mt-2 ",
-                              attrs: {
-                                src: _vm.currentImage,
-                                height: "200px",
-                                width: "230px"
-                              }
-                            }),
+                  {
+                    staticClass: "infoWindowStyles container ml-3 text-center"
+                  },
+                  _vm._l(_vm.openedInfowindow, function(post, index) {
+                    return _c("div", { key: index }, [
+                      _c("img", {
+                        staticClass: "mt-2 ",
+                        attrs: {
+                          src: post.imagine,
+                          height: "200px",
+                          width: "230px"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("h5", [_vm._v("  " + _vm._s(post.titlu) + " ")]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(" " + _vm._s(post.descriere) + "... ")]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "container mt-3" }, [
+                        _c(
+                          "div",
+                          [
+                            _c("br"),
                             _vm._v(" "),
-                            _c("div", { staticClass: "arrowLeft" }, [
-                              _c("i", {
-                                staticClass: "fa fa-chevron-left fa-3x",
-                                on: { click: _vm.prev }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "arrowRight" }, [
-                              _c("i", {
-                                staticClass: "fa fa-chevron-right fa-3x",
-                                on: { click: _vm.next }
-                              })
-                            ])
-                          ])
-                        : _vm._e()
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "container mt-3" }, [
-                      _c(
-                        "div",
-                        [
-                          _vm._v(
-                            "\n            $ " +
-                              _vm._s(_vm.detalii.pret) +
-                              "\n                "
-                          ),
-                          _c("br"),
-                          _vm._v(" "),
-                          _vm.detalii.id
-                            ? _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    to: {
-                                      name: "post",
-                                      params: { id: _vm.detalii.id }
+                            post.id
+                              ? _c(
+                                  "router-link",
+                                  {
+                                    attrs: {
+                                      to: {
+                                        name: "post",
+                                        params: { id: post.id }
+                                      }
                                     }
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "button",
-                                    { staticClass: "btn btn-success" },
-                                    [_c("i", { staticClass: "fa fa-eye" })]
-                                  )
-                                ]
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      )
+                                  },
+                                  [
+                                    _c(
+                                      "button",
+                                      { staticClass: "btn btn-success ml-3" },
+                                      [
+                                        _vm._v(
+                                          "\n                Vizualizeaza Chiria\n            "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm.openedInfowindow.length > 1 ? _c("hr") : _vm._e()
                     ])
-                  ],
-                  2
+                  })
                 )
               ]
             )
@@ -59485,7 +59444,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var curentFileLength = files.length;
             //daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
             if (files && files_count <= 8) {
-                var _vm = this;
+                var vm = this;
                 //const photos = [];
 
                 // daca exista fisiere adauga la cele existente sau creaza array de fisiere nou
@@ -59505,7 +59464,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     };
                     reader.readAsDataURL(files[_i]);
                 }
-                _vm.form.images = photos;
+                vm.form.images = photos;
             } else {
                 this.error('Eroare', '');
             }
@@ -59529,7 +59488,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
         },
         addMarker: function addMarker() {
-
+            var vm = this;
             var chirie = new FormData();
             chirie.append("lat", this.form.currentPlace.geometry.location.lat());
             chirie.append("lng", this.form.currentPlace.geometry.location.lng());
@@ -60386,6 +60345,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -60552,19 +60529,42 @@ var render = function() {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("img", {
-          staticClass: "rounded-circle",
-          attrs: {
-            src: _vm.user.profile_picture,
-            height: "120px",
-            width: "120px"
-          }
-        })
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "row no-gutters" }, [
+            _c("div", { staticClass: "col-auto" }, [
+              _c("img", {
+                staticClass: "rounded-circle m-2",
+                attrs: {
+                  src: _vm.user.profile_picture,
+                  height: "120px",
+                  width: "120px"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col" }, [
+      _c("div", { staticClass: "card-block px-2 text-center text-left" }, [
+        _c("p", { staticClass: "card-text" }, [_vm._v("Numar telefon")]),
+        _vm._v(" "),
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+          _vm._v("Trimite un mesaj")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -61122,9 +61122,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
 
-            __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post('/post/edit', edited).then(function (response) {
-                return console.log(response);
-            }).catch(function (error) {
+            __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post('/post/edit', edited).then().catch(function (error) {
                 return console.log(error);
             });
         },

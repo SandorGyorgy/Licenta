@@ -55,10 +55,28 @@
         <br>
         <br>
         <br>
-<img :src="user.profile_picture" 
-     height="120px" 
-     width="120px" 
-     class="rounded-circle">
+
+
+
+
+
+ <div class="card">
+        <div class="row no-gutters">
+            <div class="col-auto">
+               <img :src="user.profile_picture" 
+                height="120px" 
+                width="120px" 
+                class="rounded-circle m-2">
+            </div>
+            <div class="col">
+                <div class="card-block px-2 text-center text-left">
+                  
+                    <p class="card-text">Numar telefon</p>
+                    <a href="#" class="btn btn-primary">Trimite un mesaj</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 </div>
@@ -119,6 +137,7 @@ methods:{
        vm.post = response.data.post
        vm.images = vm.filter_array(Object.values(response.data.images))
        vm.user = response.data.user
+      
        
     })
     .catch(error => console.log(error))

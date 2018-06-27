@@ -6,17 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-    public function location(){
-        return $this-> belongsTo('App\Post');
+    public function post(){
+        return $this-> hasOne('App\Post');
     }
     
     protected $fillable = [
-        'county',
-        'neighborhood',
-        'city',
         'address',
-        'longitude',
-        'latitude'
+        'lng',
+        'lat'
     ];
 
     protected $hidden = [

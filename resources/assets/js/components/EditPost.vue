@@ -442,7 +442,7 @@ export default {
     // }
 
         axios.post('/post/edit' , edited)
-        .then(response=> console.log(response))
+        .then()
         .catch(error =>console.log(error))
  
         },

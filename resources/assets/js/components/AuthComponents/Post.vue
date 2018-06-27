@@ -393,7 +393,7 @@ export default {
     },
 
     addMarker() {
-        
+        const vm = this; 
         var chirie = new FormData();
         chirie.append("lat" ,this.form.currentPlace.geometry.location.lat());
         chirie.append("lng" ,this.form.currentPlace.geometry.location.lng());

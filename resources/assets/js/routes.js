@@ -34,7 +34,16 @@ const routes = [
     {
         path: '/edit/:id',
         component: EditPost,
-        name: 'editPost'
+        name: 'editPost',
+        beforeEnter(to, from, next) {
+            if (store.state.router) {
+                next()
+            } else if (store.state.token) {
+                next()
+            } else {
+                next('/login')
+            }
+        }
     },
     {
         path: '/login',

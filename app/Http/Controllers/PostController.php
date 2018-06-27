@@ -10,13 +10,19 @@ use Illuminate\Http\Request;
 use JWTFactory;
 use JWTAuth;
 use Response;
+use DB;
 
 class PostController extends Controller
 {   
     public function index(){
-       $post = Post::with(['location' , 'images'])->with('user')->get();
-            return response()->json($post);
-
+        $post = Post::with(['location' , 'images'])->with('user')->get();
+        $grouped = $post->groupBy('location.address');
+        $filtered = [];
+        foreach( $grouped as $key=> $value){
+            array_push($filtered , $value);
+        }
+        
+        return response()->json($filtered);
     }
     
     public function userPosts()
@@ -112,8 +118,6 @@ class PostController extends Controller
         $post->price_year = $request->price_year ;
         $post->dimension = $request->dimension;
 
-      
-
         $location = Location::where('post_id' , $id)->firstOrFail();
 
         $location->address = $request->address;
@@ -122,14 +126,13 @@ class PostController extends Controller
 
 
         $images = Images::where('post_id' , $id)->firstOrFail();
-
         $oldImages = json_decode($request->oldImages ,true);
         $newImages = $request->newImages;
-       
         $currentFileNumber = sizeof($newImages);
         $i = -1;
         foreach( $oldImages as $key => $value ){
-            
+        //verifica daca informatiile din baza de date sunt in concordanta cu cele 
+        //din frontend aka curata baza de date de pozele care sunt selectate ca si sterse pe front
             if( $value != $images->{$key} ){
                     $public = public_path('images');
                     $oldImagePath = $images->{$key};
@@ -138,7 +141,8 @@ class PostController extends Controller
                     \File::delete($path);
                     $images->{$key} = null;
             }
-
+        //dupa ce baza de date este curatata atribuie imaginile nou selectate in rubrici care sunt null
+        //daca exista imagini noi
             if($images->{$key} == null && $currentFileNumber > 0){
                 $i = $i + 1 ;
                 $currentFileNumber = $currentFileNumber -1;
@@ -155,11 +159,9 @@ class PostController extends Controller
 
          $images->update();
          $post->update();
+         $location->update();
 
-        //  $oldImagePath = $images->image0;
-        // $oldImageName = explode("http://licenta.test/images/" , $oldImagePath );
-
-        //  return $oldImageName;
+        
 
     }
 
@@ -178,7 +180,7 @@ class PostController extends Controller
         if($userId == $post->user_id && $post){
             $location = Location::where('post_id' , $id)->firstOrFail();
             $images = Images::where('post_id' , $id)->firstOrFail();
-         for($i = 0 ; $i<5 ; $i++){
+         for($i = 0 ; $i<7 ; $i++){
             $iteration = 'image'.$i;
             $image = $images->$iteration;
             if($image){
@@ -198,4 +200,14 @@ class PostController extends Controller
             
 
     }
+
+    public function topPlaces() {
+
+        $count = Location::groupBy('address')
+        ->select('address', DB::raw('count(*) as total'))->get()->take(3);
+
+        return response()->json($count);
+
+    }
+
 }

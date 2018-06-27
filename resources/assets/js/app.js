@@ -47,8 +47,6 @@ const app = new Vue({
     router,
     axios,
     store
-   
-  
     
 });
 //Vue core instance
