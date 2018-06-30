@@ -6,16 +6,16 @@
 
 
        <h3 class="text-center">
-    Anunturile mele
+    Anunțurile mele
       </h3>
      
   <table class="table  table-hover">
     <thead class="text-center">
       <th>Imagine</th>
       <th>Titlu</th>
-      <th>Pret</th>
+      <th>Preț</th>
       <th>Camere</th>
-      <th class="">Vizualizeaza/Editeaza/Sterge</th>
+      <th class="">Vizualizează/Modifică/Șterge</th>
     </thead>
   <tbody>
 
@@ -32,7 +32,7 @@
       >
       </td>
       <td>{{ post.title }}</td>
-      <td>{{ post.price_month }}</td>
+      <td>{{ post.price_month }}€</td>
       <td>{{ post.room_nr }}</td>
       <td > 
 

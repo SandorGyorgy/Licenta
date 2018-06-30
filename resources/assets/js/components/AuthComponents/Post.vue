@@ -3,7 +3,7 @@
 
       
      <div class="container">
-    <form  @submit.prevent="addMarker" 
+    <form  @submit.prevent="adaugaChirie"
     class="form-horizontal" 
     role="form"
     enctype="multipart/form-data"
@@ -132,10 +132,10 @@
             <div class="col-md-6">
                 <div class="form-group has-danger">
                     
-                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-
+                 <div class="input-group mb-2 mr-sm-2 mb-sm-0"
+                 >
                         <gmap-autocomplete
-                            @place_changed="setPlace"  
+                            @place_changed="adaugaAdresa" 
                             class="form-control" 
                             placeholder="Selectati adresa chiriei cautate">
                        </gmap-autocomplete>
@@ -284,7 +284,9 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <button type="submit" class="btn btn-success mb-3 bWidth ">
+                <button  class="btn btn-success mb-3 bWidth"
+                type="submit"
+                :disabled="seTrimite == true">
                     <i class="fa fa-plus-circle"></i>
                     Adauga Chirie</button>
             </div>
@@ -319,13 +321,16 @@ export default {
         id: localStorage.getItem("userId"),
         plata_jumate_an: false,
         plata_an: false,
+        seTrimite: false
         
     };
   },
 
   methods: {
-    setPlace(place) {
+    adaugaAdresa(place) {
       this.form.currentPlace = place;
+      console.log(this.form.currentPlace)
+
     },
 
     onFileChange(e) {
@@ -392,12 +397,15 @@ export default {
         }
     },
 
-    addMarker() {
-        const vm = this; 
+    adaugaChirie() {
+     if(this.form.currentPlace){
+
+           const vm = this; 
         var chirie = new FormData();
         chirie.append("lat" ,this.form.currentPlace.geometry.location.lat());
         chirie.append("lng" ,this.form.currentPlace.geometry.location.lng());
         chirie.append("address" , this.form.currentPlace.formatted_address);
+        chirie.append("city" , this.form.currentPlace.vicinity);
         chirie.append("title" , this.form.titlu);
         chirie.append("description" , this.form.descriere);
         chirie.append("room_nr" , this.form.nrCamere);
@@ -411,7 +419,7 @@ export default {
             chirie.append("images[]" , item);
         }
 
-      
+      this.seTrimite = true ;
 
         axiosAuth
           .post(`/user/post`, chirie)
@@ -419,6 +427,7 @@ export default {
               if(response.status == 200){
                    vm.success("Succes!" , "Chiria a fost adaugata!");
                    vm.reset();
+                   vm.seTrimite = false;
               }
 
               console.log(response)
@@ -426,8 +435,12 @@ export default {
           .catch(error =>{
               if(error){
                   vm.error("Eroare!" , "A aparut o eroare , incercati din nou mai tarziu!");
+                   vm.seTrimite = false;
               }
           });
+
+     }
+      
    
     }
   },

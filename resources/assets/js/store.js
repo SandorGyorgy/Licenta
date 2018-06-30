@@ -52,13 +52,12 @@ export const store = new Vuex.Store({
     actions: {
 
 
-        //Register action : sends the request to the register api and gets back the JWT commits it to the
-        // store state 
-        register({ commit, dispatch }, formData) {
+       
+        register(formData) {
             axios.post('/api/user/register', formData)
                 .catch(error => console.log(error))
         },
-        // End of the register action
+      
 
         //Logout action 
         logOut({ commit }) {
@@ -92,12 +91,11 @@ export const store = new Vuex.Store({
 
 
         //Logi action : sends the user data to the api and gets back a JWT token 
-        login({ commit, dispatch }, loginData) {
+        login({dispatch }, loginData) {
             axios.post('/api/user/login', loginData)
                 .then(response => {
                     localStorage.setItem('token', response.data.token)
                     dispatch('authUserData')
-                  
                 })
                 .catch(error => console.log(error))
         },

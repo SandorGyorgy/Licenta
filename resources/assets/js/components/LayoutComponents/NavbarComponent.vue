@@ -10,11 +10,11 @@
                <div class="navbar-nav mx-auto" >
                 
                   <router-link to="/"><button :class=" buttonClass" >
-                      Home 
+                      Acasă 
                   </button></router-link>
 
                   <router-link to="/map"><button :class=" buttonClass" > 
-                    Map  
+                    Hartă  
                   </button></router-link>
                 
                 </div>
@@ -39,14 +39,14 @@
                 <router-link to="/user/post" >
                   <button class="dropdown-item"> 
                     <i class=" fa-plus-circle" :class="dropdownIcons"></i> 
-                    Adauga Anunt
+                    Adaugă Anunț
                   </button>
                 </router-link>
 
                 <router-link to="/user/posts" >
                   <button class="dropdown-item">
                      <i class=" fa-map-marker " :class="dropdownIcons"></i> 
-                     Anunturile Mele
+                     Anunțurile Mele
                      </button>
                 </router-link>
                 <router-link to="/user/messages" >
@@ -59,7 +59,7 @@
                 <router-link to="/user/account" >
                   <button class="dropdown-item"> 
                     <i class=" fa-cog" :class="dropdownIcons"></i> 
-                    Setari Cont
+                    Setări Cont
                     </button>
                 </router-link>
                   <button @click="logOut" class="dropdown-item"> 

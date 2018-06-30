@@ -49,6 +49,7 @@ class PostController extends Controller
             $location->address = $request->address;
             $location->lat = $request->lat;
             $location->lng = $request->lng;
+            $location->city = $request->city;
 
       
             $images = new Images;
@@ -95,7 +96,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $location = Location::where('post_id' , $id)->firstOrFail()->only('lat','lng','address');
         $images = Images::where('post_id' , $id)->firstOrFail();
-        $user = User::where('id' , $post->user_id)->firstOrFail()->only('email' , 'name' ,'phone' ,'profile_picture');
+        $user = User::where('id' , $post->user_id)->firstOrFail()->only( 'id' ,'email' , 'name' ,'phone' ,'profile_picture');
     
         return response()->json([
             'post' => $post , 
@@ -109,57 +110,64 @@ class PostController extends Controller
     public function edit(Request $request)
     {   $id = $request->id;
         $post = Post::findOrFail($id);
+        $user = auth()->user();
+        if($user->id != $post->user_id){
 
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->room_nr = $request->room_nr;
-        $post->price_month = $request->price_month ;
-        $post->price_half_year = $request->price_half_year ;
-        $post->price_year = $request->price_year ;
-        $post->dimension = $request->dimension;
-
-        $location = Location::where('post_id' , $id)->firstOrFail();
-
-        $location->address = $request->address;
-        $location->lat = $request->lat;
-        $location->lng = $request->lng;
-
-
-        $images = Images::where('post_id' , $id)->firstOrFail();
-        $oldImages = json_decode($request->oldImages ,true);
-        $newImages = $request->newImages;
-        $currentFileNumber = sizeof($newImages);
-        $i = -1;
-        foreach( $oldImages as $key => $value ){
-        //verifica daca informatiile din baza de date sunt in concordanta cu cele 
-        //din frontend aka curata baza de date de pozele care sunt selectate ca si sterse pe front
-            if( $value != $images->{$key} ){
-                    $public = public_path('images');
-                    $oldImagePath = $images->{$key};
-                    $oldImageName = explode("http://licenta.test/images/" , $oldImagePath );
-                    $path = $public.'/'.$oldImageName[1];
-                    \File::delete($path);
-                    $images->{$key} = null;
-            }
-        //dupa ce baza de date este curatata atribuie imaginile nou selectate in rubrici care sunt null
-        //daca exista imagini noi
-            if($images->{$key} == null && $currentFileNumber > 0){
-                $i = $i + 1 ;
-                $currentFileNumber = $currentFileNumber -1;
-                $extention = $newImages[$i]->getClientOriginalExtension();
-                $imageName = time().str_random().".".$extention;
-                $destinationPath = public_path('images');
-                $newImages[$i]->move($destinationPath , $imageName);
-                $images->{$key} = "http://licenta.test/images/".$imageName; 
-            }
-
-         }
-
+            $post->title = $request->title;
+            $post->description = $request->description;
+            $post->room_nr = $request->room_nr;
+            $post->price_month = $request->price_month ;
+            $post->price_half_year = $request->price_half_year ;
+            $post->price_year = $request->price_year ;
+            $post->dimension = $request->dimension;
+    
+            $location = Location::where('post_id' , $id)->firstOrFail();
+    
+            $location->address = $request->address;
+            $location->lat = $request->lat;
+            $location->lng = $request->lng;
+            $location->city = $request->city;
+    
+    
+            $images = Images::where('post_id' , $id)->firstOrFail();
+            $oldImages = json_decode($request->oldImages ,true);
+            $newImages = $request->newImages;
+            $currentFileNumber = sizeof($newImages);
+            $i = -1;
+            foreach( $oldImages as $key => $value ){
+            //verifica daca informatiile din baza de date sunt in concordanta cu cele 
+            //din frontend aka curata baza de date de pozele care sunt selectate ca si sterse pe front
+                if( $value != $images->{$key} ){
+                        $public = public_path('images');
+                        $oldImagePath = $images->{$key};
+                        $oldImageName = explode("http://licenta.test/images/" , $oldImagePath );
+                        $path = $public.'/'.$oldImageName[1];
+                        \File::delete($path);
+                        $images->{$key} = null;
+                }
+            //dupa ce baza de date este curatata atribuie imaginile nou selectate in rubrici care sunt null
+            //daca exista imagini noi
+                if($images->{$key} == null && $currentFileNumber > 0){
+                    $i = $i + 1 ;
+                    $currentFileNumber = $currentFileNumber -1;
+                    $extention = $newImages[$i]->getClientOriginalExtension();
+                    $imageName = time().str_random().".".$extention;
+                    $destinationPath = public_path('images');
+                    $newImages[$i]->move($destinationPath , $imageName);
+                    $images->{$key} = "http://licenta.test/images/".$imageName; 
+                }
+    
+             }
+    
+           
+    
+             $images->update();
+             $post->update();
+             $location->update();
+        }else{
+            return response()->json('Unauthorized' ,401);
+        }
        
-
-         $images->update();
-         $post->update();
-         $location->update();
 
         
 
@@ -203,8 +211,8 @@ class PostController extends Controller
 
     public function topPlaces() {
 
-        $count = Location::groupBy('address')
-        ->select('address', DB::raw('count(*) as total'))->get()->take(3);
+        $count = Location::groupBy('city')
+        ->select('city', DB::raw('count(*) as total'))->get()->take(3);
 
         return response()->json($count);
 

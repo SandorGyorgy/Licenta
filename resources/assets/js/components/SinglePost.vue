@@ -39,28 +39,14 @@
             <h3 class="col-md-4">Pret: {{post.price_month}}€</h3>
             </div>
             
-     
-
-    
     
 
     <br><br>
-        <p> {{ post.description }} </p>
+        {{ post.description }} 
 
 
 
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-
-
-
-
-
- <div class="card">
+ <div class="card mt-5">
         <div class="row no-gutters">
             <div class="col-auto">
                <img :src="user.profile_picture" 
@@ -70,8 +56,8 @@
             </div>
             <div class="col">
                 <div class="card-block px-2 text-center text-left">
-                  
-                    <p class="card-text">Numar telefon</p>
+                    <h5 class="card-title"> Contacteaza Utilizatorul</h5>
+                    <p class="card-text">Numar telefon {{user.phone}}</p>
                     <a href="#" class="btn btn-primary">Trimite un mesaj</a>
                 </div>
             </div>

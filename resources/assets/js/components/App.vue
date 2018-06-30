@@ -1,9 +1,9 @@
 <template>
 <div class="container">
- <navbar-component class="pageStyle" style="display:block;"></navbar-component>
-            <div class=" mt-2 mb-2" style="display:block !important;">
+ <navbar-component class="pageStyle container" style="display:block;"></navbar-component>
+            <div class=" mt-2 mb-2" >
                 <transition name="slide" mode="out-in">
-                    <router-view class="pageStyle" style="display:block !important;"></router-view>
+                    <router-view class="pageStyle" ></router-view>
                 </transition>
             </div>
  <footer-component class="pageStyle" style="display:block;"></footer-component>

@@ -33,7 +33,7 @@
         <div class="card " style="width: 18rem;" v-if="topPlaces[0]">
                 <img class="card-img-top" src="https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046" alt="">
         <div class="card-body ">
-            <h5 class="card-title">{{ topPlaces[0].address }}</h5>
+            <h5 class="card-title">{{ topPlaces[0].city }}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
@@ -42,7 +42,7 @@
         <div class="card" style="width: 18rem;" v-if="topPlaces[1]">
                 <img class="card-img-top" src="https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046" alt="">
         <div class="card-body ">
-            <h5 class="card-title">Card title</h5>
+            <h5 class="card-title">{{ topPlaces[1].city }}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
@@ -52,7 +52,7 @@
         <div class="card" style="width: 18rem;" v-if="topPlaces[2]">
                 <img class="card-img-top" src="https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046" alt="">
         <div class="card-body ">
-            <h5 class="card-title ">Card title</h5>
+            <h5 class="card-title ">{{ topPlaces[2].city }}</h5>
             <p class="card-text ">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             <a href="#" class="btn btn-primary  ">Go somewhere</a>
         </div>
@@ -83,9 +83,10 @@ export default {
       },
       getBestPlaces(){
 
-          axios.get('api/test')
+          axios.get('api/mostpopular')
           .then(response=> {
               this.topPlaces = response.data
+             
           })
           .catch(error =>{
               console.log(error)

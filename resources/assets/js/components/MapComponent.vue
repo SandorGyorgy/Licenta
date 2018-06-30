@@ -1,20 +1,35 @@
 <template>
   <div>
-    <nav class="navbar navbar-light navbar-inverse" role="navigation" >
-      <label>
-        <gmap-autocomplete
-          @place_changed="setPlace" style="width: 300px">
-        </gmap-autocomplete>
-        <button @click="addMarker">Add</button>
-      </label>
-      <br/>
-    </nav>
+      <div class="row">
+          
+            <div class="col-md-6 container mt-2">
+                <div class="form-group has-danger">
+                    
+                 <div class="input-group  mr-sm-2 mb-sm-0"
+                  @keydown.enter.prevent="addMarker"
+                 >
+                        <gmap-autocomplete
+                            @place_changed="setPlace" 
+                            class="form-control"
+                            placeholder="Introduceti o locatie">
+                       </gmap-autocomplete>
+                    
+                        <div class="col-md-3 field-label-responsive"> 
+              <button class="btn btn-info"
+              @click="addMarker"
+              > Cauta </button>
+            </div>
+                 </div>
+                </div>
+            </div>
+
+        </div>
     
-    <div class="m-3 pb-3"> 
+    <div class="mt-1 mb-3 mr-3 ml-3 pb-3"> 
     <gmap-map
       :center="center"
-      :zoom="12"
-      style="width:100%;  height: 500px; border: 1px solid black; " 
+      :zoom="13"
+      style="width:100%;  height: 600px; border: 1px solid black; " 
     >
 
     
@@ -32,8 +47,9 @@
         <gmap-info-window
             :opened="infoWinOpen"
             :position="infoWindowPos"
-            @click="infoWinOpen=!infoWinOpen"
             :options="infoOptions"
+            @closeclick="infoWinOpen = !infoWinOpen"
+          
             
             >
 
@@ -43,8 +59,9 @@
         :key="index"
          >
          <img :src="post.imagine" height="200px" width="230px" class="mt-2 ">
-        <h5>  {{post.titlu}} </h5> 
-        <p> {{post.descriere}}... </p> 
+        <h4>  {{post.titlu}} </h4> 
+        <p> {{post.descriere}}... </p>
+        <p> {{post.pret}} </p> 
        
           <div class="container mt-3">
 
@@ -126,7 +143,6 @@ export default {
         
           for (var i in data) {
            this.markers.push(data[i])
-          
             
           }
 
@@ -139,7 +155,7 @@ export default {
               coordIndex : i ,
               numarApartamente : numarApartamente
             }
-             console.log(position.numarApartamente)
+             
             this.coordonates.push(position)
            
           }   
@@ -152,6 +168,7 @@ export default {
 
 
     toggleInfoWindow(index , position) {
+     
       this.openedInfowindow = [];
       for(var i in this.markers[index]){
         const test = this.markers[index]
@@ -171,9 +188,13 @@ export default {
         }
         this.openedInfowindow.push(detalii)
       }
-     
-      this.infoWinOpen = !this.infoWinOpen;
-    console.log(this.openedInfowindow)
+     if(this.infoWinOpen == false){
+       this.infoWinOpen = true;
+     }else{
+       this.infoWinOpen = false;
+     }
+      
+    
       
     },
 
@@ -203,7 +224,9 @@ export default {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng()
+          
         };
+        console.log(this.currentPlace);
         this.center = marker;
         this.currentPlace = null;
       }

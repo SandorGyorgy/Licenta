@@ -32,5 +32,5 @@ Route::post('user/register', 'APIRegisterController@register');
 Route::post('user/login', 'APILoginController@login');
 Route::get('/posts' ,'PostController@index');
 Route::get('/view/post/{id}' , 'PostController@show');
-Route::get('/test' , 'PostController@topPlaces');
+Route::get('/mostpopular' , 'PostController@topPlaces');
 

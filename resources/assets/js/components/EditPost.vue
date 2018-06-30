@@ -442,9 +442,19 @@ export default {
     // }
 
         axios.post('/post/edit' , edited)
-        .then()
-        .catch(error =>console.log(error))
- 
+        .then(response => {
+              console.log(response)
+            if(response.status == 200){
+                this.success('Succes' , 'Postare editata cu succes!')
+              
+            }
+        })
+        .catch(error =>{
+            if(error.response.status == 401){
+                this.error('Eroare' , 'Nu sunteti autorizat sa editati aceasta postare!')
+            }
+        })
+         
         },
 
 
@@ -452,11 +462,19 @@ export default {
      const id = this.id
      const vm = this
      const url = '/view/post/'+id
+     const userId = localStorage.getItem('userId');
+     
      axios.get(url)
      .then(response => {
+         if(response.data.user.id == userId){
          vm.images = response.data.images
          vm.post = response.data.post
          vm.location = response.data.location
+         }else{
+             console.log('404')
+         }
+        
+         
          
        
     })
