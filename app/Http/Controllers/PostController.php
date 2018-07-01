@@ -111,7 +111,7 @@ class PostController extends Controller
     {   $id = $request->id;
         $post = Post::findOrFail($id);
         $user = auth()->user();
-        if($user->id != $post->user_id){
+        if($user->id == $post->user_id){
 
             $post->title = $request->title;
             $post->description = $request->description;

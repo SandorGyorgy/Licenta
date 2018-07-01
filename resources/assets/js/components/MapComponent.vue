@@ -58,8 +58,8 @@
         <div v-for="(post , index) in openedInfowindow"
         :key="index"
          >
-         <img :src="post.imagine" height="200px" width="230px" class="mt-2 ">
-        <h4>  {{post.titlu}} </h4> 
+         <img :src="post.imagine" height="190px" width="230px" class="mt-2 ">
+        <h6>  {{post.titlu}} </h6> 
         <p> {{post.descriere}}... </p>
         <p> {{post.pret}} </p> 
        
@@ -67,7 +67,7 @@
 
             <div>
             
-                  <br>
+        
                 <router-link v-if="post.id" :to="{ name: 'post' , params:{ id : post.id } }">
               <button 
               class="btn btn-success ml-3"
@@ -133,6 +133,20 @@ export default {
   methods: {
     setPlace(place) {
       this.currentPlace = place;
+      for(var i in this.currentPlace.address_components){
+          if(this.currentPlace.address_components[i].types[0] == 'locality'){
+                const city = this.currentPlace.address_components[i].types[0]
+                console.log(this.currentPlace.address_components[i].short_name)
+          }
+
+      }
+
+      // for(var i in this.currentPlace.address_components){
+      //   console.log(this.currentPlace.address_components)
+      //     // if(this.currentPlace.address_components[i].types[0] == 'locality'){
+      //     //   console.log(this.currentPlace.address_components[i].types[0])
+      //     // }
+      // }
     },
 
     showMarker() {

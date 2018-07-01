@@ -57185,6 +57185,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     setPlace: function setPlace(place) {
       this.currentPlace = place;
+      for (var i in this.currentPlace.address_components) {
+        if (this.currentPlace.address_components[i].types[0] == 'locality') {
+          var city = this.currentPlace.address_components[i].types[0];
+          console.log(this.currentPlace.address_components[i].short_name);
+        }
+      }
+
+      // for(var i in this.currentPlace.address_components){
+      //   console.log(this.currentPlace.address_components)
+      //     // if(this.currentPlace.address_components[i].types[0] == 'locality'){
+      //     //   console.log(this.currentPlace.address_components[i].types[0])
+      //     // }
+      // }
     },
     showMarker: function showMarker() {
       var _this = this;
@@ -57385,12 +57398,12 @@ var render = function() {
                         staticClass: "mt-2 ",
                         attrs: {
                           src: post.imagine,
-                          height: "200px",
+                          height: "190px",
                           width: "230px"
                         }
                       }),
                       _vm._v(" "),
-                      _c("h4", [_vm._v("  " + _vm._s(post.titlu) + " ")]),
+                      _c("h6", [_vm._v("  " + _vm._s(post.titlu) + " ")]),
                       _vm._v(" "),
                       _c("p", [_vm._v(" " + _vm._s(post.descriere) + "... ")]),
                       _vm._v(" "),
@@ -57400,8 +57413,6 @@ var render = function() {
                         _c(
                           "div",
                           [
-                            _c("br"),
-                            _vm._v(" "),
                             post.id
                               ? _c(
                                   "router-link",
@@ -58688,15 +58699,17 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.check[data-v-36da1883]{\r\n    border: 1px solid black;\r\n    height: 500px;\n}\n#userList[data-v-36da1883]{\r\n    height: 500px;\r\n    width: 150px;\n}\n#mesages[data-v-36da1883]{\r\n   display: -webkit-box;\r\n   display: -ms-flexbox;\r\n   display: flex;\n}\n.singleConv[data-v-36da1883]{\r\n    height: 85px;\n}\n.singleConv[data-v-36da1883] :hover{\r\n    background-color: grey;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.areaDiv[data-v-36da1883]{\r\n    width: 80%;\n}\n#chatbox[data-v-36da1883]{\r\n    height: 400px;\r\n    overflow: scroll;\r\n    margin-bottom: 5px;\n}\nul[data-v-36da1883]{\r\n  list-style: none;\r\n  margin: 0;\r\n  padding: 0;\n}\nul li[data-v-36da1883]{\r\n  display: inline;\r\n  clear: both;\r\n  padding: 8px;\r\n  border-radius: 30px;\r\n  margin-bottom: 2px;\r\n  font-family: Helvetica, Arial, sans-serif;\n}\n.him[data-v-36da1883]{\r\n  background: #eee;\r\n  float: left;\n}\n.me[data-v-36da1883]{\r\n  float: right;\r\n  background: #0084ff;\r\n  color: #fff;\n}\n.him + .me[data-v-36da1883]{\r\n  border-bottom-right-radius: 5px;\n}\n.me + .me[data-v-36da1883]{\r\n  border-top-right-radius: 5px;\r\n  border-bottom-right-radius: 5px;\n}\n.me[data-v-36da1883]:last-of-type {\r\n  border-bottom-right-radius: 30px;\r\n  margin-bottom: 15px;\n}\n.check[data-v-36da1883]{\r\n    border: 1px solid grey;\r\n    height: 550px;\n}\n#userList[data-v-36da1883]{\r\n    height: 550px;\r\n    width: 150px;\r\n    overflow: scroll;\n}\n#mesages[data-v-36da1883]{\r\n   display: -webkit-box;\r\n   display: -ms-flexbox;\r\n   display: flex;\n}\n.singleConv[data-v-36da1883]{\r\n    height: 85px;\n}\n.singleConv[data-v-36da1883] :hover{\r\n    background-color: grey;\n}\n#textArea[data-v-36da1883]{\r\n    width: 100%;\r\n    position: relative;\r\n    top: 10px\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 116 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -58757,6 +58770,70 @@ exports.push([module.i, "\n.check[data-v-36da1883]{\r\n    border: 1px solid bla
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            message: ''
+        };
+    },
+
+
+    methods: {
+        send: function send() {
+            console.log(this.message);
+            this.message = '';
+        }
+    }
+
+});
 
 /***/ }),
 /* 117 */
@@ -58766,68 +58843,197 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-8 check ml-md-4 mt-2 mb-2" }, [
+        _c("h4", { staticClass: "text-center" }, [
+          _vm._v(" Conversatia cu John Doe ")
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "container ",
+            on: {
+              keyup: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                $event.preventDefault()
+                return _vm.send($event)
+              }
+            }
+          },
+          [
+            _c("textarea-autosize", {
+              attrs: { id: "textArea" },
+              model: {
+                value: _vm.message,
+                callback: function($$v) {
+                  _vm.message = $$v
+                },
+                expression: "message"
+              }
+            })
+          ],
+          1
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-3 check ml-md-4" }, [
-          _c("h4", { staticClass: "text-center" }, [_vm._v(" Mesaje ")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "singleConv mb-2" }, [
-            _c("div", { staticClass: "row " }, [
-              _c("div", [
-                _c("img", {
-                  staticClass: "rounded-circle m-1",
-                  attrs: {
-                    src: "http://raisingkarma.com/images/anonymousProfile.jpg",
-                    width: "80px",
-                    height: "80px"
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "text-left" }, [
-                _c("h6", [_vm._v(" Nume utilizator ")]),
-                _vm._v("\r\n            anunt\r\n            "),
-                _c("br"),
-                _vm._v("\r\n            PRET \r\n         ")
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "singleConv" }, [
-            _c("div", { staticClass: "row " }, [
-              _c("div", [
-                _c("img", {
-                  staticClass: "rounded-circle m-1",
-                  attrs: {
-                    src: "http://raisingkarma.com/images/anonymousProfile.jpg",
-                    width: "80px",
-                    height: "80px"
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "text-left" }, [
-                _c("h6", [_vm._v(" Nume utilizator ")]),
-                _vm._v("\r\n            anunt\r\n            "),
-                _c("br"),
-                _vm._v("\r\n            PRET \r\n         ")
-              ])
+    return _c(
+      "div",
+      {
+        staticClass: "col-md-3 check ml-md-4 mt-2 mb-2",
+        attrs: { id: "userList" }
+      },
+      [
+        _c("h4", { staticClass: "text-center" }, [_vm._v(" Mesaje ")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "singleConv mb-2" }, [
+          _c("div", { staticClass: "row " }, [
+            _c("div", [
+              _c("img", {
+                staticClass: "rounded-circle m-1",
+                attrs: {
+                  src: "http://raisingkarma.com/images/anonymousProfile.jpg",
+                  width: "80px",
+                  height: "80px"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-left m-1" }, [
+              _c("h6", [_vm._v(" Nume utilizator ")]),
+              _vm._v("\r\n            anunt\r\n            "),
+              _c("br"),
+              _vm._v("\r\n            PRET \r\n         ")
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-8 check ml-md-4" }, [
-          _c("h4", { staticClass: "text-center" }, [
-            _vm._v(" Conversatia cu John Doe ")
+        _c("div", { staticClass: "singleConv" }, [
+          _c("div", { staticClass: "row " }, [
+            _c("div", [
+              _c("img", {
+                staticClass: "rounded-circle m-1",
+                attrs: {
+                  src: "http://raisingkarma.com/images/anonymousProfile.jpg",
+                  width: "80px",
+                  height: "80px"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-left" }, [
+              _c("h6", [_vm._v(" Nume utilizator ")]),
+              _vm._v("\r\n            anunt\r\n            "),
+              _c("br"),
+              _vm._v("\r\n            PRET \r\n         ")
+            ])
           ])
         ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "chatbox" } }, [
+      _c("ul", [
+        _c("li", { staticClass: "him" }, [_vm._v("By Other User")]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v("By this User, first message")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v("By this User, secondmessage")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v("By this User, third message")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v("By this User, fourth message")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v("By this User, fourth message")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v("By this User, fourth message")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v(
+            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v(
+            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v(
+            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v(
+            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v(
+            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v(
+            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v(
+            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "me" }, [
+          _vm._v(
+            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "him" }, [_vm._v("By Other User")]),
+        _vm._v(" "),
+        _c("li", { staticClass: "him" }, [_vm._v("By Other User")])
       ])
     ])
   }
@@ -59692,7 +59898,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 chirie.append("lat", this.form.currentPlace.geometry.location.lat());
                 chirie.append("lng", this.form.currentPlace.geometry.location.lng());
                 chirie.append("address", this.form.currentPlace.formatted_address);
-                chirie.append("city", this.form.currentPlace.vicinity);
+                for (var i in this.form.currentPlace.address_components) {
+                    if (this.form.currentPlace.address_components[i].types[0] == 'locality') {
+                        chirie.append("city", this.form.currentPlace.address_components[i].short_name);
+                    }
+                }
+
                 chirie.append("title", this.form.titlu);
                 chirie.append("description", this.form.descriere);
                 chirie.append("room_nr", this.form.nrCamere);
@@ -61270,6 +61481,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 edited.append("lat", this.locatie.geometry.location.lat());
                 edited.append("lng", this.locatie.geometry.location.lng());
+                for (var i in this.locatie.address_components) {
+                    if (this.locatie.address_components[i].types[0] == 'locality') {
+                        edited.append("city", this.locatie.address_components[i].short_name);
+                    }
+                }
                 edited.append("address", this.locatie.formatted_address);
             }
 

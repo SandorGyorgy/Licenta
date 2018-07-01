@@ -405,7 +405,13 @@ export default {
         chirie.append("lat" ,this.form.currentPlace.geometry.location.lat());
         chirie.append("lng" ,this.form.currentPlace.geometry.location.lng());
         chirie.append("address" , this.form.currentPlace.formatted_address);
-        chirie.append("city" , this.form.currentPlace.vicinity);
+         for(var i in this.form.currentPlace.address_components){
+          if(this.form.currentPlace.address_components[i].types[0] == 'locality'){
+                chirie.append("city" , this.form.currentPlace.address_components[i].short_name);
+          }
+
+      }
+       
         chirie.append("title" , this.form.titlu);
         chirie.append("description" , this.form.descriere);
         chirie.append("room_nr" , this.form.nrCamere);

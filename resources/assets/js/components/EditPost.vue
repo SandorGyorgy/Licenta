@@ -428,6 +428,12 @@ export default {
         }else{
             edited.append("lat" ,this.locatie.geometry.location.lat());
             edited.append("lng" ,this.locatie.geometry.location.lng());
+          for(var i in this.locatie.address_components){
+            if(this.locatie.address_components[i].types[0] == 'locality'){
+                    edited.append("city" , this.locatie.address_components[i].short_name);
+            }
+
+      }
             edited.append("address" , this.locatie.formatted_address);
         }
        
