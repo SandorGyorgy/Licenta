@@ -33,6 +33,8 @@ class APIRegisterController extends Controller
 
         ]);
 
+        
+
        
 
     }

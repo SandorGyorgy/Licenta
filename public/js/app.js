@@ -26198,12 +26198,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
 
     actions: {
-        register: function register(formData) {
-            axios.post('/api/user/register', formData).catch(function (error) {
-                return console.log(error);
-            });
-        },
-
 
         //Logout action 
         logOut: function logOut(_ref) {
@@ -58112,8 +58106,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       formData.append('password', this.password);
       formData.append('profilePicture', this.profilePicture);
 
-      this.$store.dispatch("register", formData);
-      this.$router.push({ name: "login" });
+      axios.post('/api/user/register', formData).then(this.$router.push({ name: "login" })).catch(function (error) {
+        return console.log(error);
+      });
     },
     trash: function trash(index) {
       this.preview.splice(index, 1);
@@ -58686,6 +58681,7 @@ exports.push([module.i, "\n.areaDiv[data-v-36da1883]{\r\n    width: 80%;\n}\n#ch
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__axios_auth__ = __webpack_require__(6);
 //
 //
 //
@@ -58756,56 +58752,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            message: ''
+            message: '',
+            contacts: '',
+            conversation: '',
+            myId: this.$store.state.userId,
+            convWith: ''
         };
+    },
+    beforeMount: function beforeMount() {
+        this.getContacts();
     },
 
 
     methods: {
-        send: function send() {
-            console.log(this.message);
+        send: function send(convWith) {
+            var _this = this;
+
+            var text = {
+                to: this.convWith,
+                text: this.message
+            };
+            __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post('/create/message', text).then(function (res) {
+
+                _this.showConv(convWith);
+            }).catch(function (error) {
+                return console.log(error);
+            });
             this.message = '';
+        },
+        getContacts: function getContacts() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].get('/contacts').then(function (response) {
+                _this2.contacts = response.data;
+            }).catch(function (error) {
+                return console.log(error);
+            });
+        },
+        showConv: function showConv(id) {
+            var _this3 = this;
+
+            this.convWith = id;
+            this.conversation = '';
+            __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].get('get/messages/' + id).then(function (res) {
+                _this3.conversation = res.data;
+                console.log(res.data);
+            });
         }
     }
 
@@ -58821,7 +58818,50 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _vm._m(0),
+      _c(
+        "div",
+        {
+          staticClass: "col-md-3 check ml-md-4 mt-2 mb-2",
+          attrs: { id: "userList" }
+        },
+        [
+          _c("h4", { staticClass: "text-center" }, [_vm._v(" Mesaje ")]),
+          _vm._v(" "),
+          _vm._l(_vm.contacts, function(person) {
+            return _c(
+              "div",
+              {
+                key: person.id,
+                staticClass: "singleConv mb-2",
+                on: {
+                  click: function($event) {
+                    _vm.showConv(person.id)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "row " }, [
+                  _c("div", [
+                    _c("img", {
+                      staticClass: "rounded-circle m-1",
+                      attrs: {
+                        src: person.profile_picture,
+                        width: "80px",
+                        height: "80px"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-left m-1" }, [
+                    _c("h6", [_vm._v(" " + _vm._s(person.name) + " ")])
+                  ])
+                ])
+              ]
+            )
+          })
+        ],
+        2
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-8 check ml-md-4 mt-2 mb-2" }, [
         _c("h4", { staticClass: "text-center" }, [
@@ -58830,12 +58870,26 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _vm._m(1),
+        _c(
+          "div",
+          { attrs: { id: "chatbox" } },
+          _vm._l(_vm.conversation, function(text, index) {
+            return _c("ul", { key: index }, [
+              text.from == _vm.convWith
+                ? _c("li", { staticClass: "him" }, [_vm._v(_vm._s(text.text))])
+                : _vm._e(),
+              _vm._v(" "),
+              text.from == _vm.myId
+                ? _c("li", { staticClass: "me" }, [_vm._v(_vm._s(text.text))])
+                : _vm._e()
+            ])
+          })
+        ),
         _vm._v(" "),
         _c(
           "div",
           {
-            staticClass: "container ",
+            staticClass: "container",
             on: {
               keyup: function($event) {
                 if (
@@ -58845,7 +58899,7 @@ var render = function() {
                   return null
                 }
                 $event.preventDefault()
-                return _vm.send($event)
+                _vm.send(_vm.convWith)
               }
             }
           },
@@ -58867,153 +58921,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "col-md-3 check ml-md-4 mt-2 mb-2",
-        attrs: { id: "userList" }
-      },
-      [
-        _c("h4", { staticClass: "text-center" }, [_vm._v(" Mesaje ")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "singleConv mb-2" }, [
-          _c("div", { staticClass: "row " }, [
-            _c("div", [
-              _c("img", {
-                staticClass: "rounded-circle m-1",
-                attrs: {
-                  src: "http://raisingkarma.com/images/anonymousProfile.jpg",
-                  width: "80px",
-                  height: "80px"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-left m-1" }, [
-              _c("h6", [_vm._v(" Nume utilizator ")]),
-              _vm._v("\r\n            anunt\r\n            "),
-              _c("br"),
-              _vm._v("\r\n            PRET \r\n         ")
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "singleConv" }, [
-          _c("div", { staticClass: "row " }, [
-            _c("div", [
-              _c("img", {
-                staticClass: "rounded-circle m-1",
-                attrs: {
-                  src: "http://raisingkarma.com/images/anonymousProfile.jpg",
-                  width: "80px",
-                  height: "80px"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-left" }, [
-              _c("h6", [_vm._v(" Nume utilizator ")]),
-              _vm._v("\r\n            anunt\r\n            "),
-              _c("br"),
-              _vm._v("\r\n            PRET \r\n         ")
-            ])
-          ])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "chatbox" } }, [
-      _c("ul", [
-        _c("li", { staticClass: "him" }, [_vm._v("By Other User")]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v("By this User, first message")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v("By this User, secondmessage")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v("By this User, third message")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v("By this User, fourth message")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v("By this User, fourth message")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v("By this User, fourth message")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v(
-            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v(
-            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v(
-            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v(
-            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v(
-            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v(
-            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v(
-            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "me" }, [
-          _vm._v(
-            "By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "him" }, [_vm._v("By Other User")]),
-        _vm._v(" "),
-        _c("li", { staticClass: "him" }, [_vm._v("By Other User")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

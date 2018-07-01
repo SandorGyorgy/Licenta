@@ -57,10 +57,7 @@ export const store = new Vuex.Store({
 
 
        
-        register(formData) {
-            axios.post('/api/user/register', formData)
-                .catch(error => console.log(error))
-        },
+       
       
 
         //Logout action 

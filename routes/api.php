@@ -26,6 +26,10 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('/user/posts' , 'PostController@UserPosts');
     Route::post('/post/delete' , 'PostController@destroy');
     Route::post('/post/edit' , 'PostController@edit');
+    Route::post('/create/message' , 'MessagesController@store');
+    Route::get('/contacts' , 'MessagesController@contacts');
+    Route::get('/get/messages/{id}' , 'MessagesController@conversation');
+
 
     });
 Route::post('user/register', 'APIRegisterController@register');
@@ -33,4 +37,5 @@ Route::post('user/login', 'APILoginController@login');
 Route::get('/posts' ,'PostController@index');
 Route::get('/view/post/{id}' , 'PostController@show');
 Route::get('/mostpopular' , 'PostController@topPlaces');
-Route::post('/create/message' , 'MessagesController@store');
+
+

@@ -202,8 +202,12 @@ export default {
 
         
 
-       this.$store.dispatch("register", formData);
-       this.$router.push({ name: "login" });
+      
+            axios.post('/api/user/register', formData)
+            .then(  this.$router.push({ name: "login" }) )
+             .catch(error => console.log(error))
+      
+       
     },
 
       trash(index){

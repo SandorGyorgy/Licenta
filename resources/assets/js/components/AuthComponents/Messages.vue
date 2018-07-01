@@ -5,50 +5,26 @@
         <div class="col-md-3 check ml-md-4 mt-2 mb-2" id="userList">
             <h4 class="text-center"> Mesaje </h4> 
 
-<div class="singleConv mb-2">
+<div class="singleConv mb-2"
+v-for="person in contacts"
+:key="person.id"
+@click="showConv(person.id)"
+>
    <div class="row ">
         <div>
             <img 
-            src="http://raisingkarma.com/images/anonymousProfile.jpg" 
+            :src="person.profile_picture" 
             width="80px" 
             height="80px" 
             class="rounded-circle m-1"> 
         </div>
 
         <div class="text-left m-1">
-            <h6> Nume utilizator </h6>
-            anunt
-            <br>
-            PRET 
+            <h6> {{person.name}} </h6>
+            
          </div>    
      </div>
 </div>
-
-<div class="singleConv">
-   <div class="row ">
-        <div>
-            <img 
-            src="http://raisingkarma.com/images/anonymousProfile.jpg" 
-            width="80px" 
-            height="80px" 
-            class="rounded-circle m-1"> 
-        </div>
-
-        <div class="text-left">
-            <h6> Nume utilizator </h6>
-            anunt
-            <br>
-            PRET 
-         </div>    
-     </div>
-</div>
-
-
-
-
-
-
-
 
 
 
@@ -64,32 +40,19 @@
             <h4 class="text-center"> Conversatia cu John Doe </h4>
             <hr>
             <div id="chatbox">
-    <ul>
-                <li class="him">By Other User</li>
-                <li class="me">By this User, first message</li>
-                <li class="me">By this User, secondmessage</li>
-                <li class="me">By this User, third message</li>
-                <li class="me">By this User, fourth message</li>
-                <li class="me">By this User, fourth message</li>
-                <li class="me">By this User, fourth message</li>
-                <li class="me">By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message</li>
-                <li class="me">By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message</li>
-                <li class="me">By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message</li>
-                <li class="me">By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message</li>
-                <li class="me">By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message</li>
-                <li class="me">By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message</li>
-                <li class="me">By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message</li>
-                <li class="me">By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message By this User, fourth message</li>
-                <li class="him">By Other User</li>
-                <li class="him">By Other User</li>
-</ul>
+            <ul
+            v-for="(text , index) in conversation" :key="index"
+            >
+                <li class="him"  v-if="text.from == convWith">{{text.text}}</li>
+                <li class="me" v-if="text.from == myId">{{text.text}}</li>
+               
+            </ul>
             </div>
         
            
      <div 
-        class="container " 
-       
-        @keyup.enter.prevent="send"
+        class="container" 
+        @keyup.enter.prevent="send(convWith)"
         >
         <textarea-autosize 
          id="textArea"
@@ -106,17 +69,58 @@
    
 </template>
 <script>
+import axios from '../../axios-auth'
 export default{
 data(){
     return {
-        message:''
+        message:'',
+        contacts:'',
+        conversation:'',
+        myId: this.$store.state.userId,
+        convWith :'' 
     }
 },
 
+beforeMount(){
+    this.getContacts()
+},
+
 methods: {
-    send(){
-       console.log(this.message)
+    send(convWith){
+       
+       
+        const text = {
+            to: this.convWith,
+            text : this.message
+        }
+       axios.post('/create/message' , text)
+       .then(res => {
+
+           this.showConv(convWith)
+
+       })
+       .catch(error => console.log(error)) 
        this.message = '';
+    },
+    getContacts(){
+
+        axios.get('/contacts')
+        .then(response => {
+            this.contacts = response.data
+             
+        })
+        .catch(error=>console.log(error))
+
+    },
+    showConv(id){
+        this.convWith = id ;
+        this.conversation = '';
+        axios.get('get/messages/'+id )
+        .then(res => {
+            this.conversation = res.data
+            console.log(res.data)
+        })
+       
     }
 
 }
