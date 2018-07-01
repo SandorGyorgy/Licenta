@@ -32,12 +32,35 @@
     </div>
     <br>
           
-            <div class="row">
-             
-            <i class="fa fa-bed fa-2x ml-3 col-md-3 " title="Numar camere">: {{ post.room_nr }} </i>
-            <h3 class="col-md-3">{{post.dimension}} m<sup>2</sup> </h3>
-            <h3 class="col-md-4">Pret: {{post.price_month}}€</h3>
-            </div>
+    <div class="row">
+
+        <h3 >
+
+        <span class="badge badge-pill badge-primary"> 
+            {{post.price_month}} € / Luna
+            </span>
+
+        <span v-if="post.price_half_year" class="badge badge-pill badge-primary"> 
+        {{post.price_half_year}} € / 6 Luni
+        </span>
+
+        <span v-if="post.price_year" class="badge badge-pill badge-primary"> 
+        {{post.price_year}} € / An
+        </span>
+
+        <span class="badge badge-pill badge-primary">
+            Suprafata utila 
+            {{post.dimension}}  m<sup>2</sup>
+            </span>
+
+        <span class="badge badge-pill badge-primary"> 
+          Numar camere  
+        <i class="fa fa-bed  ">: {{ post.room_nr }} </i>
+        </span>
+
+        </h3>
+
+    </div>
             
     
 
@@ -56,9 +79,10 @@
             </div>
             <div class="col">
                 <div class="card-block px-2 text-center text-left">
-                    <h5 class="card-title"> Contacteaza Utilizatorul</h5>
-                    <p class="card-text">Numar telefon {{user.phone}}</p>
-                    <a href="#" class="btn btn-primary">Trimite un mesaj</a>
+                    <h5 class="card-title"> {{ user.name }}</h5>
+                    <p class="card-text" id="telefon">Numar telefon <span 
+                    class="badge badge-pill badge-primary"> {{user.phone}} </span> </p>
+                    <a href="#" class="btn btn-primary">Trimite mesaj</a>
                 </div>
             </div>
         </div>
@@ -96,7 +120,7 @@ watch: {
     
 
 },
-mounted(){
+beforeMount(){
 this.get();
 },
 
@@ -153,6 +177,9 @@ methods:{
 
 </script>
 <style scoped>
+#telefon{
+    font-size: 20px;
+}
 .circle{
     border-radius: 50%;
 }

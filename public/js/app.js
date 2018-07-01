@@ -26061,7 +26061,8 @@ var routes = [{
     name: 'home'
 }, {
     path: '/map',
-    component: __WEBPACK_IMPORTED_MODULE_2__components_MapComponent_vue___default.a
+    component: __WEBPACK_IMPORTED_MODULE_2__components_MapComponent_vue___default.a,
+    name: 'map'
 
 }, {
     path: '/post/:id',
@@ -26167,7 +26168,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         userEmail: null,
         userPhone: null,
         router: localStorage.getItem('token'),
-        profilePic: null
+        profilePic: null,
+        visitPlace: null
 
     },
 
@@ -26189,6 +26191,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userPhone');
             localStorage.removeItem('profilePic');
+        },
+        visit: function visit(state, place) {
+            state.visitPlace = place;
         }
     },
 
@@ -26277,6 +26282,11 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             }).catch(function (error) {
                 return console.log(error);
             });
+        },
+        visit: function visit(_ref5, placeToVisit) {
+            var commit = _ref5.commit;
+
+            commit('visit', placeToVisit);
         }
     },
 
@@ -56764,29 +56774,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             formClasses: "form-group float-right mr-1",
-            topPlaces: ''
+            topPlaces: '',
+            place: ''
         };
     },
-    created: function created() {
+    beforeMount: function beforeMount() {
         this.getUserData;
         this.getBestPlaces();
     },
@@ -56794,6 +56791,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getUserData: function getUserData() {
             this.$store.dispatch("authUserData");
+        },
+        visitPlace: function visitPlace(place) {
+            this.place = place;
+            var coords = {
+                lat: this.place.geometry.location.lat(),
+                lng: this.place.geometry.location.lng()
+            };
+            this.$store.dispatch('visit', coords);
+            this.$router.push({ name: "map" });
         },
         getBestPlaces: function getBestPlaces() {
             var _this = this;
@@ -56816,110 +56822,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "p-3 " }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-deck text-center mr-1 " }, [
-      _vm.topPlaces[0]
-        ? _c("div", { staticClass: "card ", staticStyle: { width: "18rem" } }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src:
-                  "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
-                alt: ""
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body " }, [
-              _c("h5", { staticClass: "card-title" }, [
-                _vm._v(_vm._s(_vm.topPlaces[0].city))
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-text" }, [
-                _vm._v(
-                  "Some quick example text to build on the card title and make up the bulk of the card's content."
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "a",
-                { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                [_vm._v("Go somewhere")]
-              )
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.topPlaces[1]
-        ? _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src:
-                  "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
-                alt: ""
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body " }, [
-              _c("h5", { staticClass: "card-title" }, [
-                _vm._v(_vm._s(_vm.topPlaces[1].city))
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-text" }, [
-                _vm._v(
-                  "Some quick example text to build on the card title and make up the bulk of the card's content."
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "a",
-                { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                [_vm._v("Go somewhere")]
-              )
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.topPlaces[2]
-        ? _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
-            _c("img", {
-              staticClass: "card-img-top",
-              attrs: {
-                src:
-                  "https://vignette.wikia.nocookie.net/arianagrande/images/7/70/Example.png/revision/latest?cb=20160301231046",
-                alt: ""
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body " }, [
-              _c("h5", { staticClass: "card-title " }, [
-                _vm._v(_vm._s(_vm.topPlaces[2].city))
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-text " }, [
-                _vm._v(
-                  "Some quick example text to build on the card title and make up the bulk of the card's content."
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "a",
-                { staticClass: "btn btn-primary  ", attrs: { href: "#" } },
-                [_vm._v("Go somewhere")]
-              )
-            ])
-          ])
-        : _vm._e()
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-4 ml-1 mr-1" }, [
+    _c("div", { staticClass: "row mb-4 ml-1 mr-1" }, [
       _c(
         "div",
         {
@@ -56928,24 +56831,75 @@ var staticRenderFns = [
           attrs: { id: "form-container" }
         },
         [
-          _c("form", { attrs: { action: "" } }, [
-            _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body " }, [
-              _c("div", { staticClass: "card-text" }),
-              _vm._v(" "),
-              _c("a", { staticClass: "btn btn-primary mt-3" }, [
-                _vm._v("Go somewhere")
-              ])
-            ])
+          _c("h5", { staticClass: "card-title" }, [_vm._v("Card title")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body " }, [
+            _c(
+              "div",
+              { staticClass: "card-text" },
+              [
+                _c("gmap-autocomplete", {
+                  staticClass: "form-control",
+                  attrs: { placeholder: "Introduceti o locatie" },
+                  on: { place_changed: _vm.visitPlace }
+                })
+              ],
+              1
+            )
           ])
         ]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-4" })
-    ])
-  }
-]
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-deck text-center mr-1 " },
+      _vm._l(_vm.topPlaces, function(oras, index) {
+        return oras
+          ? _c(
+              "div",
+              {
+                key: index,
+                staticClass: "card ",
+                staticStyle: { width: "18rem" }
+              },
+              [
+                _c("img", {
+                  staticClass: "card-img-top",
+                  attrs: { src: oras.url, height: "200px", width: "100%" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body " }, [
+                  _c("h5", { staticClass: "card-title" }, [
+                    _vm._v(_vm._s(oras.city))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v(
+                      "Pret Mediu / chirie " + _vm._s(oras.avg_price) + " € "
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      " Total chirii disponibile " + _vm._s(oras.total) + " "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    { staticClass: "btn btn-primary", attrs: { href: "#" } },
+                    [_vm._v("Vizualizeaza Chiriile din " + _vm._s(oras.city))]
+                  )
+                ])
+              ]
+            )
+          : _vm._e()
+      })
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -57150,6 +57104,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -57172,8 +57132,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     };
   },
-  mounted: function mounted() {
+  beforeMount: function beforeMount() {
     this.showMarker();
+    if (this.$store.state.visitPlace != null) {
+      this.center = this.$store.state.visitPlace;
+      console.log(this.$store.state.visitPlace);
+    }
   },
 
   computed: {
@@ -57185,19 +57149,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     setPlace: function setPlace(place) {
       this.currentPlace = place;
-      for (var i in this.currentPlace.address_components) {
-        if (this.currentPlace.address_components[i].types[0] == 'locality') {
-          var city = this.currentPlace.address_components[i].types[0];
-          console.log(this.currentPlace.address_components[i].short_name);
-        }
-      }
-
-      // for(var i in this.currentPlace.address_components){
-      //   console.log(this.currentPlace.address_components)
-      //     // if(this.currentPlace.address_components[i].types[0] == 'locality'){
-      //     //   console.log(this.currentPlace.address_components[i].types[0])
-      //     // }
-      // }
     },
     showMarker: function showMarker() {
       var _this = this;
@@ -57407,7 +57358,32 @@ var render = function() {
                       _vm._v(" "),
                       _c("p", [_vm._v(" " + _vm._s(post.descriere) + "... ")]),
                       _vm._v(" "),
-                      _c("p", [_vm._v(" " + _vm._s(post.pret) + " ")]),
+                      _c("h4", [
+                        _c(
+                          "span",
+                          { staticClass: "badge badge-pill badge-primary" },
+                          [_vm._v(" " + _vm._s(post.pret) + " €")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          { staticClass: "badge badge-pill badge-primary" },
+                          [
+                            _vm._v(" " + _vm._s(post.dimensiune) + "  m"),
+                            _c("sup", [_vm._v("2")])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          { staticClass: "badge badge-pill badge-primary" },
+                          [
+                            _c("i", { staticClass: "fa fa-bed  " }, [
+                              _vm._v(": " + _vm._s(post.camere) + " ")
+                            ])
+                          ]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "container mt-3" }, [
                         _c(
@@ -57430,7 +57406,7 @@ var render = function() {
                                       { staticClass: "btn btn-success ml-3" },
                                       [
                                         _vm._v(
-                                          "\n                Vizualizeaza Chiria\n            "
+                                          "\n                 Vizualizeaza Chiria\n             "
                                         )
                                       ]
                                     )
@@ -58699,7 +58675,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.areaDiv[data-v-36da1883]{\r\n    width: 80%;\n}\n#chatbox[data-v-36da1883]{\r\n    height: 400px;\r\n    overflow: scroll;\r\n    margin-bottom: 5px;\n}\nul[data-v-36da1883]{\r\n  list-style: none;\r\n  margin: 0;\r\n  padding: 0;\n}\nul li[data-v-36da1883]{\r\n  display: inline;\r\n  clear: both;\r\n  padding: 8px;\r\n  border-radius: 30px;\r\n  margin-bottom: 2px;\r\n  font-family: Helvetica, Arial, sans-serif;\n}\n.him[data-v-36da1883]{\r\n  background: #eee;\r\n  float: left;\n}\n.me[data-v-36da1883]{\r\n  float: right;\r\n  background: #0084ff;\r\n  color: #fff;\n}\n.him + .me[data-v-36da1883]{\r\n  border-bottom-right-radius: 5px;\n}\n.me + .me[data-v-36da1883]{\r\n  border-top-right-radius: 5px;\r\n  border-bottom-right-radius: 5px;\n}\n.me[data-v-36da1883]:last-of-type {\r\n  border-bottom-right-radius: 30px;\r\n  margin-bottom: 15px;\n}\n.check[data-v-36da1883]{\r\n    border: 1px solid grey;\r\n    height: 550px;\n}\n#userList[data-v-36da1883]{\r\n    height: 550px;\r\n    width: 150px;\r\n    overflow: scroll;\n}\n#mesages[data-v-36da1883]{\r\n   display: -webkit-box;\r\n   display: -ms-flexbox;\r\n   display: flex;\n}\n.singleConv[data-v-36da1883]{\r\n    height: 85px;\n}\n.singleConv[data-v-36da1883] :hover{\r\n    background-color: grey;\n}\n#textArea[data-v-36da1883]{\r\n    width: 100%;\r\n    position: relative;\r\n    top: 10px\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.areaDiv[data-v-36da1883]{\r\n    width: 80%;\n}\n#chatbox[data-v-36da1883]{\r\n    height: 400px;\r\n    overflow: scroll;\r\n    margin-bottom: 5px;\n}\nul[data-v-36da1883]{\r\n  list-style: none;\r\n  margin: 0;\r\n  padding: 0;\n}\nul li[data-v-36da1883]{\r\n  display: inline;\r\n  clear: both;\r\n  padding: 8px;\r\n  border-radius: 30px;\r\n  font-family: Helvetica, Arial, sans-serif;\n}\n.him[data-v-36da1883]{\r\n  background: #eee;\r\n  float: left;\n}\n.me[data-v-36da1883]{\r\n  float: right;\r\n  background: #0084ff;\r\n  color: #fff;\n}\n.him + .me[data-v-36da1883]{\r\n  border-bottom-right-radius: 5px;\n}\n.me + .me[data-v-36da1883]{\r\n  border-top-right-radius: 5px;\r\n  border-bottom-right-radius: 5px;\n}\n.me[data-v-36da1883]:last-of-type {\r\n  border-bottom-right-radius: 30px;\r\n  margin-bottom: 15px;\n}\n.check[data-v-36da1883]{\r\n    border: 1px solid grey;\r\n    height: 550px;\n}\n#userList[data-v-36da1883]{\r\n    height: 550px;\r\n    width: 150px;\r\n    overflow: scroll;\n}\n#mesages[data-v-36da1883]{\r\n   display: -webkit-box;\r\n   display: -ms-flexbox;\r\n   display: flex;\n}\n.singleConv[data-v-36da1883]{\r\n    height: 85px;\n}\n.singleConv[data-v-36da1883] :hover{\r\n    background-color: grey;\n}\n#textArea[data-v-36da1883]{\r\n    width: 100%;\r\n    position: relative;\r\n    top: 10px\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -59235,8 +59211,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       status: ''
     };
   },
+  beforeMount: function beforeMount() {
+    this.get;
+  },
 
-  created: function created() {},
 
   computed: {
     get: function get() {
@@ -59294,7 +59272,7 @@ var render = function() {
     "div",
     [
       _c("vue-snotify"),
-      _vm._v("\r\n" + _vm._s(_vm.get) + "\r\n\r\n\r\n       "),
+      _vm._v(" "),
       _c("h3", { staticClass: "text-center" }, [
         _vm._v("\r\n    Anunțurile mele\r\n      ")
       ]),
@@ -60672,7 +60650,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.circle[data-v-286fd882]{\r\n    border-radius: 50%;\n}\n.check[data-v-286fd882]{\r\n    border: solid 1px black;\n}\n.active[data-v-286fd882]{\r\n    border: solid 1px rgba(236, 235, 235, 0.938);\n}\n.inactive[data-v-286fd882]{\r\n    opacity: 0.5;\n}\n.arrowLeft[data-v-286fd882] {\r\n    z-index: 1;\r\n    position: absolute;\r\n    top: 150px;\r\n    left: 15px;\n}\n.arrowRight[data-v-286fd882] {\r\n    z-index: 1;\r\n    position: absolute;\r\n    top: 150px;\r\n    left: 395px;\n}\n#displayImage[data-v-286fd882]{\r\n        height: 300px;\r\n        width: 405px;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n#telefon[data-v-286fd882]{\r\n    font-size: 20px;\n}\n.circle[data-v-286fd882]{\r\n    border-radius: 50%;\n}\n.check[data-v-286fd882]{\r\n    border: solid 1px black;\n}\n.active[data-v-286fd882]{\r\n    border: solid 1px rgba(236, 235, 235, 0.938);\n}\n.inactive[data-v-286fd882]{\r\n    opacity: 0.5;\n}\n.arrowLeft[data-v-286fd882] {\r\n    z-index: 1;\r\n    position: absolute;\r\n    top: 150px;\r\n    left: 15px;\n}\n.arrowRight[data-v-286fd882] {\r\n    z-index: 1;\r\n    position: absolute;\r\n    top: 150px;\r\n    left: 395px;\n}\n#displayImage[data-v-286fd882]{\r\n        height: 300px;\r\n        width: 405px;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -60685,6 +60663,30 @@ exports.push([module.i, "\n.circle[data-v-286fd882]{\r\n    border-radius: 50%;\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__axios_auth__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_globalMethods__ = __webpack_require__(10);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -60781,7 +60783,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.id = to.params.id;
         }
     },
-    mounted: function mounted() {
+    beforeMount: function beforeMount() {
         this.get();
     },
 
@@ -60889,22 +60891,50 @@ var render = function() {
         _c("br"),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c(
-            "i",
-            {
-              staticClass: "fa fa-bed fa-2x ml-3 col-md-3 ",
-              attrs: { title: "Numar camere" }
-            },
-            [_vm._v(": " + _vm._s(_vm.post.room_nr) + " ")]
-          ),
-          _vm._v(" "),
-          _c("h3", { staticClass: "col-md-3" }, [
-            _vm._v(_vm._s(_vm.post.dimension) + " m"),
-            _c("sup", [_vm._v("2")])
-          ]),
-          _vm._v(" "),
-          _c("h3", { staticClass: "col-md-4" }, [
-            _vm._v("Pret: " + _vm._s(_vm.post.price_month) + "€")
+          _c("h3", [
+            _c("span", { staticClass: "badge badge-pill badge-primary" }, [
+              _vm._v(
+                " \r\n            " +
+                  _vm._s(_vm.post.price_month) +
+                  " € / Luna\r\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _vm.post.price_half_year
+              ? _c("span", { staticClass: "badge badge-pill badge-primary" }, [
+                  _vm._v(
+                    " \r\n        " +
+                      _vm._s(_vm.post.price_half_year) +
+                      " € / 6 Luni\r\n        "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.post.price_year
+              ? _c("span", { staticClass: "badge badge-pill badge-primary" }, [
+                  _vm._v(
+                    " \r\n        " +
+                      _vm._s(_vm.post.price_year) +
+                      " € / An\r\n        "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("span", { staticClass: "badge badge-pill badge-primary" }, [
+              _vm._v(
+                "\r\n            Suprafata utila \r\n            " +
+                  _vm._s(_vm.post.dimension) +
+                  "  m"
+              ),
+              _c("sup", [_vm._v("2")])
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "badge badge-pill badge-primary" }, [
+              _vm._v(" \r\n          Numar camere  \r\n        "),
+              _c("i", { staticClass: "fa fa-bed  " }, [
+                _vm._v(": " + _vm._s(_vm.post.room_nr) + " ")
+              ])
+            ])
           ])
         ]),
         _vm._v(" "),
@@ -60932,17 +60962,26 @@ var render = function() {
                 { staticClass: "card-block px-2 text-center text-left" },
                 [
                   _c("h5", { staticClass: "card-title" }, [
-                    _vm._v(" Contacteaza Utilizatorul")
+                    _vm._v(" " + _vm._s(_vm.user.name))
                   ]),
                   _vm._v(" "),
-                  _c("p", { staticClass: "card-text" }, [
-                    _vm._v("Numar telefon " + _vm._s(_vm.user.phone))
-                  ]),
+                  _c(
+                    "p",
+                    { staticClass: "card-text", attrs: { id: "telefon" } },
+                    [
+                      _vm._v("Numar telefon "),
+                      _c(
+                        "span",
+                        { staticClass: "badge badge-pill badge-primary" },
+                        [_vm._v(" " + _vm._s(_vm.user.phone) + " ")]
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
                   _c(
                     "a",
                     { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                    [_vm._v("Trimite un mesaj")]
+                    [_vm._v("Trimite mesaj")]
                   )
                 ]
               )
@@ -61408,7 +61447,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
-    mounted: function mounted() {
+    beforeMount: function beforeMount() {
         this.get();
     },
 
@@ -61552,7 +61591,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         trash: function trash(key) {
             this.images[key] = "";
-            //console.log(this.images)
         }
     },
 

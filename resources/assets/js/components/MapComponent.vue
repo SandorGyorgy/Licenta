@@ -61,7 +61,13 @@
          <img :src="post.imagine" height="190px" width="230px" class="mt-2 ">
         <h6>  {{post.titlu}} </h6> 
         <p> {{post.descriere}}... </p>
-        <p> {{post.pret}} </p> 
+        <h4> <span class="badge badge-pill badge-primary"> {{post.pret}} €</span>
+          <span class="badge badge-pill badge-primary"> {{post.dimensiune}}  m<sup>2</sup></span>
+          <span class="badge badge-pill badge-primary"> 
+ <i class="fa fa-bed  ">: {{ post.camere }} </i>
+          </span>
+         
+          </h4> 
        
           <div class="container mt-3">
 
@@ -119,8 +125,13 @@ export default {
     };
   },
 
-  mounted() {
+  beforeMount() {
     this.showMarker();
+    if(this.$store.state.visitPlace != null){
+      this.center = this.$store.state.visitPlace
+ console.log(this.$store.state.visitPlace)
+    }
+   
   },
   computed:{
 
@@ -133,20 +144,7 @@ export default {
   methods: {
     setPlace(place) {
       this.currentPlace = place;
-      for(var i in this.currentPlace.address_components){
-          if(this.currentPlace.address_components[i].types[0] == 'locality'){
-                const city = this.currentPlace.address_components[i].types[0]
-                console.log(this.currentPlace.address_components[i].short_name)
-          }
-
-      }
-
-      // for(var i in this.currentPlace.address_components){
-      //   console.log(this.currentPlace.address_components)
-      //     // if(this.currentPlace.address_components[i].types[0] == 'locality'){
-      //     //   console.log(this.currentPlace.address_components[i].types[0])
-      //     // }
-      // }
+     
     },
 
     showMarker() {

@@ -343,7 +343,7 @@ export default {
         },
     },
 
-    mounted(){
+    beforeMount(){
         this.get()
     },
 
@@ -494,7 +494,6 @@ export default {
 
      trash(key){
         this.images[key] = ""
-        //console.log(this.images)
     }
 
     

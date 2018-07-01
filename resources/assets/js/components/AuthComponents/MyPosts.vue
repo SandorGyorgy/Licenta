@@ -2,7 +2,7 @@
 <div>
  
        <vue-snotify></vue-snotify>
-{{get}}
+
 
 
        <h3 class="text-center">
@@ -87,8 +87,8 @@ export default {
       status:''
     };
   },
-  created: function() {
-    
+  beforeMount() {
+    this.get
   },
 
   computed:{

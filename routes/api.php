@@ -33,4 +33,4 @@ Route::post('user/login', 'APILoginController@login');
 Route::get('/posts' ,'PostController@index');
 Route::get('/view/post/{id}' , 'PostController@show');
 Route::get('/mostpopular' , 'PostController@topPlaces');
-
+Route::post('/create/message' , 'MessagesController@store');

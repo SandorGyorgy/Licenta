@@ -15,7 +15,8 @@ export const store = new Vuex.Store({
         userEmail: null,
         userPhone: null,
         router: localStorage.getItem('token'),
-        profilePic: null
+        profilePic: null,
+        visitPlace:null
 
     },
 
@@ -45,6 +46,9 @@ export const store = new Vuex.Store({
             localStorage.removeItem('userEmail');
             localStorage.removeItem('userPhone');
             localStorage.removeItem('profilePic');
+        },
+        visit(state , place){
+            state.visitPlace = place;
         }
 
     },
@@ -129,6 +133,10 @@ export const store = new Vuex.Store({
                 })
                 .catch(error => console.log(error))
         },
+        visit({commit} , placeToVisit){
+            commit('visit' , placeToVisit)
+          
+        }
 
 
 

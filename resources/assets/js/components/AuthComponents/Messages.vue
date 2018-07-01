@@ -148,7 +148,6 @@ ul li{
   clear: both;
   padding: 8px;
   border-radius: 30px;
-  margin-bottom: 2px;
   font-family: Helvetica, Arial, sans-serif;
 
 }

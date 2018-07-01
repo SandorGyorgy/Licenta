@@ -212,9 +212,27 @@ class PostController extends Controller
     public function topPlaces() {
 
         $count = Location::groupBy('city')
-        ->select('city', DB::raw('count(*) as total'))->get()->take(3);
+        ->select('city', DB::raw('count(*) as total '))->orderBy('total' , 'DESC')->get()->take(3);
 
-        return response()->json($count);
+        for($i = 0 ; $i<3 ; $i ++){
+            $test = $count[$i]->city;
+            $test2 = DB::table('locations')
+            ->join('posts' , 'locations.id' , '=' , 'posts.location_id')
+            ->where('city' , $test)
+            ->avg('price_month')
+            ;
+            $test = str_replace(" ", "" , $test );
+           $url = 'http://licenta.test/orase/'.$test.'.'.'jpg' ; 
+           $test2 = round($test2);
+           $count[$i]->avg_price = $test2;
+           $count[$i]->url = $url;
+
+        }
+      
+        
+
+
+        return response()->json( $count );
 
     }
 

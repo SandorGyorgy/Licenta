@@ -13,6 +13,11 @@ class User extends Authenticatable
     public function post(){
         return $this->hasMany('App\Post');
     }
+
+    public function messages(){
+        return $this->hasMany('App\Message');
+    }
+
     protected $fillable = [
         'name', 'email', 'password', 'phone' ,'profile_picture'
     ];

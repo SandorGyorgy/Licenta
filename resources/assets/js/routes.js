@@ -20,7 +20,8 @@ const routes = [
     },
     {
         path: '/map',
-        component: MapComponent
+        component: MapComponent,
+        name: 'map'
 
     },
     {
