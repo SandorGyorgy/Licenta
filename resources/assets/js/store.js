@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import routes from './routes';
+import {router} from './app';
 import axiosAuth from './axios-auth';
 
 Vue.use(Vuex);
@@ -16,7 +16,9 @@ export const store = new Vuex.Store({
         userPhone: null,
         router: localStorage.getItem('token'),
         profilePic: null,
-        visitPlace:null
+        visitPlace:null,
+        startConversation:null
+      
 
     },
 
@@ -49,16 +51,29 @@ export const store = new Vuex.Store({
         },
         visit(state , place){
             state.visitPlace = place;
+        },
+
+        startConversation(state , user){
+            state.startConversation = user
+            console.log(user)
         }
+
+      
 
     },
 
     actions: {
 
+        startConversation({commit} , id){
+            axiosAuth.get('start/conversation/'+id)
+            .then(res =>{
+                commit('startConversation' , res.data)
+                router.push({ name: "messages" })
+            })
 
-       
-       
-      
+           
+        },
+
 
         //Logout action 
         logOut({ commit }) {

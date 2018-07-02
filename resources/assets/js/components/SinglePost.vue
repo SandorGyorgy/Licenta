@@ -69,7 +69,7 @@
 
 
 
- <div class="card mt-5">
+ <div class="card mt-5" v-if="user.id != myId">
         <div class="row no-gutters">
             <div class="col-auto">
                <img :src="user.profile_picture" 
@@ -82,7 +82,9 @@
                     <h5 class="card-title"> {{ user.name }}</h5>
                     <p class="card-text" id="telefon">Numar telefon <span 
                     class="badge badge-pill badge-primary"> {{user.phone}} </span> </p>
-                    <a href="#" class="btn btn-primary">Trimite mesaj</a>
+                    <a  class="btn btn-primary"
+                    @click="startConversation(user.id)"
+                    >Trimite mesaj</a>
                 </div>
             </div>
         </div>
@@ -109,7 +111,8 @@ export default{
         currentNumber: 0,
         active:'',
         incative:'',
-        user:[]
+        user:[] ,
+        myId : this.$store.state.userId
     };
 },
 watch: {
@@ -147,11 +150,9 @@ methods:{
        vm.post = response.data.post
        vm.images = vm.filter_array(Object.values(response.data.images))
        vm.user = response.data.user
-      
-       
+       console.log(vm.user)
     })
     .catch(error => console.log(error))
-
     },
 
     change(index){
@@ -165,6 +166,11 @@ methods:{
     prev(){
            this.currentNumber -= 1
         },
+    startConversation(id){
+        this.$store.dispatch('startConversation' ,id);
+
+    }
+    
 
 
    
@@ -182,9 +188,6 @@ methods:{
 }
 .circle{
     border-radius: 50%;
-}
-.check{
-    border: solid 1px black;
 }
 
 .active{

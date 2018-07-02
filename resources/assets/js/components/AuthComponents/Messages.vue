@@ -3,12 +3,31 @@
 
     <div class="row" >
         <div class="col-md-3 check ml-md-4 mt-2 mb-2" id="userList">
-            <h4 class="text-center"> Mesaje </h4> 
+            <h4 class="text-center"> Mesaje </h4>
+
+  <div class="singleConv mb-2"
+    v-if="startConversation"
+>
+   <div class="row ">
+        <div>
+            <img 
+            :src="startConversation.profile_picture" 
+            width="80px" 
+            height="80px" 
+            class="rounded-circle m-1"> 
+        </div>
+
+        <div class="text-left m-1">
+            <h6> {{startConversation.name}} </h6>
+            
+         </div>    
+     </div>
+</div>           
 
 <div class="singleConv mb-2"
 v-for="person in contacts"
 :key="person.id"
-@click="showConv(person.id)"
+@click="showConv(person.id , person.name)"
 >
    <div class="row ">
         <div>
@@ -26,20 +45,15 @@ v-for="person in contacts"
      </div>
 </div>
 
-
-
-
-
-
        
 </div>
 
 
         <div class="col-md-8 check ml-md-4 mt-2 mb-2" >
             
-            <h4 class="text-center"> Conversatia cu John Doe </h4>
+            <h4 class="text-center"> Conversatia cu {{convName}}</h4>
             <hr>
-            <div id="chatbox">
+            <div id="chatbox" ref="feed">
             <ul
             v-for="(text , index) in conversation" :key="index"
             >
@@ -77,7 +91,9 @@ data(){
         contacts:'',
         conversation:'',
         myId: this.$store.state.userId,
-        convWith :'' 
+        convWith :'' ,
+        convName: '',
+        startConversation: this.$store.state.startConversation
     }
 },
 
@@ -85,44 +101,68 @@ beforeMount(){
     this.getContacts()
 },
 
+
 methods: {
     send(convWith){
-       
-       
-        const text = {
+
+        if(this.startConversation){
+            var text = {
+            to: this.startConversation.id,
+            text : this.message
+            } 
+        }
+        else{
+            var text = {
             to: this.convWith,
             text : this.message
+            }
         }
+       if(text){
        axios.post('/create/message' , text)
        .then(res => {
-
-           this.showConv(convWith)
+           this.conversation.push(res.data)
+            this.scrollToBottom();
 
        })
        .catch(error => console.log(error)) 
        this.message = '';
+       } 
+
+      
     },
     getContacts(){
 
         axios.get('/contacts')
         .then(response => {
             this.contacts = response.data
-             
         })
         .catch(error=>console.log(error))
 
     },
-    showConv(id){
+    showConv(id , name){
+        if(this.convWith == id){
+            return ;
+        }
+        this.convName = name;
         this.convWith = id ;
         this.conversation = '';
         axios.get('get/messages/'+id )
         .then(res => {
             this.conversation = res.data
-            console.log(res.data)
+          
         })
-       
+    },
+    scrollToBottom(){
+        setTimeout(()=>{
+            this.$refs.feed.scrollTop = this.$refs.feed.scrollHeight - this.$refs.feed.clientHeight;
+        } , 200)
     }
 
+},
+watch: {
+    convWith(convName){
+        this.scrollToBottom();
+    }
 }
 
 
@@ -137,7 +177,8 @@ methods: {
 
 #chatbox{
     height: 400px;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     margin-bottom: 5px; 
 }
 
@@ -189,7 +230,8 @@ ul li{
 #userList{
     height: 550px;
     width: 150px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 #mesages{
    display: flex;

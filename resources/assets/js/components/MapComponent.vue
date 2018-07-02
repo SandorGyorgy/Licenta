@@ -129,7 +129,7 @@ export default {
     this.showMarker();
     if(this.$store.state.visitPlace != null){
       this.center = this.$store.state.visitPlace
- console.log(this.$store.state.visitPlace)
+ 
     }
    
   },

@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration
             $table->integer('to');
             $table->integer('from');
             $table->string('text' , 500);
+            $table->boolean('seen')->default('0');
             $table->timestamps();
            
         });

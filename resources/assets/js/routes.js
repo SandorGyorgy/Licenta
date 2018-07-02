@@ -84,6 +84,7 @@ const routes = [
     {
         path: '/user/messages',
         component: Messages,
+        name: 'messages',
         beforeEnter(to, from, next) {
             if (store.state.router) {
                 next()

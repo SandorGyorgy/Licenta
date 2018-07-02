@@ -3,17 +3,6 @@ use App\User;
 use App\Post;
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 
 
 Route::group(['middleware' => 'jwt.auth'], function(){
@@ -29,7 +18,8 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::post('/create/message' , 'MessagesController@store');
     Route::get('/contacts' , 'MessagesController@contacts');
     Route::get('/get/messages/{id}' , 'MessagesController@conversation');
-
+    Route::get('/seen' , 'MessagesController@seen');
+    Route::get('/start/conversation/{id}' , 'MessagesController@startConversation');
 
     });
 Route::post('user/register', 'APIRegisterController@register');

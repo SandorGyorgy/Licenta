@@ -214,7 +214,7 @@ class PostController extends Controller
         $count = Location::groupBy('city')
         ->select('city', DB::raw('count(*) as total '))->orderBy('total' , 'DESC')->get()->take(3);
 
-        for($i = 0 ; $i<3 ; $i ++){
+        for($i = 0 ; $i<sizeof($count) ; $i ++){
             $test = $count[$i]->city;
             $test2 = DB::table('locations')
             ->join('posts' , 'locations.id' , '=' , 'posts.location_id')

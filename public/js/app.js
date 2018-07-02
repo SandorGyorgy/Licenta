@@ -26116,6 +26116,7 @@ var routes = [{
 }, {
     path: '/user/messages',
     component: __WEBPACK_IMPORTED_MODULE_6__components_AuthComponents_Messages_vue___default.a,
+    name: 'messages',
     beforeEnter: function beforeEnter(to, from, next) {
         if (__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].state.router) {
             next();
@@ -26150,7 +26151,7 @@ var routes = [{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__axios_auth__ = __webpack_require__(6);
 
 
@@ -26169,7 +26170,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         userPhone: null,
         router: localStorage.getItem('token'),
         profilePic: null,
-        visitPlace: null
+        visitPlace: null,
+        startConversation: null
 
     },
 
@@ -26194,14 +26196,27 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         visit: function visit(state, place) {
             state.visitPlace = place;
+        },
+        startConversation: function startConversation(state, user) {
+            state.startConversation = user;
+            console.log(user);
         }
     },
 
     actions: {
+        startConversation: function startConversation(_ref, id) {
+            var commit = _ref.commit;
+
+            __WEBPACK_IMPORTED_MODULE_3__axios_auth__["a" /* default */].get('start/conversation/' + id).then(function (res) {
+                commit('startConversation', res.data);
+                __WEBPACK_IMPORTED_MODULE_2__app__["router"].push({ name: "messages" });
+            });
+        },
+
 
         //Logout action 
-        logOut: function logOut(_ref) {
-            var commit = _ref.commit;
+        logOut: function logOut(_ref2) {
+            var commit = _ref2.commit;
 
             __WEBPACK_IMPORTED_MODULE_3__axios_auth__["a" /* default */].post('/user/logout');
             commit('logoutUser');
@@ -26209,8 +26224,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 
         //Stay logged in untill logout 
-        tryAutoLogin: function tryAutoLogin(_ref2) {
-            var commit = _ref2.commit;
+        tryAutoLogin: function tryAutoLogin(_ref3) {
+            var commit = _ref3.commit;
 
             var token = localStorage.getItem('token');
             var userId = localStorage.getItem('userId');
@@ -26234,8 +26249,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 
         //Logi action : sends the user data to the api and gets back a JWT token 
-        login: function login(_ref3, loginData) {
-            var dispatch = _ref3.dispatch;
+        login: function login(_ref4, loginData) {
+            var dispatch = _ref4.dispatch;
 
             axios.post('/api/user/login', loginData).then(function (response) {
                 localStorage.setItem('token', response.data.token);
@@ -26248,8 +26263,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         //End of the login action
 
 
-        authUserData: function authUserData(_ref4) {
-            var commit = _ref4.commit;
+        authUserData: function authUserData(_ref5) {
+            var commit = _ref5.commit;
 
             var token = localStorage.getItem('token');
             axios({
@@ -26277,8 +26292,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
                 return console.log(error);
             });
         },
-        visit: function visit(_ref5, placeToVisit) {
-            var commit = _ref5.commit;
+        visit: function visit(_ref6, placeToVisit) {
+            var commit = _ref6.commit;
 
             commit('visit', placeToVisit);
         }
@@ -29767,6 +29782,7 @@ module.exports = __webpack_require__(158);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "router", function() { return router; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(11);
@@ -57130,7 +57146,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.showMarker();
     if (this.$store.state.visitPlace != null) {
       this.center = this.$store.state.visitPlace;
-      console.log(this.$store.state.visitPlace);
     }
   },
 
@@ -58670,7 +58685,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.areaDiv[data-v-36da1883]{\r\n    width: 80%;\n}\n#chatbox[data-v-36da1883]{\r\n    height: 400px;\r\n    overflow: scroll;\r\n    margin-bottom: 5px;\n}\nul[data-v-36da1883]{\r\n  list-style: none;\r\n  margin: 0;\r\n  padding: 0;\n}\nul li[data-v-36da1883]{\r\n  display: inline;\r\n  clear: both;\r\n  padding: 8px;\r\n  border-radius: 30px;\r\n  font-family: Helvetica, Arial, sans-serif;\n}\n.him[data-v-36da1883]{\r\n  background: #eee;\r\n  float: left;\n}\n.me[data-v-36da1883]{\r\n  float: right;\r\n  background: #0084ff;\r\n  color: #fff;\n}\n.him + .me[data-v-36da1883]{\r\n  border-bottom-right-radius: 5px;\n}\n.me + .me[data-v-36da1883]{\r\n  border-top-right-radius: 5px;\r\n  border-bottom-right-radius: 5px;\n}\n.me[data-v-36da1883]:last-of-type {\r\n  border-bottom-right-radius: 30px;\r\n  margin-bottom: 15px;\n}\n.check[data-v-36da1883]{\r\n    border: 1px solid grey;\r\n    height: 550px;\n}\n#userList[data-v-36da1883]{\r\n    height: 550px;\r\n    width: 150px;\r\n    overflow: scroll;\n}\n#mesages[data-v-36da1883]{\r\n   display: -webkit-box;\r\n   display: -ms-flexbox;\r\n   display: flex;\n}\n.singleConv[data-v-36da1883]{\r\n    height: 85px;\n}\n.singleConv[data-v-36da1883] :hover{\r\n    background-color: grey;\n}\n#textArea[data-v-36da1883]{\r\n    width: 100%;\r\n    position: relative;\r\n    top: 10px\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.areaDiv[data-v-36da1883]{\r\n    width: 80%;\n}\n#chatbox[data-v-36da1883]{\r\n    height: 400px;\r\n    overflow-x: hidden;\r\n    overflow-y: scroll;\r\n    margin-bottom: 5px;\n}\nul[data-v-36da1883]{\r\n  list-style: none;\r\n  margin: 0;\r\n  padding: 0;\n}\nul li[data-v-36da1883]{\r\n  display: inline;\r\n  clear: both;\r\n  padding: 8px;\r\n  border-radius: 30px;\r\n  font-family: Helvetica, Arial, sans-serif;\n}\n.him[data-v-36da1883]{\r\n  background: #eee;\r\n  float: left;\n}\n.me[data-v-36da1883]{\r\n  float: right;\r\n  background: #0084ff;\r\n  color: #fff;\n}\n.him + .me[data-v-36da1883]{\r\n  border-bottom-right-radius: 5px;\n}\n.me + .me[data-v-36da1883]{\r\n  border-top-right-radius: 5px;\r\n  border-bottom-right-radius: 5px;\n}\n.me[data-v-36da1883]:last-of-type {\r\n  border-bottom-right-radius: 30px;\r\n  margin-bottom: 15px;\n}\n.check[data-v-36da1883]{\r\n    border: 1px solid grey;\r\n    height: 550px;\n}\n#userList[data-v-36da1883]{\r\n    height: 550px;\r\n    width: 150px;\r\n    overflow-y: scroll;\r\n    overflow-x: hidden;\n}\n#mesages[data-v-36da1883]{\r\n   display: -webkit-box;\r\n   display: -ms-flexbox;\r\n   display: flex;\n}\n.singleConv[data-v-36da1883]{\r\n    height: 85px;\n}\n.singleConv[data-v-36da1883] :hover{\r\n    background-color: grey;\n}\n#textArea[data-v-36da1883]{\r\n    width: 100%;\r\n    position: relative;\r\n    top: 10px\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -58752,6 +58767,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -58761,7 +58790,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             contacts: '',
             conversation: '',
             myId: this.$store.state.userId,
-            convWith: ''
+            convWith: '',
+            convName: '',
+            startConversation: this.$store.state.startConversation
         };
     },
     beforeMount: function beforeMount() {
@@ -58773,17 +58804,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         send: function send(convWith) {
             var _this = this;
 
-            var text = {
-                to: this.convWith,
-                text: this.message
-            };
-            __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post('/create/message', text).then(function (res) {
-
-                _this.showConv(convWith);
-            }).catch(function (error) {
-                return console.log(error);
-            });
-            this.message = '';
+            if (this.startConversation) {
+                var text = {
+                    to: this.startConversation.id,
+                    text: this.message
+                };
+            } else {
+                var text = {
+                    to: this.convWith,
+                    text: this.message
+                };
+            }
+            if (text) {
+                __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post('/create/message', text).then(function (res) {
+                    _this.conversation.push(res.data);
+                    _this.scrollToBottom();
+                }).catch(function (error) {
+                    return console.log(error);
+                });
+                this.message = '';
+            }
         },
         getContacts: function getContacts() {
             var _this2 = this;
@@ -58794,15 +58834,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return console.log(error);
             });
         },
-        showConv: function showConv(id) {
+        showConv: function showConv(id, name) {
             var _this3 = this;
 
+            if (this.convWith == id) {
+                return;
+            }
+            this.convName = name;
             this.convWith = id;
             this.conversation = '';
             __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].get('get/messages/' + id).then(function (res) {
                 _this3.conversation = res.data;
-                console.log(res.data);
             });
+        },
+        scrollToBottom: function scrollToBottom() {
+            var _this4 = this;
+
+            setTimeout(function () {
+                _this4.$refs.feed.scrollTop = _this4.$refs.feed.scrollHeight - _this4.$refs.feed.clientHeight;
+            }, 200);
+        }
+    },
+    watch: {
+        convWith: function convWith(convName) {
+            this.scrollToBottom();
         }
     }
 
@@ -58827,6 +58882,29 @@ var render = function() {
         [
           _c("h4", { staticClass: "text-center" }, [_vm._v(" Mesaje ")]),
           _vm._v(" "),
+          _vm.startConversation
+            ? _c("div", { staticClass: "singleConv mb-2" }, [
+                _c("div", { staticClass: "row " }, [
+                  _c("div", [
+                    _c("img", {
+                      staticClass: "rounded-circle m-1",
+                      attrs: {
+                        src: _vm.startConversation.profile_picture,
+                        width: "80px",
+                        height: "80px"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-left m-1" }, [
+                    _c("h6", [
+                      _vm._v(" " + _vm._s(_vm.startConversation.name) + " ")
+                    ])
+                  ])
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _vm._l(_vm.contacts, function(person) {
             return _c(
               "div",
@@ -58835,7 +58913,7 @@ var render = function() {
                 staticClass: "singleConv mb-2",
                 on: {
                   click: function($event) {
-                    _vm.showConv(person.id)
+                    _vm.showConv(person.id, person.name)
                   }
                 }
               },
@@ -58865,14 +58943,14 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-md-8 check ml-md-4 mt-2 mb-2" }, [
         _c("h4", { staticClass: "text-center" }, [
-          _vm._v(" Conversatia cu John Doe ")
+          _vm._v(" Conversatia cu " + _vm._s(_vm.convName))
         ]),
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
         _c(
           "div",
-          { attrs: { id: "chatbox" } },
+          { ref: "feed", attrs: { id: "chatbox" } },
           _vm._l(_vm.conversation, function(text, index) {
             return _c("ul", { key: index }, [
               text.from == _vm.convWith
@@ -59709,16 +59787,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             id: localStorage.getItem("userId"),
             plata_jumate_an: false,
             plata_an: false,
-            seTrimite: false
+            seTrimite: false,
+            eroare: {
+                titlu: false,
+                descriere: false,
+                nrCamere: false,
+                metriiPatrati: false,
+                pretLuna: false,
+                currentPlace: false
+            }
 
         };
     },
 
 
     methods: {
+        validate: function validate() {
+            var form = this.form;
+            var eroareCount = 0;
+            if (form.currentPlace == null) {
+                this.eroare.currentPlace = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.currentPlace = false;
+            }
+            if (form.titlu == '') {
+                this.eroare.titlu = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.titlu = false;
+            }
+            if (form.descriere == '') {
+                this.eroare.descriere = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.descriere = false;
+            }
+            if (form.nrCamere == '') {
+                this.eroare.nrCamere = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.nrCamere = false;
+            }
+            if (form.pretLuna == '') {
+                this.eroare.pretLuna = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.pretLuna = false;
+            }
+            if (form.metriiPatrati == '') {
+                this.eroare.metriiPatrati = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.metriiPatrati = false;
+            }
+            if (form.files.length == 0) {
+                this.error('eroare', 'Trebuie sa selectati cel putin o imagine');
+                eroareCount = eroareCount + 1;
+            }
+
+            return eroareCount;
+        },
         adaugaAdresa: function adaugaAdresa(place) {
             this.form.currentPlace = place;
-            console.log(this.form.currentPlace);
         },
         onFileChange: function onFileChange(e) {
             var files = e.target.files;
@@ -59755,7 +59886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
                 vm.form.images = photos;
             } else {
-                this.error('Eroare', '');
+                this.eroare('Eroare', '');
             }
         },
         trash: function trash(index) {
@@ -59777,69 +59908,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
         },
         adaugaChirie: function adaugaChirie() {
-            if (this.form.currentPlace) {
 
-                var vm = this;
-                var chirie = new FormData();
-                chirie.append("lat", this.form.currentPlace.geometry.location.lat());
-                chirie.append("lng", this.form.currentPlace.geometry.location.lng());
-                chirie.append("address", this.form.currentPlace.formatted_address);
-                for (var i in this.form.currentPlace.address_components) {
-                    if (this.form.currentPlace.address_components[i].types[0] == 'locality') {
-                        chirie.append("city", this.form.currentPlace.address_components[i].short_name);
+            if (this.validate() == 0) {
+                if (this.form.currentPlace) {
+
+                    var vm = this;
+                    var chirie = new FormData();
+                    chirie.append("lat", this.form.currentPlace.geometry.location.lat());
+                    chirie.append("lng", this.form.currentPlace.geometry.location.lng());
+                    chirie.append("address", this.form.currentPlace.formatted_address);
+                    for (var i in this.form.currentPlace.address_components) {
+                        if (this.form.currentPlace.address_components[i].types[0] == 'locality') {
+                            chirie.append("city", this.form.currentPlace.address_components[i].short_name);
+                        }
                     }
-                }
 
-                chirie.append("title", this.form.titlu);
-                chirie.append("description", this.form.descriere);
-                chirie.append("room_nr", this.form.nrCamere);
-                chirie.append("dimension", this.form.metriiPatrati);
-                chirie.append("price_month", this.form.pretLuna);
-                chirie.append("price_half_year", this.form.pretJumateAn);
-                chirie.append("price_year", this.form.pretAn);
-                chirie.append("id", this.id);
+                    chirie.append("title", this.form.titlu);
+                    chirie.append("description", this.form.descriere);
+                    chirie.append("room_nr", this.form.nrCamere);
+                    chirie.append("dimension", this.form.metriiPatrati);
+                    chirie.append("price_month", this.form.pretLuna);
+                    chirie.append("price_half_year", this.form.pretJumateAn);
+                    chirie.append("price_year", this.form.pretAn);
+                    chirie.append("id", this.id);
 
-                var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
+                    var _iteratorNormalCompletion = true;
+                    var _didIteratorError = false;
+                    var _iteratorError = undefined;
 
-                try {
-                    for (var _iterator = this.form.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var item = _step.value;
-
-                        chirie.append("images[]", item);
-                    }
-                } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
-                } finally {
                     try {
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                            _iterator.return();
+                        for (var _iterator = this.form.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                            var item = _step.value;
+
+                            chirie.append("images[]", item);
                         }
+                    } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
                     } finally {
-                        if (_didIteratorError) {
-                            throw _iteratorError;
+                        try {
+                            if (!_iteratorNormalCompletion && _iterator.return) {
+                                _iterator.return();
+                            }
+                        } finally {
+                            if (_didIteratorError) {
+                                throw _iteratorError;
+                            }
                         }
                     }
+
+                    this.seTrimite = true;
+
+                    __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post("/user/post", chirie).then(function (response) {
+                        if (response.status == 200) {
+                            vm.success("Succes!", "Chiria a fost adaugata!");
+                            vm.reset();
+                            vm.seTrimite = false;
+                        }
+
+                        console.log(response);
+                    }).catch(function (eroare) {
+                        if (eroare) {
+                            vm.eroare("Eroare!", "A aparut o eroare , incercati din nou mai tarziu!");
+                            vm.seTrimite = false;
+                        }
+                    });
                 }
-
-                this.seTrimite = true;
-
-                __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post("/user/post", chirie).then(function (response) {
-                    if (response.status == 200) {
-                        vm.success("Succes!", "Chiria a fost adaugata!");
-                        vm.reset();
-                        vm.seTrimite = false;
-                    }
-
-                    console.log(response);
-                }).catch(function (error) {
-                    if (error) {
-                        vm.error("Eroare!", "A aparut o eroare , incercati din nou mai tarziu!");
-                        vm.seTrimite = false;
-                    }
-                });
             }
         }
     },
@@ -59925,7 +60059,9 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm.eroare.titlu
+                  ? _c("div", { staticClass: "col-md-3" }, [_vm._m(1)])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -59961,7 +60097,9 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm.eroare.descriere
+                  ? _c("div", { staticClass: "col-md-3" }, [_vm._m(2)])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -60006,7 +60144,21 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(3)
+                _c("div", { staticClass: "col-md-3" }, [
+                  _vm.eroare.nrCamere
+                    ? _c("div", { staticClass: "form-control-feedback" }, [
+                        _c(
+                          "span",
+                          { staticClass: "text-danger align-middle" },
+                          [
+                            _vm._v(
+                              "\n                            Nu ati precizat numarul de camere\n                        "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -60051,7 +60203,9 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(4)
+                _vm.eroare.metriiPatrati
+                  ? _c("div", { staticClass: "col-md-3" }, [_vm._m(3)])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -60076,7 +60230,21 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(5)
+                _c("div", { staticClass: "col-md-3" }, [
+                  _vm.eroare.currentPlace
+                    ? _c("div", { staticClass: "form-control-feedback" }, [
+                        _c(
+                          "span",
+                          { staticClass: "text-danger align-middle" },
+                          [
+                            _vm._v(
+                              "\n                            Nu ati ales adresa chiriei\n                        "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -60121,7 +60289,9 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(6)
+                _vm.eroare.pretLuna
+                  ? _c("div", { staticClass: "col-md-3" }, [_vm._m(4)])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
@@ -60406,9 +60576,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
+    return _c("div", { staticClass: "form-control-feedback" }, [
+      _c("span", { staticClass: "text-danger align-middle" }, [
+        _vm._v(
+          "\n                    Nu ati adaugat un titlu \n                "
+        )
       ])
     ])
   },
@@ -60416,9 +60588,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
+    return _c("div", { staticClass: "form-control-feedback" }, [
+      _c("span", { staticClass: "text-danger align-middle" }, [
+        _vm._v(
+          "\n                    Nu ati ales o descriere\n                "
+        )
       ])
     ])
   },
@@ -60426,9 +60600,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
+    return _c("div", { staticClass: "form-control-feedback" }, [
+      _c("span", { staticClass: "text-danger align-middle" }, [
+        _vm._v(
+          "\n                                Nu ati precizat suprafata utila\n                        "
+        )
       ])
     ])
   },
@@ -60436,29 +60612,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
+    return _c("div", { staticClass: "form-control-feedback" }, [
+      _c("span", { staticClass: "text-danger align-middle" }, [
+        _vm._v(
+          "\n                                Nu ati precizat un pret\n                        "
+        )
       ])
     ])
   }
@@ -60558,7 +60716,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n#telefon[data-v-286fd882]{\r\n    font-size: 20px;\n}\n.circle[data-v-286fd882]{\r\n    border-radius: 50%;\n}\n.check[data-v-286fd882]{\r\n    border: solid 1px black;\n}\n.active[data-v-286fd882]{\r\n    border: solid 1px rgba(236, 235, 235, 0.938);\n}\n.inactive[data-v-286fd882]{\r\n    opacity: 0.5;\n}\n.arrowLeft[data-v-286fd882] {\r\n    z-index: 1;\r\n    position: absolute;\r\n    top: 150px;\r\n    left: 15px;\n}\n.arrowRight[data-v-286fd882] {\r\n    z-index: 1;\r\n    position: absolute;\r\n    top: 150px;\r\n    left: 395px;\n}\n#displayImage[data-v-286fd882]{\r\n        height: 300px;\r\n        width: 405px;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n#telefon[data-v-286fd882]{\r\n    font-size: 20px;\n}\n.circle[data-v-286fd882]{\r\n    border-radius: 50%;\n}\n.active[data-v-286fd882]{\r\n    border: solid 1px rgba(236, 235, 235, 0.938);\n}\n.inactive[data-v-286fd882]{\r\n    opacity: 0.5;\n}\n.arrowLeft[data-v-286fd882] {\r\n    z-index: 1;\r\n    position: absolute;\r\n    top: 150px;\r\n    left: 15px;\n}\n.arrowRight[data-v-286fd882] {\r\n    z-index: 1;\r\n    position: absolute;\r\n    top: 150px;\r\n    left: 395px;\n}\n#displayImage[data-v-286fd882]{\r\n        height: 300px;\r\n        width: 405px;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -60571,6 +60729,8 @@ exports.push([module.i, "\n#telefon[data-v-286fd882]{\r\n    font-size: 20px;\n}
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__axios_auth__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_globalMethods__ = __webpack_require__(10);
+//
+//
 //
 //
 //
@@ -60682,7 +60842,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             currentNumber: 0,
             active: '',
             incative: '',
-            user: []
+            user: [],
+            myId: this.$store.state.userId
         };
     },
 
@@ -60716,6 +60877,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 vm.post = response.data.post;
                 vm.images = vm.filter_array(Object.values(response.data.images));
                 vm.user = response.data.user;
+                console.log(vm.user);
             }).catch(function (error) {
                 return console.log(error);
             });
@@ -60728,6 +60890,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         prev: function prev() {
             this.currentNumber -= 1;
+        },
+        startConversation: function startConversation(id) {
+            this.$store.dispatch('startConversation', id);
         }
     }
 
@@ -60851,51 +61016,60 @@ var render = function() {
         _vm._v(
           "\r\n        " + _vm._s(_vm.post.description) + " \r\n\r\n\r\n\r\n "
         ),
-        _c("div", { staticClass: "card mt-5" }, [
-          _c("div", { staticClass: "row no-gutters" }, [
-            _c("div", { staticClass: "col-auto" }, [
-              _c("img", {
-                staticClass: "rounded-circle m-2",
-                attrs: {
-                  src: _vm.user.profile_picture,
-                  height: "120px",
-                  width: "120px"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col" }, [
-              _c(
-                "div",
-                { staticClass: "card-block px-2 text-center text-left" },
-                [
-                  _c("h5", { staticClass: "card-title" }, [
-                    _vm._v(" " + _vm._s(_vm.user.name))
-                  ]),
-                  _vm._v(" "),
+        _vm.user.id != _vm.myId
+          ? _c("div", { staticClass: "card mt-5" }, [
+              _c("div", { staticClass: "row no-gutters" }, [
+                _c("div", { staticClass: "col-auto" }, [
+                  _c("img", {
+                    staticClass: "rounded-circle m-2",
+                    attrs: {
+                      src: _vm.user.profile_picture,
+                      height: "120px",
+                      width: "120px"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col" }, [
                   _c(
-                    "p",
-                    { staticClass: "card-text", attrs: { id: "telefon" } },
+                    "div",
+                    { staticClass: "card-block px-2 text-center text-left" },
                     [
-                      _vm._v("Numar telefon "),
+                      _c("h5", { staticClass: "card-title" }, [
+                        _vm._v(" " + _vm._s(_vm.user.name))
+                      ]),
+                      _vm._v(" "),
                       _c(
-                        "span",
-                        { staticClass: "badge badge-pill badge-primary" },
-                        [_vm._v(" " + _vm._s(_vm.user.phone) + " ")]
+                        "p",
+                        { staticClass: "card-text", attrs: { id: "telefon" } },
+                        [
+                          _vm._v("Numar telefon "),
+                          _c(
+                            "span",
+                            { staticClass: "badge badge-pill badge-primary" },
+                            [_vm._v(" " + _vm._s(_vm.user.phone) + " ")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              _vm.startConversation(_vm.user.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Trimite mesaj")]
                       )
                     ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                    [_vm._v("Trimite mesaj")]
                   )
-                ]
-              )
+                ])
+              ])
             ])
-          ])
-        ])
+          : _vm._e()
       ])
     ])
   ])

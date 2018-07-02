@@ -21,6 +21,8 @@ class MessagesController extends Controller
         $message->text = $request->text;
 
         $message->save();
+
+        return response()->json($message);
        
 
     }
@@ -32,7 +34,6 @@ class MessagesController extends Controller
         ->orWhere('to' , $otherUser)
         ->orderBy('created_at' , 'ASC')
         ->get();
-       
         return response()->json($messages);
 
     }
@@ -51,7 +52,24 @@ class MessagesController extends Controller
         }
         $filtered = [];
        $filtered = array_unique($person);
-        return response()->json($filtered);
+        return response()->json(
+            $filtered
+            );
+    } 
+    public function startConversation($id){
+        $user = User::where('id' , $id)->firstOrFail();
+        return response()->json($user);
+    }
+
+    public function seen(){
+        $user = auth()->user();
+        $id = $user->id;
+        $unseen = Message::where('to' , $id)->where('seen' , 0)->get();
+        foreach($unseen as $seen){
+            $seen->seen = 1;
+            $seen->update();
+        }
+
     }
 
 }

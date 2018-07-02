@@ -34,10 +34,10 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3" v-if="eroare.titlu">
         <div class="form-control-feedback">
                 <span class="text-danger align-middle">
-
+                    Nu ati adaugat un titlu 
                 </span>
         </div>
     </div>  
@@ -65,10 +65,10 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3" v-if="eroare.descriere">
         <div class="form-control-feedback">
                 <span class="text-danger align-middle">
-
+                    Nu ati ales o descriere
                 </span>
         </div>
     </div>  
@@ -93,9 +93,9 @@
             </div>
 
             <div class="col-md-3">
-                <div class="form-control-feedback">
+                <div class="form-control-feedback" v-if="eroare.nrCamere">
                         <span class="text-danger align-middle">
-
+                            Nu ati precizat numarul de camere
                         </span>
                 </div>
             </div>  
@@ -117,10 +117,10 @@
             </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3" v-if="eroare.metriiPatrati">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                                
+                                Nu ati precizat suprafata utila
                         </span>
                 </div>
             </div>  
@@ -145,9 +145,9 @@
             </div>
 
             <div class="col-md-3">
-                <div class="form-control-feedback">
+                <div class="form-control-feedback" v-if="eroare.currentPlace">
                         <span class="text-danger align-middle">
-
+                            Nu ati ales adresa chiriei
                         </span>
                 </div>
             </div>
@@ -169,10 +169,10 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3" v-if="eroare.pretLuna">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-
+                                Nu ati precizat un pret
                         </span>
                 </div>
             </div>  
@@ -321,59 +321,115 @@ export default {
         id: localStorage.getItem("userId"),
         plata_jumate_an: false,
         plata_an: false,
-        seTrimite: false
+        seTrimite: false,
+        eroare:{
+            titlu:false,
+            descriere:false,
+            nrCamere:false,
+            metriiPatrati:false,
+            pretLuna:false,
+            currentPlace:false
+        }
         
     };
   },
 
   methods: {
+
+      validate(){
+          var form = this.form
+          var eroareCount = 0
+          if(form.currentPlace == null){
+              this.eroare.currentPlace = true
+              eroareCount = eroareCount+1
+          }else{
+              this.eroare.currentPlace = false
+          }
+        if(form.titlu == ''){
+              this.eroare.titlu = true
+              eroareCount = eroareCount+1
+          }else{
+              this.eroare.titlu = false
+          }
+        if(form.descriere == ''){
+              this.eroare.descriere = true
+              eroareCount = eroareCount+1
+          }else{
+               this.eroare.descriere = false
+          }
+        if(form.nrCamere == ''){
+              this.eroare.nrCamere = true
+              eroareCount = eroareCount+1
+          }else{
+               this.eroare.nrCamere = false
+          }
+        if(form.pretLuna == ''){
+              this.eroare.pretLuna = true
+              eroareCount = eroareCount+1
+          }else{
+              this.eroare.pretLuna = false
+          }
+        if(form.metriiPatrati == ''){
+              this.eroare.metriiPatrati = true
+              eroareCount = eroareCount+1
+          }else{
+               this.eroare.metriiPatrati = false
+          }
+        if(form.files.length == 0){
+            this.error('eroare' , 'Trebuie sa selectati cel putin o imagine')
+             eroareCount = eroareCount+1
+        } 
+
+        return eroareCount;
+
+      },
+
     adaugaAdresa(place) {
       this.form.currentPlace = place;
-      console.log(this.form.currentPlace)
 
     },
 
     onFileChange(e) {
-      var files = e.target.files;
-  
-  //daca exista imagini pentru preview adauga la cele existente sau creaza array gol
-      if(this.form.images){
-          var photos = this.form.images
-      }else{
-           var photos = [];
-      }
-      var files_count = files.length + this.form.images.length;
-      var curentFileLength = files.length
-//daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
-      if (files && files_count <= 8) {
-        const vm = this;
-        //const photos = [];
-
- // daca exista fisiere adauga la cele existente sau creaza array de fisiere nou
+            var files = e.target.files;
         
-            const formFiles = this.form.files
-            for(let i = 0 ; i < curentFileLength; i++ ){
-                formFiles.push(files[i])
+        //daca exista imagini pentru preview adauga la cele existente sau creaza array gol
+            if(this.form.images){
+                var photos = this.form.images
+            }else{
+                var photos = [];
             }
-            this.form.files = formFiles
-           
-        
+            var files_count = files.length + this.form.images.length;
+            var curentFileLength = files.length
+        //daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
+            if (files && files_count <= 8) {
+                const vm = this;
+                //const photos = [];
+
+        // daca exista fisiere adauga la cele existente sau creaza array de fisiere nou
+                
+                    const formFiles = this.form.files
+                    for(let i = 0 ; i < curentFileLength; i++ ){
+                        formFiles.push(files[i])
+                    }
+                    this.form.files = formFiles
+                
+                
 
 
 
-        for (let i = 0; i < curentFileLength; i++) {
-          var reader = new FileReader();
-          var image = "";
-          reader.onload = function(e) {
-            image = e.target.result;
-            photos.push(image);
-          };
-          reader.readAsDataURL(files[i]);
-        }
-        vm.form.images = photos
-      }else{
-          this.error('Eroare' , '')
-      }
+                for (let i = 0; i < curentFileLength; i++) {
+                var reader = new FileReader();
+                var image = "";
+                reader.onload = function(e) {
+                    image = e.target.result;
+                    photos.push(image);
+                };
+                reader.readAsDataURL(files[i]);
+                }
+                vm.form.images = photos
+            }else{
+                this.eroare('Eroare' , '')
+            }
     },
 
     trash(index){
@@ -398,8 +454,10 @@ export default {
     },
 
     adaugaChirie() {
-     if(this.form.currentPlace){
-
+        
+        if(this.validate() == 0){
+            if(this.form.currentPlace){
+            
            const vm = this; 
         var chirie = new FormData();
         chirie.append("lat" ,this.form.currentPlace.geometry.location.lat());
@@ -438,14 +496,19 @@ export default {
 
               console.log(response)
           })
-          .catch(error =>{
-              if(error){
-                  vm.error("Eroare!" , "A aparut o eroare , incercati din nou mai tarziu!");
+          .catch(eroare =>{
+              if(eroare){
+                  vm.eroare("Eroare!" , "A aparut o eroare , incercati din nou mai tarziu!");
                    vm.seTrimite = false;
               }
           });
 
      }
+
+
+
+        }
+    
       
    
     }
