@@ -56790,43 +56790,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            formClasses: "form-group float-right mr-1",
-            topPlaces: '',
-            place: ''
-        };
-    },
-    beforeMount: function beforeMount() {
-        this.getUserData;
-        this.getBestPlaces();
-    },
+  data: function data() {
+    return {
+      formClasses: "form-group float-right mr-1",
+      topPlaces: '',
+      place: ''
 
-    methods: {
-        getUserData: function getUserData() {
-            this.$store.dispatch("authUserData");
-        },
-        visitPlace: function visitPlace(place) {
-            this.place = place;
-            var coords = {
-                lat: this.place.geometry.location.lat(),
-                lng: this.place.geometry.location.lng()
-            };
-            this.$store.dispatch('visit', coords);
-            this.$router.push({ name: "map" });
-        },
-        getBestPlaces: function getBestPlaces() {
-            var _this = this;
+    };
+  },
+  beforeMount: function beforeMount() {
 
-            axios.get('api/mostpopular').then(function (response) {
-                _this.topPlaces = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            });
+    this.getUserData;
+    this.getBestPlaces();
+  },
+
+
+  methods: {
+    getUserData: function getUserData() {
+      this.$store.dispatch("authUserData");
+    },
+    visitPlace: function visitPlace(place) {
+      this.place = place;
+      var coords = {
+        lat: this.place.geometry.location.lat(),
+        lng: this.place.geometry.location.lng()
+      };
+      this.$store.dispatch('visit', coords);
+      this.$router.push({ name: "map" });
+    },
+    visitCity: function visitCity(data) {
+      var _this = this;
+
+      var completeAddress = data + ' România';
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ 'address': completeAddress }, function (results, status) {
+        if (status === 'OK') {
+          var test = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          };
+          _this.$store.dispatch('visit', test);
+          _this.$router.push({ name: "map" });
         }
+      });
+    },
+    getBestPlaces: function getBestPlaces() {
+      var _this2 = this;
+
+      axios.get('api/mostpopular').then(function (response) {
+        _this2.topPlaces = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
+  }
 });
 
 /***/ }),
@@ -56861,7 +56882,7 @@ var render = function() {
                     position: "relative",
                     top: "120px"
                   },
-                  attrs: { placeholder: "Introduceti o locatie" },
+                  attrs: { placeholder: "Introduceți o locație" },
                   on: { place_changed: _vm.visitPlace }
                 })
               ],
@@ -56899,7 +56920,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "card-text" }, [
                     _vm._v(
-                      "Pret Mediu / chirie " + _vm._s(oras.avg_price) + " € "
+                      "Preț Mediu / chirie " + _vm._s(oras.avg_price) + " € "
                     ),
                     _c("br"),
                     _vm._v(
@@ -56908,8 +56929,16 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c(
-                    "a",
-                    { staticClass: "btn btn-primary", attrs: { href: "#" } },
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.visitCity(oras.city)
+                        }
+                      }
+                    },
                     [_vm._v("Vizualizeaza Chiriile din " + _vm._s(oras.city))]
                   )
                 ])
@@ -57160,11 +57189,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
 
-  computed: {
-    currentImage: function currentImage() {
-      // return this.detalii.poze[Math.abs(this.currentNumber) % this.detalii.poze.length];
-    }
-  },
+  computed: {},
 
   methods: {
     setPlace: function setPlace(place) {
@@ -57291,7 +57316,7 @@ var render = function() {
             [
               _c("gmap-autocomplete", {
                 staticClass: "form-control",
-                attrs: { placeholder: "Introduceti o locatie" },
+                attrs: { placeholder: "Introduceți o locație" },
                 on: { place_changed: _vm.setPlace }
               }),
               _vm._v(" "),
@@ -57299,7 +57324,7 @@ var render = function() {
                 _c(
                   "button",
                   { staticClass: "btn btn-info", on: { click: _vm.addMarker } },
-                  [_vm._v(" Cauta ")]
+                  [_vm._v(" Caută ")]
                 )
               ])
             ],
@@ -57425,7 +57450,7 @@ var render = function() {
                                       { staticClass: "btn btn-success ml-3" },
                                       [
                                         _vm._v(
-                                          "\n                 Vizualizeaza Chiria\n             "
+                                          "\n                 Vizualizează Chiria\n             "
                                         )
                                       ]
                                     )
@@ -58269,7 +58294,7 @@ var render = function() {
                       type: "text",
                       name: "phone",
                       id: "phone",
-                      placeholder: "Numar Telefon",
+                      placeholder: "Număr Telefon",
                       required: "",
                       autofocus: ""
                     },
@@ -58310,7 +58335,7 @@ var render = function() {
                       type: "password",
                       name: "password",
                       id: "password",
-                      placeholder: "Parola",
+                      placeholder: "Parolă",
                       required: ""
                     },
                     domProps: { value: _vm.password },
@@ -61004,7 +61029,7 @@ var render = function() {
               _vm._v(
                 " \r\n            " +
                   _vm._s(_vm.post.price_month) +
-                  " € / Luna\r\n            "
+                  " € / Lună\r\n            "
               )
             ]),
             _vm._v(" "),
@@ -61030,7 +61055,7 @@ var render = function() {
             _vm._v(" "),
             _c("span", { staticClass: "badge badge-pill badge-primary" }, [
               _vm._v(
-                "\r\n            Suprafata utila \r\n            " +
+                "\r\n            Suprafață utilă \r\n            " +
                   _vm._s(_vm.post.dimension) +
                   "  m"
               ),
@@ -61038,7 +61063,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("span", { staticClass: "badge badge-pill badge-primary" }, [
-              _vm._v(" \r\n          Numar camere  \r\n        "),
+              _vm._v(" \r\n          Număr camere  \r\n        "),
               _c("i", { staticClass: "fa fa-bed  " }, [
                 _vm._v(": " + _vm._s(_vm.post.room_nr) + " ")
               ])
@@ -61080,7 +61105,7 @@ var render = function() {
                         "p",
                         { staticClass: "card-text", attrs: { id: "telefon" } },
                         [
-                          _vm._v("Numar telefon "),
+                          _vm._v("Număr telefon "),
                           _c(
                             "span",
                             { staticClass: "badge badge-pill badge-primary" },

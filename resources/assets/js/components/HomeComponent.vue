@@ -17,7 +17,7 @@
                              position:relative;
                              top: 120px;
                              "
-                            placeholder="Introduceti o locatie">
+                            placeholder="Introduceți o locație">
                        </gmap-autocomplete>
                          
                         </div>
@@ -45,8 +45,10 @@
         :src="oras.url" height="200px" width="100%">
         <div class="card-body ">
             <h5 class="card-title">{{ oras.city }}</h5>
-            <p class="card-text">Pret Mediu / chirie {{ oras.avg_price }} € <br> Total chirii disponibile {{ oras.total }} </p>
-            <a href="#" class="btn btn-primary">Vizualizeaza Chiriile din {{oras.city}}</a>
+            <p class="card-text">Preț Mediu / chirie {{ oras.avg_price }} € <br> Total chirii disponibile {{ oras.total }} </p>
+            <button
+            @click.prevent="visitCity(oras.city)" 
+            class="btn btn-primary">Vizualizeaza Chiriile din {{oras.city}}</button>
         </div>
         </div>
 
@@ -63,14 +65,18 @@ export default {
     return {
       formClasses: "form-group float-right mr-1",
       topPlaces: '',
-      place:''
+      place:'',
+    
     };
   },
   beforeMount(){
+     
       this.getUserData
       this.getBestPlaces()
   },
+
   methods:{
+     
       getUserData(){
           this.$store.dispatch("authUserData");
       },
@@ -83,6 +89,21 @@ export default {
       this.$store.dispatch('visit' , coords)
       this.$router.push({ name: "map" });
      
+    },
+    visitCity(data){
+      var completeAddress = data+' România'
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({'address': completeAddress}, (results, status) => {
+        if (status === 'OK') {
+            const test = {
+            lat : results[0].geometry.location.lat(),
+            lng : results[0].geometry.location.lng()
+            }
+            this.$store.dispatch('visit' , test)
+            this.$router.push({ name: "map" });
+        }
+      });
+    
     },
       getBestPlaces(){
 

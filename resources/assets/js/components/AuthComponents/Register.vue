@@ -66,7 +66,7 @@
                         type="text" 
                         name="phone" class="form-control" 
                         id="phone"
-                        placeholder="Numar Telefon" 
+                        placeholder="Număr Telefon" 
                         required autofocus>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                 <div class="form-group has-danger">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <input v-model="password" type="password" name="password" class="form-control" id="password"
-                               placeholder="Parola" required>
+                               placeholder="Parolă" required>
                     </div>
                 </div>
             </div>

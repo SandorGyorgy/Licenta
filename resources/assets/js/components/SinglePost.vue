@@ -37,7 +37,7 @@
         <h3 >
 
         <span class="badge badge-pill badge-primary"> 
-            {{post.price_month}} € / Luna
+            {{post.price_month}} € / Lună
             </span>
 
         <span v-if="post.price_half_year" class="badge badge-pill badge-primary"> 
@@ -49,12 +49,12 @@
         </span>
 
         <span class="badge badge-pill badge-primary">
-            Suprafata utila 
+            Suprafață utilă 
             {{post.dimension}}  m<sup>2</sup>
             </span>
 
         <span class="badge badge-pill badge-primary"> 
-          Numar camere  
+          Număr camere  
         <i class="fa fa-bed  ">: {{ post.room_nr }} </i>
         </span>
 
@@ -81,7 +81,7 @@
             <div class="col">
                 <div class="card-block px-2 text-center text-left">
                     <h5 class="card-title"> {{ user.name }}</h5>
-                    <p class="card-text" id="telefon">Numar telefon <span 
+                    <p class="card-text" id="telefon">Număr telefon <span 
                     class="badge badge-pill badge-primary"> {{user.phone}} </span> </p>
                     <a  class="btn btn-primary"
                     @click="startConversation(user.id)"

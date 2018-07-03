@@ -11,13 +11,13 @@
                         <gmap-autocomplete
                             @place_changed="setPlace" 
                             class="form-control"
-                            placeholder="Introduceti o locatie">
+                            placeholder="Introduceți o locație">
                        </gmap-autocomplete>
                     
                         <div class="col-md-3 field-label-responsive"> 
               <button class="btn btn-info"
               @click="addMarker"
-              > Cauta </button>
+              > Caută </button>
             </div>
                  </div>
                 </div>
@@ -78,7 +78,7 @@
               <button 
               class="btn btn-success ml-3"
               >
-                  Vizualizeaza Chiria
+                  Vizualizează Chiria
               </button> 
         </router-link>
 
@@ -135,9 +135,6 @@ export default {
   },
   computed:{
 
-    currentImage(){
-      	// return this.detalii.poze[Math.abs(this.currentNumber) % this.detalii.poze.length];
-    }
 
   },
 
