@@ -38,8 +38,8 @@ v-for="person in contacts"
             class="rounded-circle m-1"> 
         </div>
 
-        <div class="text-left m-1">
-            <h6> {{person.name}} </h6>
+        <div class="text-left m-4">
+            <h4> {{person.name}} </h4>
             
          </div>    
      </div>
@@ -51,7 +51,7 @@ v-for="person in contacts"
 
         <div class="col-md-8 check ml-md-4 mt-2 mb-2" >
             
-            <h4 class="text-center"> Conversatia cu {{convName}}</h4>
+            <h4 class="text-center"> Conversatia cu {{convName}} <span v-if="startConversation">{{startConversation.name}}</span></h4>
             <hr>
             <div id="chatbox" ref="feed">
             <ul
@@ -78,18 +78,21 @@ v-for="person in contacts"
         </div>
            
     </div>
+    <vue-snotify></vue-snotify>
 
 </div>
    
 </template>
 <script>
 import axios from '../../axios-auth'
+import globalMethods from '../../mixins/globalMethods'
 export default{
+mixins:[globalMethods],
 data(){
     return {
         message:'',
         contacts:'',
-        conversation:'',
+        conversation:[],
         myId: this.$store.state.userId,
         convWith :'' ,
         convName: '',
@@ -104,7 +107,6 @@ beforeMount(){
 
 methods: {
     send(convWith){
-
         if(this.startConversation){
             var text = {
             to: this.startConversation.id,
@@ -131,24 +133,32 @@ methods: {
       
     },
     getContacts(){
-
         axios.get('/contacts')
         .then(response => {
             this.contacts = response.data
+          
+            if(this.startConversation){
+               for(var i in this.contacts){
+                   if(this.startConversation.id == this.contacts[i].id){
+                       const errMessage = 'Aveti deja o conversatie inceputa cu '+this.startConversation.name
+                       this.error('Eroare' , errMessage)
+                       this.startConversation = ''
+                   }
+               }
+            }
         })
         .catch(error=>console.log(error))
 
     },
     showConv(id , name){
-        if(this.convWith == id){
-            return ;
-        }
+      
         this.convName = name;
         this.convWith = id ;
         this.conversation = '';
         axios.get('get/messages/'+id )
         .then(res => {
             this.conversation = res.data
+            this.scrollToBottom()
           
         })
     },

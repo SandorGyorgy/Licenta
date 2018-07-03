@@ -1,7 +1,13 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light  mt-2 pageStyle">
-            <a class="navbar-brand" href="#">Navbar</a>
+        <nav class="navbar navbar-expand-lg navbar-light p-0  mt-2 pageStyle">
+            <a class="navbar-brand" >
+              <img src="http://licenta.test/media/logo.png" 
+              width="50px" 
+              height="50px"
+              style="margin:0px !important;padding:0px !important ; border-radius:50%"
+              >
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>

@@ -2,18 +2,24 @@
 
 <div class="p-3 ">
         <div class="row mb-4 ml-1 mr-1">
-            <div class=" text-center col-md-12 mb-2 container mx-auto" style="width: 250px;"  id="form-container">
-                    <h5 class="card-title">Card title</h5>
+            <div class=" text-center col-md-12 mb-2 container mx-auto card bg-primary"  id="form-container">
+                  
 
                     <div class="card-body ">
                         <div class="card-text">
-
-                            <gmap-autocomplete
+                        
+                        <gmap-autocomplete
                             @place_changed="visitPlace" 
                             class="form-control"
+                            style="height: 60px;
+                             font-size:30px; 
+                             color:#489CFB;
+                             position:relative;
+                             top: 120px;
+                             "
                             placeholder="Introduceti o locatie">
                        </gmap-autocomplete>
-
+                         
                         </div>
 
                     </div>

@@ -65,7 +65,8 @@
     
 
     <br><br>
-        {{ post.description }} 
+    <p style="white-space: pre-line">{{post.description}}</p>
+     
 
 
 

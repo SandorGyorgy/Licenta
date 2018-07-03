@@ -238,7 +238,6 @@ export default {
           lng: this.currentPlace.geometry.location.lng()
           
         };
-        console.log(this.currentPlace);
         this.center = marker;
         this.currentPlace = null;
       }

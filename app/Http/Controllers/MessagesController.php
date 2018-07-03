@@ -52,9 +52,7 @@ class MessagesController extends Controller
         }
         $filtered = [];
        $filtered = array_unique($person);
-        return response()->json(
-            $filtered
-            );
+        return response()->json( $filtered);
     } 
     public function startConversation($id){
         $user = User::where('id' , $id)->firstOrFail();
