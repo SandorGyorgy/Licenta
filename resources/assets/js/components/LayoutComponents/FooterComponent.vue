@@ -10,7 +10,8 @@
 
                 <!--Grid column-->
                 <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
-                    <h6 class="mb-0 white-text">Get connected with us on social networks!</h6>
+                    <h6 class="mb-0 white-text">
+Conectează-te cu noi pe rețelele de socializare!</h6>
                 </div>
                 <!--Grid column-->
 
@@ -51,31 +52,30 @@
             <!--First column-->
             <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
                 <h6 :class="columnTitle">
-                    <strong>Company name</strong>
+                    <strong>New Way Rent</strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                <p>Here you can use rows and columns here to organize your footer content. Lorem ipsum dolor sit
-                    amet, consectetur adipisicing elit.</p>
+                <p>New Way Rent a fost fondat in 2018. </p>
             </div>
             <!--/.First column-->
 
             <!--Second column-->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 :class="columnTitle">
-                    <strong>Products</strong>
+                    <strong>Tehnologii Folosite</strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="#!">MDBootstrap</a>
+                    <a href="#!">Vue js</a>
                 </p>
                 <p>
-                    <a href="#!">MDWordPress</a>
+                    <a href="#!">Laravel</a>
                 </p>
                 <p>
-                    <a href="#!">BrandFlow</a>
+                    <a href="#!">Google maps</a>
                 </p>
                 <p>
-                    <a href="#!">Bootstrap Angular</a>
+                    <a href="#!">Bootstrap</a>
                 </p>
             </div>
             <!--/.Second column-->
@@ -87,16 +87,16 @@
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="#!">Your Account</a>
+                    <a href="#!">Udemy</a>
                 </p>
                 <p>
-                    <a href="#!">Become an Affiliate</a>
+                    <a href="#!">SkillShare</a>
                 </p>
                 <p>
-                    <a href="#!">Shipping Rates</a>
+                    <a href="#!">Treehouse</a>
                 </p>
                 <p>
-                    <a href="#!">Help</a>
+                    <a href="#!">Udacity</a>
                 </p>
             </div>
             <!--/.Third column-->
@@ -108,11 +108,11 @@
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <i class=" fa-home " :class="contactIconClass"></i> New York, NY 10012, US</p>
+                    <i class=" fa-home " :class="contactIconClass"></i> Victoriei 22 , Baia Mare</p>
                 <p>
-                    <i class=" fa-envelope " :class="contactIconClass"></i> info@example.com</p>
+                    <i class=" fa-envelope " :class="contactIconClass"></i> newWayRent@gmail.com</p>
                 <p>
-                    <i class=" fa-phone " :class="contactIconClass"></i> + 01 234 567 88</p>
+                    <i class=" fa-phone " :class="contactIconClass"></i> 0756562120</p>
                 <p>
                     <i class=" fa-print " :class="contactIconClass"></i> + 01 234 567 89</p>
             </div>

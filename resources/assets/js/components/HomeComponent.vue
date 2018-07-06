@@ -48,7 +48,7 @@
             <p class="card-text">Preț Mediu / chirie {{ oras.avg_price }} € <br> Total chirii disponibile {{ oras.total }} </p>
             <button
             @click.prevent="visitCity(oras.city)" 
-            class="btn btn-primary">Vizualizeaza Chiriile din {{oras.city}}</button>
+            class="btn btn-primary">Vizualizează Chiriile din {{oras.city}}</button>
         </div>
         </div>
 

@@ -56939,7 +56939,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Vizualizeaza Chiriile din " + _vm._s(oras.city))]
+                    [_vm._v("Vizualizează Chiriile din " + _vm._s(oras.city))]
                   )
                 ])
               ]
@@ -58594,13 +58594,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       profilePic: this.$store.state.profilePic,
       phone: this.$store.state.userPhone,
-      email: this.$store.state.userEmail
+      email: this.$store.state.userEmail,
+      name: this.$store.state.userName
     };
   }
 });
@@ -58614,14 +58617,18 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("p", [_vm._v(_vm._s(_vm.phone))]),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.email))]),
-    _vm._v(" "),
-    _c("img", {
-      staticClass: "rounded-circle",
-      attrs: { src: _vm.profilePic, height: "180", width: "180" }
-    })
+    _c("div", { staticClass: "card m-2" }, [
+      _c("img", {
+        staticClass: "rounded-circle card-image",
+        attrs: { src: _vm.profilePic, height: "180", width: "180" }
+      }),
+      _vm._v(" "),
+      _vm.name
+        ? _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.name))])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [_vm._v("test body")])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -61552,19 +61559,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -61580,7 +61574,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             location: '',
             imagesPreview: "",
             newImages: [],
-            locatie: null
+            locatie: null,
+            totalImagesLenght: '',
+            eroare: {
+                titlu: false,
+                descriere: false,
+                nrCamere: false,
+                metriiPatrati: false,
+                pretLuna: false,
+                adresa: false
+            }
 
         };
     },
@@ -61636,81 +61639,134 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
                 vm.imagesPreview = photos;
             } else {
-                this.error('Eroare', '');
+                this.error('Eroare', 'Puteti selecta maxim 8 imagini!');
             }
+        },
+        validate: function validate() {
+
+            var eroareCount = 0;
+            if (this.post.title == '') {
+                this.eroare.titlu = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.titlu = false;
+            }
+
+            if (this.post.description == '') {
+                this.eroare.descriere = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.descriere = false;
+            }
+
+            if (this.post.room_nr == '') {
+                this.eroare.nrCamere = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.nrCamere = false;
+            }
+
+            if (this.post.dimension == '') {
+                this.eroare.metriiPatrati = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.metriiPatrati = false;
+            }
+
+            if (this.post.location == '') {
+                this.eroare.adresa = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.adresa = false;
+            }
+            if (this.post.price_month == '') {
+                this.eroare.pretLuna = true;
+                eroareCount = eroareCount + 1;
+            } else {
+                this.eroare.pretLuna = false;
+            }
+
+            return eroareCount;
         },
         editPost: function editPost() {
             var _this = this;
 
-            var edited = new FormData();
+            if (this.validate() == 0) {
 
-            edited.append("id", this.post.id);
-            edited.append("title", this.post.title);
-            edited.append("description", this.post.description);
-            edited.append("room_nr", this.post.room_nr);
-            edited.append("dimension", this.post.dimension);
-            edited.append("price_month", this.post.price_month);
-            edited.append("price_half_year", this.post.price_half_year);
-            edited.append("price_year", this.post.price_year);
+                var edited = new FormData();
+                edited.append("id", this.post.id);
+                edited.append("title", this.post.title);
+                edited.append("description", this.post.description);
+                edited.append("room_nr", this.post.room_nr);
+                edited.append("dimension", this.post.dimension);
+                if (this.post.price_half_year == null) {
+                    this.post.price_half_year = '';
+                }
+                if (this.post.price_year == null) {
+                    this.post.price_year = '';
+                }
+                edited.append("price_month", this.post.price_month);
+                edited.append("price_half_year", this.post.price_half_year);
+                edited.append("price_year", this.post.price_year);
 
-            var oldImages = JSON.stringify(this.images);
+                var oldImages = JSON.stringify(this.images);
 
-            edited.append('oldImages', oldImages);
+                edited.append('oldImages', oldImages);
 
-            if (this.locatie == null) {
-                edited.append('lat', this.location.lat);
-                edited.append('lng', this.location.lng);
-                edited.append('address', this.location.address);
-            } else {
-                edited.append("lat", this.locatie.geometry.location.lat());
-                edited.append("lng", this.locatie.geometry.location.lng());
-                for (var i in this.locatie.address_components) {
-                    if (this.locatie.address_components[i].types[0] == 'locality') {
-                        edited.append("city", this.locatie.address_components[i].short_name);
+                if (this.locatie == null) {
+                    edited.append('lat', this.location.lat);
+                    edited.append('lng', this.location.lng);
+                    edited.append('address', this.location.address);
+                    edited.append('city', this.location.city);
+                } else {
+                    edited.append("lat", this.locatie.geometry.location.lat());
+                    edited.append("lng", this.locatie.geometry.location.lng());
+                    for (var i in this.locatie.address_components) {
+                        if (this.locatie.address_components[i].types[0] == 'locality') {
+                            edited.append("city", this.locatie.address_components[i].short_name);
+                        }
                     }
-                }
-                edited.append("address", this.locatie.formatted_address);
-            }
-
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = this.newImages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var item = _step.value;
-
-                    edited.append("newImages[]", item);
+                    edited.append("address", this.locatie.formatted_address);
                 }
 
-                //     for (var pair of edited.entries()) {
-                // console.log(pair[0]+ ', ' + pair[1]); 
-                // }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
                 try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
+                    for (var _iterator = this.newImages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var item = _step.value;
 
-            __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post('/post/edit', edited).then(function (response) {
-                console.log(response);
-                if (response.status == 200) {
-                    _this.success('Succes', 'Postare editata cu succes!');
+                        edited.append("newImages[]", item);
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
                 }
-            }).catch(function (error) {
-                if (error.response.status == 401) {
-                    _this.error('Eroare', 'Nu sunteti autorizat sa editati aceasta postare!');
-                }
-            });
+
+                __WEBPACK_IMPORTED_MODULE_0__axios_auth__["a" /* default */].post('/post/edit', edited).then(function (response) {
+                    console.log(response);
+                    if (response.status == 200) {
+                        _this.success('Succes', 'Postare editata cu succes!');
+                    }
+                }).catch(function (error) {
+                    if (error.response.status == 401) {
+                        _this.error('Eroare', 'Nu sunteti autorizat sa editati aceasta postare!');
+                    }
+                });
+            } else {
+                this.error('Eroare', 'Postarea nu a putut fi editata!');
+            }
         },
         get: function get() {
             var id = this.id;
@@ -61723,6 +61779,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     vm.images = response.data.images;
                     vm.post = response.data.post;
                     vm.location = response.data.location;
+                    console.log(response);
                 } else {
                     console.log('404');
                 }
@@ -61734,7 +61791,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.currentPlace = place;
         },
         trash: function trash(key) {
-            this.images[key] = "";
+            if (this.totalImagesLenght > 1) {
+                this.images[key] = "";
+            } else {
+                this.error('Eroare', 'Postarea trebuie sa contina cel putin o imagine!');
+            }
+        },
+        trashNew: function trashNew(index) {
+            if (this.totalImagesLenght > 1) {
+                this.imagesPreview.splice(index, 1);
+                this.newImages.splice(index, 1);
+            } else {
+                this.error('Eroare', 'Postarea trebuie sa contina cel putin o imagine!');
+            }
         }
     },
 
@@ -61748,6 +61817,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var array = this.filter_array(Object.values(this.images));
             var counter = array.length + this.imagesPreview.length;
             if (counter < 8) {
+                this.totalImagesLenght = counter;
                 return true;
             } else {
                 return false;
@@ -61786,7 +61856,9 @@ var render = function() {
               _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+                _c("div", { staticClass: "col-md-3 field-label-responsive" }, [
+                  _vm._v(" Titlu ")
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group" }, [
@@ -61820,11 +61892,15 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm.eroare.titlu
+                  ? _c("div", { staticClass: "col-md-3" }, [_vm._m(1)])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+                _c("div", { staticClass: "col-md-3 field-label-responsive" }, [
+                  _vm._v(" Descriere ")
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group" }, [
@@ -61856,11 +61932,15 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm.eroare.descriere
+                  ? _c("div", { staticClass: "col-md-3" }, [_vm._m(2)])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+                _c("div", { staticClass: "col-md-3 field-label-responsive" }, [
+                  _vm._v(" Numar Camere ")
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group" }, [
@@ -61897,11 +61977,27 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(3)
+                _c("div", { staticClass: "col-md-3" }, [
+                  _vm.eroare.nrCamere
+                    ? _c("div", { staticClass: "form-control-feedback" }, [
+                        _c(
+                          "span",
+                          { staticClass: "text-danger align-middle" },
+                          [
+                            _vm._v(
+                              "\r\n                            Nu ati precizat numarul de camere\r\n                        "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+                _c("div", { staticClass: "col-md-3 field-label-responsive" }, [
+                  _vm._v(" Suprafata Utila ")
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group" }, [
@@ -61942,11 +62038,15 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(4)
+                _vm.eroare.metriiPatrati
+                  ? _c("div", { staticClass: "col-md-3" }, [_vm._m(3)])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+                _c("div", { staticClass: "col-md-3 field-label-responsive" }, [
+                  _vm._v(" Adresa ")
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group has-danger" }, [
@@ -61965,11 +62065,27 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(5)
+                _c("div", { staticClass: "col-md-3" }, [
+                  _vm.eroare.currentPlace
+                    ? _c("div", { staticClass: "form-control-feedback" }, [
+                        _c(
+                          "span",
+                          { staticClass: "text-danger align-middle" },
+                          [
+                            _vm._v(
+                              "\r\n                            Nu ati ales adresa chiriei\r\n                        "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+                _c("div", { staticClass: "col-md-3 field-label-responsive" }, [
+                  _vm._v(" Pret / Luna (Euro) ")
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group" }, [
@@ -62010,11 +62126,15 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(6)
+                _vm.eroare.pretLuna
+                  ? _c("div", { staticClass: "col-md-3" }, [_vm._m(4)])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+                _c("div", { staticClass: "col-md-3 field-label-responsive" }, [
+                  _vm._v(" Pret / 6 Luni (Euro)")
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group has-danger" }, [
@@ -62063,7 +62183,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 field-label-responsive" }),
+                _c("div", { staticClass: "col-md-3 field-label-responsive" }, [
+                  _vm._v(" Pret / An (Euro)  ")
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group has-danger" }, [
@@ -62087,7 +62209,7 @@ var render = function() {
                               staticClass: "form-control",
                               attrs: {
                                 type: "number",
-                                placeholder: "Pret pe jumatate de an in euro "
+                                placeholder: "Pret pe an in euro "
                               },
                               domProps: { value: _vm.post.price_year },
                               on: {
@@ -62234,7 +62356,7 @@ var render = function() {
                                                     "btn trash-button",
                                                   on: {
                                                     click: function($event) {
-                                                      _vm.trash(_vm.key)
+                                                      _vm.trashNew(index)
                                                     }
                                                   }
                                                 },
@@ -62261,7 +62383,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(7)
+              _vm._m(5)
             ])
           ]
         )
@@ -62291,9 +62413,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
+    return _c("div", { staticClass: "form-control-feedback" }, [
+      _c("span", { staticClass: "text-danger align-middle" }, [
+        _vm._v(
+          "\r\n                    Nu ati adaugat un titlu \r\n                "
+        )
       ])
     ])
   },
@@ -62301,9 +62425,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
+    return _c("div", { staticClass: "form-control-feedback" }, [
+      _c("span", { staticClass: "text-danger align-middle" }, [
+        _vm._v(
+          "\r\n                    Nu ati ales o descriere\r\n                "
+        )
       ])
     ])
   },
@@ -62311,9 +62437,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
+    return _c("div", { staticClass: "form-control-feedback" }, [
+      _c("span", { staticClass: "text-danger align-middle" }, [
+        _vm._v(
+          "\r\n                                Nu ati precizat suprafata utila\r\n                        "
+        )
       ])
     ])
   },
@@ -62321,29 +62449,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-control-feedback" }, [
-        _c("span", { staticClass: "text-danger align-middle" })
+    return _c("div", { staticClass: "form-control-feedback" }, [
+      _c("span", { staticClass: "text-danger align-middle" }, [
+        _vm._v(
+          "\r\n                                Nu ati precizat un pret\r\n                        "
+        )
       ])
     ])
   },
@@ -63299,7 +63409,7 @@ var render = function() {
             _c("div", { staticClass: "row mt-3" }, [
               _c("div", { staticClass: "col-md-3 col-lg-4 col-xl-3 mb-4" }, [
                 _c("h6", { class: _vm.columnTitle }, [
-                  _c("strong", [_vm._v("Company name")])
+                  _c("strong", [_vm._v("New Way Rent")])
                 ]),
                 _vm._v(" "),
                 _c("hr", {
@@ -63308,11 +63418,7 @@ var render = function() {
                   staticStyle: { width: "60px" }
                 }),
                 _vm._v(" "),
-                _c("p", [
-                  _vm._v(
-                    "Here you can use rows and columns here to organize your footer content. Lorem ipsum dolor sit\r\n                    amet, consectetur adipisicing elit."
-                  )
-                ])
+                _c("p", [_vm._v("New Way Rent a fost fondat in 2018. ")])
               ]),
               _vm._v(" "),
               _c(
@@ -63320,7 +63426,7 @@ var render = function() {
                 { staticClass: "col-md-2 col-lg-2 col-xl-2 mx-auto mb-4" },
                 [
                   _c("h6", { class: _vm.columnTitle }, [
-                    _c("strong", [_vm._v("Products")])
+                    _c("strong", [_vm._v("Tehnologii Folosite")])
                   ]),
                   _vm._v(" "),
                   _c("hr", {
@@ -63379,7 +63485,7 @@ var render = function() {
                     staticClass: " fa-home ",
                     class: _vm.contactIconClass
                   }),
-                  _vm._v(" New York, NY 10012, US")
+                  _vm._v(" Victoriei 22 , Baia Mare")
                 ]),
                 _vm._v(" "),
                 _c("p", [
@@ -63387,7 +63493,7 @@ var render = function() {
                     staticClass: " fa-envelope ",
                     class: _vm.contactIconClass
                   }),
-                  _vm._v(" info@example.com")
+                  _vm._v(" newWayRent@gmail.com")
                 ]),
                 _vm._v(" "),
                 _c("p", [
@@ -63395,7 +63501,7 @@ var render = function() {
                     staticClass: " fa-phone ",
                     class: _vm.contactIconClass
                   }),
-                  _vm._v(" + 01 234 567 88")
+                  _vm._v(" 0756562120")
                 ]),
                 _vm._v(" "),
                 _c("p", [
@@ -63427,7 +63533,7 @@ var staticRenderFns = [
       },
       [
         _c("h6", { staticClass: "mb-0 white-text" }, [
-          _vm._v("Get connected with us on social networks!")
+          _vm._v("\r\nConectează-te cu noi pe rețelele de socializare!")
         ])
       ]
     )
@@ -63436,61 +63542,51 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "#!" } }, [_vm._v("MDBootstrap")])
-    ])
+    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("Vue js")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("Laravel")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [
-      _c("a", { attrs: { href: "#!" } }, [_vm._v("MDWordPress")])
+      _c("a", { attrs: { href: "#!" } }, [_vm._v("Google maps")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("BrandFlow")])])
+    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("Bootstrap")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "#!" } }, [_vm._v("Bootstrap Angular")])
-    ])
+    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("Udemy")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "#!" } }, [_vm._v("Your Account")])
-    ])
+    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("SkillShare")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "#!" } }, [_vm._v("Become an Affiliate")])
-    ])
+    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("Treehouse")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "#!" } }, [_vm._v("Shipping Rates")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("Help")])])
+    return _c("p", [_c("a", { attrs: { href: "#!" } }, [_vm._v("Udacity")])])
   },
   function() {
     var _vm = this

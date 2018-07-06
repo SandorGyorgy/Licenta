@@ -94,7 +94,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        $location = Location::where('post_id' , $id)->firstOrFail()->only('lat','lng','address');
+        $location = Location::where('post_id' , $id)->firstOrFail()->only('lat','lng','address' ,'city');
         $images = Images::where('post_id' , $id)->firstOrFail();
         $user = User::where('id' , $post->user_id)->firstOrFail()->only( 'id' ,'email' , 'name' ,'phone' ,'profile_picture');
     

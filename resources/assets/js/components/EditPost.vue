@@ -20,7 +20,7 @@
 
 
 <div class="row">
-    <div class="col-md-3 field-label-responsive"> </div>
+    <div class="col-md-3 field-label-responsive"> Titlu </div>
 
     <div class="col-md-6">
         <div class="form-group">
@@ -34,10 +34,10 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+      <div class="col-md-3" v-if="eroare.titlu">
         <div class="form-control-feedback">
                 <span class="text-danger align-middle">
-
+                    Nu ati adaugat un titlu 
                 </span>
         </div>
     </div>  
@@ -46,7 +46,7 @@
 
 
 <div class="row">
-    <div class="col-md-3 field-label-responsive"> </div>
+    <div class="col-md-3 field-label-responsive"> Descriere </div>
 
     <div class="col-md-6">
         <div class="form-group">
@@ -65,10 +65,10 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3" v-if="eroare.descriere">
         <div class="form-control-feedback">
                 <span class="text-danger align-middle">
-
+                    Nu ati ales o descriere
                 </span>
         </div>
     </div>  
@@ -78,7 +78,7 @@
 
     <!-- Numar camere -->
          <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
+            <div class="col-md-3 field-label-responsive"> Numar Camere </div>
 
             <div class="col-md-6">
                 <div class="form-group">
@@ -93,9 +93,9 @@
             </div>
 
             <div class="col-md-3">
-                <div class="form-control-feedback">
+                <div class="form-control-feedback" v-if="eroare.nrCamere">
                         <span class="text-danger align-middle">
-
+                            Nu ati precizat numarul de camere
                         </span>
                 </div>
             </div>  
@@ -103,7 +103,7 @@
 
     <!-- metri patrati -->
         <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
+            <div class="col-md-3 field-label-responsive"> Suprafata Utila </div>
 
             <div class="col-md-6">
             <div class="form-group">
@@ -117,10 +117,10 @@
             </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3" v-if="eroare.metriiPatrati">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                                
+                                Nu ati precizat suprafata utila
                         </span>
                 </div>
             </div>  
@@ -128,7 +128,7 @@
     
     <!-- Adresa chirie -->
         <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
+            <div class="col-md-3 field-label-responsive"> Adresa </div>
             <div class="col-md-6">
                 <div class="form-group has-danger">
                     
@@ -144,10 +144,11 @@
                 </div>
             </div>
 
+            
             <div class="col-md-3">
-                <div class="form-control-feedback">
+                <div class="form-control-feedback" v-if="eroare.currentPlace">
                         <span class="text-danger align-middle">
-
+                            Nu ati ales adresa chiriei
                         </span>
                 </div>
             </div>
@@ -155,7 +156,7 @@
 
     <!-- plata pe luna -->
         <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
+            <div class="col-md-3 field-label-responsive"> Pret / Luna (Euro) </div>
 
             <div class="col-md-6">
                 <div class="form-group">
@@ -169,28 +170,22 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+          <div class="col-md-3" v-if="eroare.pretLuna">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-
+                                Nu ati precizat un pret
                         </span>
                 </div>
-            </div>  
+            </div> 
         </div>
 
     <!-- plata pe jumate de an  -->
          <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
+            <div class="col-md-3 field-label-responsive"> Pret / 6 Luni (Euro)</div>
             <div class="col-md-6">
                 <div class="form-group has-danger">
                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 
-                    <!-- <div class="form-check" >
-                        <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" @click="plata_jumate_an = !plata_jumate_an">
-                        Acceptati plata pe jumatate de an 
-                        </label>
-                    </div> -->
 
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <input 
@@ -210,27 +205,19 @@
 
     <!-- plata pe an -->
          <div class="row">
-            <div class="col-md-3 field-label-responsive"> </div>
+            <div class="col-md-3 field-label-responsive"> Pret / An (Euro)  </div>
             <div class="col-md-6">
                 <div class="form-group has-danger">
                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
 
-                   <!-- <div class="form-check" >
-                        <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" @click="plata_an = !plata_an">
-                        Acceptati plata pe  an 
-                        </label>
-                    </div> -->
+                 
 
                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <input type="number"  
                         class="form-control" 
                         v-model="post.price_year"
-                        placeholder="Pret pe jumatate de an in euro " >
+                        placeholder="Pret pe an in euro " >
                     </div>
-                    
-
-
                  </div>
                 </div>
             </div>
@@ -242,7 +229,7 @@
 
     <!-- Preview poze -->
         <div class="row">
-                <div class="col-md-3 field-label-responsive"> </div>
+                <div class="col-md-3 field-label-responsive"></div>
                 <div class="col-md-6">
                     <div class="form-group has-danger">
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
@@ -285,7 +272,7 @@
                     class="col-sm-6 col-md-4">
 
                     <div class="lightbox preview">
-                    <h3 class="btn trash-button" @click="trash(key)" >X</h3>
+                    <h3 class="btn trash-button" @click="trashNew(index)" >X</h3>
                     <img  :src="newImage"  class="imageStyle" >
 
                    </div> 
@@ -333,7 +320,16 @@ export default {
             location: '',
             imagesPreview: "",
             newImages: [],
-            locatie: null
+            locatie: null,
+            totalImagesLenght: '',
+              eroare:{
+            titlu:false,
+            descriere:false,
+            nrCamere:false,
+            metriiPatrati:false,
+            pretLuna:false,
+            adresa:false
+        }
           
         };
     },
@@ -357,9 +353,9 @@ export default {
 
     },
 
-          onFileChange(e) {
+ onFileChange(e) {
       var files = e.target.files;
-  //daca exista imagini pentru preview adauga la cele existente sau creaza array gol
+        //daca exista imagini pentru preview adauga la cele existente sau creaza array gol
       if(this.imagesPreview){
           var photos = this.imagesPreview
       }else{
@@ -371,12 +367,12 @@ export default {
       var curentFileLength = files.length
     
 
-//daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
+    //daca sunt mai multe imagini de 8 nu se executa blockul si se afiseaza eroare      
       if (files && files_count <= 8) {
         const vm = this;
      
 
-//salveaza fisierele propriu zise intr-un array
+    //salveaza fisierele propriu zise intr-un array
             const formFiles = this.newImages
             for(let i = 0 ; i < curentFileLength; i++ ){
                 formFiles.push(files[i])
@@ -388,7 +384,7 @@ export default {
     
 
 
-//se transforma imaginile in binar
+    //se transforma imaginile in binar
         for (let i = 0; i < curentFileLength; i++) {
           var reader = new FileReader();
           var image = "";
@@ -400,19 +396,75 @@ export default {
         }
         vm.imagesPreview = photos
       }else{
-          this.error('Eroare' , '')
+          this.error('Eroare' , 'Puteti selecta maxim 8 imagini!')
       }
-    },
+},
+validate(){
+        
+        var eroareCount = 0;
+        if(this.post.title == ''){
+            this.eroare.titlu = true
+            eroareCount = eroareCount+1
+        }else{
+            this.eroare.titlu = false
+        }
+   
+        if(this.post.description == ''){
+            this.eroare.descriere = true
+            eroareCount = eroareCount+1
+        }else{
+            this.eroare.descriere = false
+        }
 
-        editPost(){  
-        var edited = new FormData()
-    
-       
+        if(this.post.room_nr == ''){
+            this.eroare.nrCamere = true
+            eroareCount = eroareCount+1
+        }else{
+            this.eroare.nrCamere = false
+        }
+
+        if(this.post.dimension == '' ){
+            this.eroare.metriiPatrati = true
+            eroareCount = eroareCount+1
+        }else{
+            this.eroare.metriiPatrati = false
+        }
+
+        if(this.post.location == ''){
+            this.eroare.adresa = true
+            eroareCount = eroareCount+1
+        }else{
+            this.eroare.adresa = false
+        }
+        if(this.post.price_month == ''){
+            this.eroare.pretLuna = true
+            eroareCount = eroareCount +1
+        }else{
+            this.eroare.pretLuna = false
+        }
+
+
+
+        return eroareCount;
+
+      },
+
+editPost(){ 
+            if(this.validate() == 0){
+
+                   var edited = new FormData()
         edited.append("id" , this.post.id);
         edited.append("title" , this.post.title);
         edited.append("description" , this.post.description);
         edited.append("room_nr" , this.post.room_nr);
         edited.append("dimension" , this.post.dimension);
+        if(this.post.price_half_year == null){
+            this.post.price_half_year = ''
+        }
+        if(this.post.price_year == null){
+            this.post.price_year = ''
+
+        }
         edited.append("price_month" , this.post.price_month);
         edited.append("price_half_year" , this.post.price_half_year);
         edited.append("price_year" , this.post.price_year);
@@ -424,7 +476,8 @@ export default {
         if(this.locatie == null){
             edited.append('lat' , this.location.lat);
             edited.append('lng' , this.location.lng);
-            edited.append('address' , this.location.address)
+            edited.append('address' , this.location.address);
+            edited.append('city' , this.location.city);
         }else{
             edited.append("lat" ,this.locatie.geometry.location.lat());
             edited.append("lng" ,this.locatie.geometry.location.lng());
@@ -443,9 +496,6 @@ export default {
             edited.append("newImages[]" , item);
         }
 
-    //     for (var pair of edited.entries()) {
-    // console.log(pair[0]+ ', ' + pair[1]); 
-    // }
 
         axios.post('/post/edit' , edited)
         .then(response => {
@@ -460,6 +510,11 @@ export default {
                 this.error('Eroare' , 'Nu sunteti autorizat sa editati aceasta postare!')
             }
         })
+
+            }else{
+                this.error('Eroare' , 'Postarea nu a putut fi editata!')
+            } 
+     
          
         },
 
@@ -476,13 +531,10 @@ export default {
          vm.images = response.data.images
          vm.post = response.data.post
          vm.location = response.data.location
+         console.log(response);
          }else{
              console.log('404')
          }
-        
-         
-         
-       
     })
     .catch(error => console.log(error))
 
@@ -493,8 +545,22 @@ export default {
     },
 
      trash(key){
-        this.images[key] = ""
-    }
+         if(this.totalImagesLenght > 1){
+             this.images[key] = ""
+         }else{
+             this.error('Eroare' , 'Postarea trebuie sa contina cel putin o imagine!')
+         }
+        
+    },
+    trashNew(index){
+         if(this.totalImagesLenght > 1){
+            this.imagesPreview.splice(index , 1);
+        this.newImages.splice(index, 1);
+         }else{
+             this.error('Eroare' , 'Postarea trebuie sa contina cel putin o imagine!')
+         }
+     
+    },
 
     
     },
@@ -509,6 +575,7 @@ export default {
          const array = this.filter_array(Object.values(this.images));
          const counter = array.length+this.imagesPreview.length; 
          if(counter < 8){
+             this.totalImagesLenght = counter
              return true;
          }else{
              return false;
