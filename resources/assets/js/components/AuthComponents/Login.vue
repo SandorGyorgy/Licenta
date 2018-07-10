@@ -68,31 +68,51 @@
         </div>
      </div>
     </form>
+    <vue-snotify></vue-snotify>
 </div>
 
 </template>
 
 <script>
+import globalMethods from '../../mixins/globalMethods';
+import axios from '../../axios-auth'
 export default {
+     mixins:[globalMethods],
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      loginError:''
     };
   },
 
   methods: {
     onSubmit() {
+      const vm = this
       const loginData = {
         email: this.email,
         password: this.password
       };
-      this.$store.dispatch("login", loginData);
-   
-      this.$router.push({ name: "home" });
-    
+
+     axios.post('/user/login', loginData)
+                .then(response => {
+                    console.log(response.status)
+                    if(response.status == 200){
+                        localStorage.setItem('token', response.data.token)
+                        this.$store.dispatch("authUserData");
+                        this.$router.push({ name: "home" });
+                    }
+                })
+                .catch(error => {
+                   if(error){
+                       this.error('Eroare' , 'Parola sau email gresit!')
+                   }
+                })
     }
-  }
+    
+  },
+ 
+
 };
 </script>
 

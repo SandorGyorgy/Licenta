@@ -110,6 +110,7 @@ export default {
           axios.get('api/mostpopular')
           .then(response=> {
               this.topPlaces = response.data
+              
              
           })
           .catch(error =>{

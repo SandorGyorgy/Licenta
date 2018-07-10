@@ -17,7 +17,8 @@ export const store = new Vuex.Store({
         router: localStorage.getItem('token'),
         profilePic: null,
         visitPlace:null,
-        startConversation:null
+        startConversation:null,
+  
       
 
     },
@@ -40,7 +41,8 @@ export const store = new Vuex.Store({
                 state.userId = null,
                 state.userEmail = null,
                 state.userPhone = null,
-                state.profilePic = null
+                state.profilePic = null,
+                state.router = null
 
             localStorage.removeItem('token');
             localStorage.removeItem('userName');
@@ -56,7 +58,8 @@ export const store = new Vuex.Store({
         startConversation(state , user){
             state.startConversation = user
             console.log(user)
-        }
+        },
+      
 
       
 
@@ -106,17 +109,6 @@ export const store = new Vuex.Store({
         },
 
 
-        //Logi action : sends the user data to the api and gets back a JWT token 
-        login({dispatch }, loginData) {
-            axios.post('/api/user/login', loginData)
-                .then(response => {
-                    localStorage.setItem('token', response.data.token)
-                    dispatch('authUserData')
-                })
-                .catch(error => console.log(error))
-        },
-        //End of the login action
-
 
         authUserData({ commit }) {
             const token = localStorage.getItem('token')
@@ -142,6 +134,7 @@ export const store = new Vuex.Store({
                     localStorage.setItem('userPhone', response.data.phone)
                     localStorage.setItem('profilePic' , response.data.profile_picture)
                     location.reload()
+                    
                 })
                 .catch(error => console.log(error))
         },
@@ -158,7 +151,8 @@ export const store = new Vuex.Store({
     getters: {
         isAuth(state) {
             return state.token !== null
-        }
+        },
+      
 
     }
 

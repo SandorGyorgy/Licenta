@@ -62,12 +62,6 @@
                     </button>
                 </router-link>
 
-                <router-link to="/user/account" >
-                  <button class="dropdown-item"> 
-                    <i class=" fa-cog" :class="dropdownIcons"></i> 
-                    Setări Cont
-                    </button>
-                </router-link>
                   <button @click="logOut" class="dropdown-item"> 
                     <i class=" fa-power-off" :class="dropdownIcons"></i> 
                     Delogare

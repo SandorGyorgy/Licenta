@@ -4,7 +4,6 @@ import HomeComponent from './components/HomeComponent.vue'
 import MapComponent from './components/MapComponent.vue'
 import Login from './components/AuthComponents/Login.vue'
 import Register from './components/AuthComponents/Register.vue'
-import AccountSettings from './components/AuthComponents/AccountSettings.vue'
 import Messages from './components/AuthComponents/Messages.vue'
 import MyPosts from './components/AuthComponents/MyPosts.vue'
 import Post from './components/AuthComponents/Post.vue'
@@ -48,7 +47,16 @@ const routes = [
     {
         path: '/login',
         component: Login,
-        name: 'login'
+        name: 'login',
+        beforeEnter(to, from, next) {
+            if (store.state.router) {
+                next('/')
+            } else if (store.state.token) {
+                next('/')
+            }else{
+                next()
+            }
+        }
     },
     {
         path: '/register',
@@ -95,19 +103,7 @@ const routes = [
             }
         }
     },
-    {
-        path: '/user/account',
-        component: AccountSettings,
-        beforeEnter(to, from, next) {
-            if (store.state.router) {
-                next()
-            } else if (store.state.token) {
-                next()
-            } else {
-                next('/login')
-            }
-        }
-    },
+ 
 
 
 ];

@@ -112,7 +112,7 @@
                     type="number"
                     v-model="form.metriiPatrati"  
                     class="form-control" 
-                    placeholder="Metrii patrati" >
+                    placeholder="Metri patrati" >
                 </div>
             </div>
             </div>

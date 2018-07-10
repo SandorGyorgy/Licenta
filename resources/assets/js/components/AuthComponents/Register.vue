@@ -155,12 +155,15 @@
         </div>
      </div>
     </form>
+    <vue-snotify></vue-snotify>
 </div>
 
 </template>
 
 <script>
+import globalMethods from '../../mixins/globalMethods'
 export default {
+     mixins:[globalMethods],
   data() {
     return {
       name: "",
@@ -200,12 +203,18 @@ export default {
         formData.append('password' , this.password);
         formData.append('profilePicture' , this.profilePicture);
 
-        
-
       
             axios.post('/api/user/register', formData)
-            .then(  this.$router.push({ name: "login" }) )
-             .catch(error => console.log(error))
+            .then( response => {
+                if(response.status == 200){
+                    this.$router.push({ name: "login" })
+                }
+               } )
+             .catch(error => {
+                 if(error.response.status == 500){
+                     this.error('Eroare' , 'Exista deja un utilizator cu acest email!')
+                 }
+             } )
       
        
     },
